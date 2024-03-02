@@ -52,17 +52,15 @@ async function verifyRefreshToken(refreshToken, username, res) {
 		} else {
 			jwt.verify(refreshToken, REFRESH_SECRET, (err, decoded) => {
 				if (err) {
-					return res.status(404).send({ auth: false, message: err.message });
+					return res.send({ auth: false, message: err.message });
 				}
 				if (decoded.exp < Date.now() / 1000) {
-					return res.status(401).send("Refresh token has expired");
+					return res.send("Refresh token has expired");
 				}
 				// If the JWT is valid, save the decoded user information in the request object
 				// so that it is available for the next middleware function
 				if (decoded.username != username) {
-					return res
-						.status(404)
-						.send({ auth: false, message: "Token mismatch" }); // Token is not this users, but another users
+					return res.send({ auth: false, message: "Token mismatch" }); // Token is not this users, but another users
 				}
 
 				return res.send({
@@ -80,24 +78,20 @@ function verifyJWT(req, res, next) {
 	const token = req.body["jwt_key"];
 
 	if (!token || !username) {
-		return res
-			.status(401)
-			.send({ status: false, message: "Missing auth fields !" });
+		return res.send({ status: false, message: "Missing auth fields !" });
 	}
 	// Verify the JWT and check that it is valid
 	jwt.verify(token, JWT_SECRET, (err, decoded) => {
 		if (err) {
-			return res.status(401).send({ status: false, message: err.message });
+			return res.send({ status: false, message: err.message });
 		}
 		if (decoded.exp < Date.now() / 1000) {
-			return res
-				.status(401)
-				.send({ status: false, message: "JWT has expired" });
+			return res.send({ status: false, message: "JWT has expired" });
 		}
 		// If the JWT is valid, save the decoded user information in the request object
 		// so that it is available for the next middleware function
 		if (decoded.username != username) {
-			return res.status(401).send({ status: false, message: "Token mismatch" }); // Token is not this users, but another users
+			return res.send({ status: false, message: "Token mismatch" }); // Token is not this users, but another users
 		}
 
 		req.decoded = decoded;
@@ -111,20 +105,20 @@ function confirmJWT(req, res) {
 	const token = req.body["jwt_key"];
 
 	if (!token) {
-		return res.status(401).send({ auth: false, message: "No token provided." });
+		return res.send({ auth: false, message: "No token provided." });
 	}
 	// Verify the JWT and check that it is valid
 	jwt.verify(token, JWT_SECRET, (err, decoded) => {
 		if (err) {
-			return res.status(404).send({ auth: false, message: err.message });
+			return res.send({ auth: false, message: err.message });
 		}
 		if (decoded.exp < Date.now() / 1000) {
-			return res.status(401).send({ auth: false, message: "JWT has expired" });
+			return res.send({ auth: false, message: "JWT has expired" });
 		}
 		// If the JWT is valid, save the decoded user information in the request object
 		// so that it is available for the next middleware function
 		if (decoded.username != username) {
-			return res.status(404).send({ auth: false, message: "Token mismatch" }); // Token is not this users, but another users
+			return res.send({ auth: false, message: "Token mismatch" }); // Token is not this users, but another users
 		}
 
 		return res.send({ auth: true, message: "jwt valid and working" });

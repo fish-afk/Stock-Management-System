@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
-import "../css/login.css";
-
-import BackgroundImage from "../assets/images/download.png";
-import Logo from "../assets/images/logo.png";
+import "../css/auth.css";
 
 const Register = () => {
 	const [inputUsername, setInputUsername] = useState("");
@@ -30,20 +27,13 @@ const Register = () => {
 	}
 
 	return (
-		<div
-			className="sign-in__wrapper"
-			style={{ backgroundImage: `url(${BackgroundImage})` }}
-		>
+		<div className="sign-in__wrapper bg-dark">
 			{/* Overlay */}
 			<div className="sign-in__backdrop"></div>
 			{/* Form */}
 			<Form className="shadow p-4 bg-white rounded" onSubmit={handleSubmit}>
 				{/* Header */}
-				<img
-					className="img-thumbnail mx-auto d-block mb-2"
-					src={Logo}
-					alt="logo"
-				/>
+				
 				<div className="h4 mb-2 text-center">Register</div>
 				{/* ALert */}
 				{show ? (
@@ -78,31 +68,29 @@ const Register = () => {
 						required
 					/>
 				</Form.Group>
-				<Form.Group className="mb-2" controlId="checkbox">
-					<Form.Check type="checkbox" label="Remember me" />
-				</Form.Group>
+
 				{!loading ? (
 					<Button className="w-100" variant="primary" type="submit">
-						Log In
+						Sign Up
 					</Button>
 				) : (
 					<Button className="w-100" variant="primary" type="submit" disabled>
-						Logging In...
+						Registering...
 					</Button>
 				)}
-				<div className="d-grid justify-content-end">
-					<Button
-						className="text-muted px-0"
-						variant="link"
-						onClick={handlePassword}
-					>
-						Forgot password?
-					</Button>
+
+				<div className="d-grid justify-content-end pt-3">
+					<p className="text-dark px-0">
+						Already have an account ?{" "}
+						<a className="text-primary" href="/login">
+							Login
+						</a>
+					</p>
 				</div>
 			</Form>
 			{/* Footer */}
 			<div className="w-100 mb-2 position-absolute bottom-0 start-50 translate-middle-x text-white text-center">
-				Made by Hendrik C | &copy;2022
+				Stock Management System | &copy; {new Date().getFullYear()}
 			</div>
 		</div>
 	);
