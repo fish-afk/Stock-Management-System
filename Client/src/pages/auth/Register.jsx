@@ -1,65 +1,52 @@
 import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
-import "../css/auth.css";
-import axios from "axios";
-import BASEURL from "../constants/apiBaseUrl";
+import "../../css/auth.css";
 
-const Login = () => {
+const Register = () => {
 	const [inputUsername, setInputUsername] = useState("");
 	const [inputPassword, setInputPassword] = useState("");
 
-	const [show, setShow] = useState("");
-	const [message, setMessage] = useState("");
+	const [show, setShow] = useState(false);
 	const [loading, setLoading] = useState(false);
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		setLoading(true);
-
-		let data = await axios.post(BASEURL + "/users/login", {
-			username: inputUsername,
-			password: inputPassword,
-		});
-		const response = data?.data;
-
-		console.log(response);
-		setShow(response?.status);
-		setMessage(response?.message);
+		await delay(500);
+		console.log(`Username :${inputUsername}, Password :${inputPassword}`);
+		if (inputUsername !== "admin" || inputPassword !== "admin") {
+			setShow(true);
+		}
 		setLoading(false);
 	};
 
 	const handlePassword = () => {};
 
+	function delay(ms) {
+		return new Promise((resolve) => setTimeout(resolve, ms));
+	}
+
 	return (
-		<div className="sign-in__wrapper bg-black">
+		<div className="sign-in__wrapper bg-dark">
 			{/* Overlay */}
 			<div className="sign-in__backdrop"></div>
 			{/* Form */}
 			<Form className="shadow p-4 bg-white rounded" onSubmit={handleSubmit}>
 				{/* Header */}
-
-				<div className="h4 mb-2 text-center">Sign In</div>
+				
+				<div className="h4 mb-2 text-center">Register</div>
 				{/* ALert */}
-				{show == "" ? (
-					<></>
-				) : show == "SUCCESS" ? (
-					<Alert
-						className="mb-2"
-						variant="success"
-						onClose={() => setShow(false)}
-						dismissible
-					>
-						{message}
-					</Alert>
-				) : (
+				{show ? (
 					<Alert
 						className="mb-2"
 						variant="danger"
 						onClose={() => setShow(false)}
 						dismissible
 					>
-						{message}
+						Incorrect username or password.
 					</Alert>
+				) : (
+					<div />
 				)}
 				<Form.Group className="mb-2" controlId="username">
 					<Form.Label>Username</Form.Label>
@@ -82,31 +69,21 @@ const Login = () => {
 					/>
 				</Form.Group>
 
-				<div className="d-grid justify-content-end pb-3">
-					<Button
-						className="text-muted px-0"
-						variant="link"
-						onClick={handlePassword}
-					>
-						Forgot password?
-					</Button>
-				</div>
-
 				{!loading ? (
 					<Button className="w-100" variant="primary" type="submit">
-						Log In
+						Sign Up
 					</Button>
 				) : (
 					<Button className="w-100" variant="primary" type="submit" disabled>
-						Logging In...
+						Registering...
 					</Button>
 				)}
 
 				<div className="d-grid justify-content-end pt-3">
-					<p className="px-0">
-						Dont have an account ?{" "}
-						<a className="text-primary" href="/register">
-							Register
+					<p className="text-dark px-0">
+						Already have an account ?{" "}
+						<a className="text-primary" href="/login">
+							Login
 						</a>
 					</p>
 				</div>
@@ -119,4 +96,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default Register;

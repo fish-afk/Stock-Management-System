@@ -11,13 +11,13 @@ CREATE TABLE IF NOT EXISTS `Categories` (
 CREATE TABLE IF NOT EXISTS `Suppliers` (
   `supplier_id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `supplier_name` VARCHAR(255),
-  `contact_info` VARCHAR(255)
+  `email` VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS `Customers` (
   `customer_id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `customer_name` VARCHAR(255),
-  `contact_info` VARCHAR(255)
+  `email` VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS `Users` (

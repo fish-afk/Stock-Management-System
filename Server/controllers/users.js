@@ -4,13 +4,16 @@ const authMiddleware = require("../middleware/auth");
 
 const register = async (req, res) => {
 	try {
-		const { username, password, firstName, lastName, contactInfo, roleId } =
-			req.body;
-		
+		const { username, password, firstName, lastName, email, roleId } = req.body;
+
 		const username_regex = /^[a-zA-Z0-9_]+$/;
 
 		if (!username_regex.test(username.toLowerCase())) {
-			return res.json({status: 'FAILURE', message: "Username should only contain alphanumeric characters and underscores" });
+			return res.json({
+				status: "FAILURE",
+				message:
+					"Username should only contain alphanumeric characters and underscores",
+			});
 		}
 
 		// Check if username already exists
@@ -30,8 +33,8 @@ const register = async (req, res) => {
 
 		// Create a new user
 		const [result] = await mysql.pool.query(
-			"INSERT INTO Users (username, password, first_name, last_name, contact_info, role_id) VALUES (?, ?, ?, ?, ?, ?)",
-			[username, hashedPassword, firstName, lastName, contactInfo, roleId],
+			"INSERT INTO Users (username, password, first_name, last_name, email, role_id) VALUES (?, ?, ?, ?, ?, ?)",
+			[username, hashedPassword, firstName, lastName, email, roleId],
 		);
 
 		res.json({
@@ -75,15 +78,16 @@ const login = async (req, res) => {
 				message: "Invalid username or password",
 			});
 		} else {
-			const role_id = user[0].role_id;
+			const { password, auth_refresh_token, ...userData } = user[0]; // Remove the 'password' field from user[0]
+			const role_id = userData.role_id;
 			const jwtToken = authMiddleware.generateJwtToken(
-				user[0].username,
+				userData.username,
 				role_id,
 				"normal",
 			);
 
 			const refreshToken = await authMiddleware.generateRefreshToken(
-				user[0].username,
+				userData.username,
 				role_id,
 			);
 
@@ -97,9 +101,10 @@ const login = async (req, res) => {
 				res.json({
 					status: "SUCCESS",
 					message: "Login successful",
+					userData, // Include relevant user information
 					jwtToken,
 					refreshToken,
-				}); // Include relevant user information
+				});
 			}
 		}
 	} catch (error) {

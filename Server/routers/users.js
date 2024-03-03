@@ -6,5 +6,7 @@ const router = express.Router();
 
 router.post("/register", userController.register);
 router.post("/login", userController.login);
+router.post("/refresh", userController.refresh);
+router.post("/confirmjwt", authMiddleware.confirmJWT);
 
 module.exports = router;
