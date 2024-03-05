@@ -4,13 +4,12 @@ import "../../css/auth.css";
 import axios from "axios";
 import BASEURL from "../../constants/apiBaseUrl";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../assets/images/logo.webp";
 
-const Login = () => {
+const ResetPassword = () => {
+	const Navigate = useNavigate();
 	const [inputUsername, setInputUsername] = useState("");
 	const [inputPassword, setInputPassword] = useState("");
-
-	const Navigate = useNavigate();
+	const [inputConfirmPassword, setInputConfirmPassword] = useState("");
 
 	const [show, setShow] = useState("");
 	const [message, setMessage] = useState("");
@@ -45,32 +44,21 @@ const Login = () => {
 				"userDataObject",
 				JSON.stringify(response?.userData),
 			);
-
-			response?.userData?.role_id == 1
-				? Navigate("/admin/dashboard")
-				: response?.userData.role_id == 2
-				? Navigate("/warehouse-operator/dashboard")
-				: Navigate("/stakeholder/dashboard");
 		}
-
 		setLoading(false);
 	};
+
+	const handlePassword = () => {};
 
 	return (
 		<div className="sign-in__wrapper bg-black">
 			{/* Overlay */}
 			<div className="sign-in__backdrop"></div>
 			{/* Form */}
-
 			<Form className="shadow p-4 bg-white rounded" onSubmit={handleSubmit}>
 				{/* Header */}
-				{/* Header */}
-				<img
-					className="img-thumbnail mx-auto d-block mb-2"
-					src={Logo}
-					alt="logo"
-				/>
-				<div className="h4 mb-2 text-center">Sign In</div>
+
+				<div className="h4 mb-2 text-center">Reset Password</div>
 				{/* ALert */}
 				{show == "" ? (
 					<></>
@@ -103,8 +91,8 @@ const Login = () => {
 						required
 					/>
 				</Form.Group>
-				<Form.Group className="mb-2" controlId="password">
-					<Form.Label>Password</Form.Label>
+				<Form.Group className="mb-2" controlId="new_password">
+					<Form.Label>New Password</Form.Label>
 					<Form.Control
 						type="password"
 						value={inputPassword}
@@ -114,25 +102,36 @@ const Login = () => {
 					/>
 				</Form.Group>
 
+				<Form.Group className="mb-2" controlId="confirm_password">
+					<Form.Label>Confrm New Password</Form.Label>
+					<Form.Control
+						type="password"
+						value={inputConfirmPassword}
+						placeholder="Password"
+						onChange={(e) => setInputConfirmPassword(e.target.value)}
+						required
+					/>
+				</Form.Group>
+
 				<div className="d-grid justify-content-end pb-3">
 					<Button
 						className="text-muted px-0"
 						variant="link"
 						onClick={() => {
-							Navigate("/reset-password");
+							Navigate("/login");
 						}}
 					>
-						Forgot password?
+						Back to Login
 					</Button>
 				</div>
 
 				{!loading ? (
 					<Button className="w-100" variant="primary" type="submit">
-						Log In
+						Reset Password
 					</Button>
 				) : (
 					<Button className="w-100" variant="primary" type="submit" disabled>
-						Logging In...
+						Reset Password Pending...
 					</Button>
 				)}
 			</Form>
@@ -144,4 +143,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default ResetPassword;

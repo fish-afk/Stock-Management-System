@@ -1,13 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
 import "./css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+	createBrowserRouter,
+	Navigate,
+	RouterProvider,
+} from "react-router-dom";
 import Redirector from "./pages/auth/Redirector";
-import Dashboard from "./pages/warehouseOperator/Dashboard";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import StakeHolderDashboard from "./pages/stakeHolder/StakeHolderDashboard";
+import WarehouseOperatorDashboard from "./pages/warehouseOperator/WarehouseOperatorDashboard";
 import ProtectedRoute from "./pages/auth/ProtectedRoute";
+import ResetPassword from "./pages/auth/ResetPassword";
 
 const router = createBrowserRouter([
 	{
@@ -19,16 +25,53 @@ const router = createBrowserRouter([
 		element: <Login />,
 	},
 	{
-		path: "/register",
-		element: <Register />,
+		path: "/reset-password",
+		element: <ResetPassword />,
 	},
 	{
-		path: "/Dashboard",
-		element: (
-			<ProtectedRoute>
-				<Dashboard />
-			</ProtectedRoute>
-		),
+		path: "/admin",
+		element: <Navigate to={"/admin/dashboard"} />,
+		children: [
+			{
+				
+				path: "dashboard",
+				element: (
+					<ProtectedRoute>
+						<AdminDashboard />
+					</ProtectedRoute>
+				),
+			},
+		],
+	},
+
+	{
+		path: "/warehouse-operator",
+		element: <Navigate to={"/warehouse-operator/dashboard"} />,
+		children: [
+			{
+				path: "dashboard",
+				element: (
+					<ProtectedRoute>
+						<WarehouseOperatorDashboard />
+					</ProtectedRoute>
+				),
+			},
+		],
+	},
+
+	{
+		path: "/stakeholder",
+		element: <Navigate to={"/stakeholder/dashboard"} />,
+		children: [
+			{
+				path: "dashboard",
+				element: (
+					<ProtectedRoute>
+						<StakeHolderDashboard />
+					</ProtectedRoute>
+				),
+			},
+		],
 	},
 ]);
 
