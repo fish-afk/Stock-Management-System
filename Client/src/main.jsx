@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import Login from "./pages/auth/Login";
+import Logout from "./pages/auth/Logout";
 import "./css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
@@ -25,15 +26,21 @@ const router = createBrowserRouter([
 		element: <Login />,
 	},
 	{
+		path: "/logout",
+		element: <Logout />,
+	},
+	{
 		path: "/reset-password",
 		element: <ResetPassword />,
 	},
 	{
 		path: "/admin",
-		element: <Navigate to={"/admin/dashboard"} />,
 		children: [
 			{
-				
+				index: true,
+				element: <Redirector />,
+			},
+			{
 				path: "dashboard",
 				element: (
 					<ProtectedRoute>
@@ -46,8 +53,11 @@ const router = createBrowserRouter([
 
 	{
 		path: "/warehouse-operator",
-		element: <Navigate to={"/warehouse-operator/dashboard"} />,
 		children: [
+			{
+				index: true,
+				element: <Redirector />,
+			},
 			{
 				path: "dashboard",
 				element: (
@@ -61,8 +71,11 @@ const router = createBrowserRouter([
 
 	{
 		path: "/stakeholder",
-		element: <Navigate to={"/stakeholder/dashboard"} />,
 		children: [
+			{
+				index: true,
+				element: <Redirector />,
+			},
 			{
 				path: "dashboard",
 				element: (
