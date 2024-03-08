@@ -1,9 +1,9 @@
-const Model = require("../models/Mysql_conn");
+const {pool} = require("../models/_mysql");
 
 function getAllWarehouses(req, res) {
 	const query = "SELECT * FROM Warehouses";
 
-	Model.connection.query(query, (err, results) => {
+	pool.query(query, (err, results) => {
 		if (!err && results) {
 			return res.send({ status: "SUCCESS", data: results });
 		} else {
@@ -17,7 +17,7 @@ async function deleteWarehouse(req, res) {
 	let warehouseId = req.body["warehouse_id"];
 
 	try {
-		await Model.connection.query(
+		await pool.query(
 			"DELETE FROM Warehouses WHERE warehouse_id = ?",
 			[warehouseId],
 		);
@@ -39,7 +39,7 @@ async function editWarehouse(req, res) {
 	const warehouse = { warehouse_name, location_id };
 
 	try {
-		await Model.connection.query(
+		await pool.query(
 			"UPDATE Warehouses SET ? WHERE warehouse_id = ?",
 			[warehouse, warehouse_id],
 		);
@@ -61,7 +61,7 @@ async function addWarehouse(req, res) {
 	const warehouse = { warehouse_name, location_id };
 
 	try {
-		await Model.connection.query("INSERT INTO Warehouses SET ?", warehouse);
+		await pool.query("INSERT INTO Warehouses SET ?", warehouse);
 		return res.send({
 			status: "SUCCESS",
 			message: "Warehouse added successfully",
