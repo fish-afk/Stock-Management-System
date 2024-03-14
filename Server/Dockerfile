@@ -16,5 +16,5 @@ EXPOSE 3000
 # Install pm2
 RUN npm install -g pm2
 
-# Start the application
+# Start the application in daemon mode
 CMD ["pm2", "start", 'index.js']

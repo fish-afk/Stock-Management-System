@@ -60,6 +60,12 @@ const AdminNavbar = () => {
 					</Link>
 				</li>
 				<li>
+					<Link to="/admin/listclients" className="nav-link text-white">
+						<FaWarehouse className="bi me-2 mb-1" />
+						Warehouses
+					</Link>
+				</li>
+				<li>
 					<Link to="/admin/listprojects" className="nav-link text-white">
 						<BsPersonLinesFill className="bi me-2 mb-1" />
 						Suppliers
@@ -80,18 +86,18 @@ const AdminNavbar = () => {
 					Navigate("/admin/editprofile");
 				}}
 			>
-				<h4>Edit Profile</h4>
+				<p className="fs-7 m-0">Edit Profile</p>
 			</div>
 			<div
-				className="container text-dark btn btn-warning mb-3"
+				className="container text-white btn btn-primary mb-3"
 				onClick={() => {
 					Navigate("/admin/changepassword");
 				}}
 			>
-				<h4>Change Password</h4>
+				<p className="fs-7 m-0">Change Password</p>
 			</div>
 			<div
-				className="container text-white btn btn-danger"
+				className="container text-white btn btn-primary"
 				onClick={() => {
 					Swal.fire({
 						title: "Are you sure you want to logout?",
@@ -107,7 +113,7 @@ const AdminNavbar = () => {
 					});
 				}}
 			>
-				<h4>Logout</h4>
+				<p className="fs-7 m-0">Logout</p>
 			</div>
 		</div>
 	);
