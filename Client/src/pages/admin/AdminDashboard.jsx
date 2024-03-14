@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import Navbar from "../../components/Navbar";
+import AdminNavbar from "../../components/AdminNavbar";
 
 const AdminDashboard = () => {
 	return (
 		<div className="d-flex">
-			<Navbar priv={'admin'}/>
-			<h1>Admin Dashboard</h1>
+			<AdminNavbar priv={"admin"} />
+			<h1>Welcome </h1>
 		</div>
 	);
 };

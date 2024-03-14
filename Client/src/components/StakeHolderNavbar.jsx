@@ -11,10 +11,9 @@ import { RiAdminLine } from "react-icons/ri";
 import { BsPersonLinesFill } from "react-icons/bs";
 import { GoPerson } from "react-icons/go";
 
-const Navbar = ({ priv }) => {
+const StakeHolderNavbar = () => {
 	const Navigate = useNavigate();
-
-	return priv == "admin" ? (
+	return (
 		<div
 			className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
 			style={{ width: "280px", height: "100vh" }}
@@ -26,7 +25,7 @@ const Navbar = ({ priv }) => {
 				<svg className="bi me-2" width="40" height="32">
 					<use xlinkHref="#bootstrap"></use>
 				</svg>
-				<span className="fs-4">Shihab Enterprise Admins</span>
+				<span className="fs-4">Shihab Enterprise Stakeholder</span>
 			</Link>
 
 			<hr />
@@ -44,7 +43,7 @@ const Navbar = ({ priv }) => {
 				<li>
 					<Link to="/admin/listfreelancers" className="nav-link text-white">
 						<BsPersonLinesFill className="bi me-2 mb-1" />
-						Freelancers
+						System Users
 					</Link>
 				</li>
 				<li>
@@ -122,94 +121,7 @@ const Navbar = ({ priv }) => {
 				<h4>Logout</h4>
 			</div>
 		</div>
-	) : (
-		<div
-			className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
-			style={{ width: "280px", height: "100vh" }}
-		>
-			<Link
-				to="#"
-				className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-			>
-				<svg className="bi me-2" width="40" height="32">
-					<use xlinkHref="#bootstrap"></use>
-				</svg>
-				<span className="fs-4">Shihab Enterprise Freelancers</span>
-			</Link>
-
-			<hr />
-			<ul className="nav nav-pills flex-column mb-auto">
-				<li className="nav-item">
-					<Link
-						to={`/freelancer/home`}
-						className="nav-link text-white"
-						aria-current="page"
-					>
-						<AiFillHome className="bi me-2 mb-1" />
-						Home
-					</Link>
-				</li>
-
-				<li>
-					<Link to="/freelancer/listadmins" className="nav-link text-white">
-						<RiAdminLine className="bi me-2 mb-1" />
-						Admins
-					</Link>
-				</li>
-
-				<li>
-					<Link to="/freelancer/listtasks" className="nav-link text-white">
-						<SiTask className="bi me-2 mb-1" />
-						Tasks
-					</Link>
-				</li>
-
-				<li>
-					<Link to="/freelancer/listmessages" className="nav-link text-white">
-						<AiFillMessage className="bi me-2 mb-1" />
-						Messages
-					</Link>
-				</li>
-			</ul>
-			<hr />
-
-			<div
-				className="container text-white btn btn-primary mb-3"
-				onClick={() => {
-					Navigate("/freelancer/editprofile");
-				}}
-			>
-				<h4>Edit Profile</h4>
-			</div>
-			<div
-				className="container text-dark btn btn-warning mb-3"
-				onClick={() => {
-					Navigate("/freelancer/changepassword");
-				}}
-			>
-				<h4>Change Password</h4>
-			</div>
-			<div
-				className="container text-white btn btn-danger"
-				onClick={() => {
-					Swal.fire({
-						title: "Are you sure you want to logout?",
-						icon: "warning",
-						showCancelButton: true,
-						confirmButtonColor: "#3085d6",
-						cancelButtonColor: "#d33",
-						confirmButtonText: "Yes",
-					}).then((result) => {
-						if (result.isConfirmed) {
-							Navigate(`/logout`);
-						}
-					});
-				}}
-			>
-				<h4>Logout</h4>
-			</div>
-		</div>
 	);
 };
 
-export default Navbar;
+export default StakeHolderNavbar;

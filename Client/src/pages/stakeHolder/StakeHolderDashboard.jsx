@@ -1,10 +1,10 @@
-import React from 'react'
-import Navbar from '../../components/Navbar'
+import React from "react";
+import StakeHolderNavbar from "../../components/StakeHolderNavbar";
 
 export default function StakeHolderDashboard() {
-  return (
+	return (
 		<div className="d-flex">
-			<Navbar priv={"stakeholder"} />
+			<StakeHolderNavbar priv={"stakeholder"} />
 			<h1>StakeHolderDashboard</h1>
 		</div>
 	);
