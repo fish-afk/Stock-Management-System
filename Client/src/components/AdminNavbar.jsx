@@ -1,7 +1,6 @@
 import { useNavigate, Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AiFillHome } from "react-icons/ai";
-import { SiTask } from "react-icons/si";
 import { BsPersonLinesFill, BsPersonFillGear } from "react-icons/bs";
 import { GoPerson } from "react-icons/go";
 import { MdCategory } from "react-icons/md";
@@ -45,12 +44,6 @@ const AdminNavbar = () => {
 					<Link to="/admin/listfreelancers" className="nav-link text-white">
 						<GoPerson className="bi me-2 mb-1" />
 						System Users
-					</Link>
-				</li>
-				<li>
-					<Link to="/admin/listadmins" className="nav-link text-white">
-						<SiTask className="bi me-2 mb-1" />
-						Products
 					</Link>
 				</li>
 				<li>
