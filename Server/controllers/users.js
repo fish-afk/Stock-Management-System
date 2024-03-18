@@ -2,6 +2,28 @@ const bcrypt = require("bcrypt"); // For password hashing
 const mysql = require("../models/_mysql");
 const authMiddleware = require("../middleware/auth");
 
+
+const getAllUsers = async (req, res) => {
+	try {
+		if (req.decoded.role_id != 1) {
+			return res.send({status: 'FAILURE', message: 'insufficient privileges'})
+		}
+		// Fetch all users excluding the password field
+		const [users] = await mysql.pool.query(
+			"SELECT username, first_name, last_name, email, role_id FROM Users",
+		);
+
+		res.json({
+			status: "SUCCESS",
+			message: "Users retrieved successfully",
+			data: users
+		});
+	} catch (error) {
+		console.error(error);
+		res.json({ status: "FAILURE", message: "Internal server error" });
+	}
+};
+
 const register = async (req, res) => {
 	try {
 		const { username, password, firstName, lastName, email, roleId } = req.body;
@@ -167,5 +189,6 @@ module.exports = {
 	register,
 	login,
 	resetPassword,
+	getAllUsers,
 	refresh,
 };

@@ -9,9 +9,15 @@ import { FaWarehouse } from "react-icons/fa";
 
 const AdminNavbar = () => {
 	const Navigate = useNavigate();
+
+	const hidenav = (element) => {
+		console.log(element);
+		element.style.display = "none";
+	};
 	return (
 		<div
-			className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
+			id="navbar1"
+			className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark navbar1"
 			style={{ width: "19%", height: "100vh" }}
 		>
 			<Link
@@ -19,7 +25,12 @@ const AdminNavbar = () => {
 				className="d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
 			>
 				<span className="fs-6 pe-2 ps-3">Shihab Enterprises</span>
-				<button className="bg-dark button">
+				<button
+					className="bg-dark button"
+					onClick={() => {
+						hidenav(document.getElementById("navbar1"));
+					}}
+				>
 					<MdOutlineKeyboardArrowLeft
 						className="ms-2 me-2 mb-1"
 						color="white"
@@ -32,7 +43,7 @@ const AdminNavbar = () => {
 			<ul className="nav nav-pills flex-column mb-auto">
 				<li className="nav-item">
 					<Link
-						to={`/admin/home`}
+						to={`/admin/dashboard`}
 						className="nav-link text-white"
 						aria-current="page"
 					>
@@ -41,31 +52,34 @@ const AdminNavbar = () => {
 					</Link>
 				</li>
 				<li>
-					<Link to="/admin/listfreelancers" className="nav-link text-white">
+					<Link to="/admin/pages/system-users" className="nav-link text-white">
 						<GoPerson className="bi me-2 mb-1" />
 						System Users
 					</Link>
 				</li>
 				<li>
-					<Link to="/admin/listclients" className="nav-link text-white">
+					<Link
+						to="/admin/pages/product-categories"
+						className="nav-link text-white"
+					>
 						<MdCategory className="bi me-2 mb-1" />
 						Product Categories
 					</Link>
 				</li>
 				<li>
-					<Link to="/admin/listclients" className="nav-link text-white">
+					<Link to="/admin/pages/warehouses" className="nav-link text-white">
 						<FaWarehouse className="bi me-2 mb-1" />
 						Warehouses
 					</Link>
 				</li>
 				<li>
-					<Link to="/admin/listprojects" className="nav-link text-white">
+					<Link to="/admin/pages/suppliers" className="nav-link text-white">
 						<BsPersonLinesFill className="bi me-2 mb-1" />
 						Suppliers
 					</Link>
 				</li>
 				<li>
-					<Link to="/admin/listtasks" className="nav-link text-white">
+					<Link to="/admin/pages/customers" className="nav-link text-white">
 						<BsPersonFillGear className="bi me-2 mb-1" />
 						Customers
 					</Link>

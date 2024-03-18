@@ -4,6 +4,7 @@ const express = require("express");
 
 const router = express.Router();
 
+router.post('/getallusers', authMiddleware.verifyJWT, userController.getAllUsers);
 router.post("/register", userController.register);
 router.post("/login", userController.login);
 router.post("/refresh", userController.refresh);

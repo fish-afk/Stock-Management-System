@@ -16,6 +16,13 @@ import WarehouseOperatorDashboard from "./pages/warehouseOperator/WarehouseOpera
 import ProtectedRoute from "./pages/auth/ProtectedRoute";
 import ResetPassword from "./pages/auth/ResetPassword";
 
+// admin pages
+import SystemUsers from "./pages/admin/SystemUsers";
+import ProductCategories from "./pages/admin/ProductCategories";
+import Warehouses from "./pages/admin/Warehouses";
+import Suppliers from "./pages/admin/Suppliers";
+import Customers from "./pages/admin/Customers";
+
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -47,6 +54,36 @@ const router = createBrowserRouter([
 						<AdminDashboard />
 					</ProtectedRoute>
 				),
+			},
+
+			{
+				path: "pages",
+				children: [
+					{
+						index: true,
+						element: <Redirector />,
+					},
+					{
+						path: "system-users",
+						element: <SystemUsers />,
+					},
+					{
+						path: "product-categories",
+						element: <ProductCategories />,
+					},
+					{
+						path: "warehouses",
+						element: <Warehouses />,
+					},
+					{
+						path: "suppliers",
+						element: <Suppliers />,
+					},
+					{
+						path: "customers",
+						element: <Customers />,
+					},
+				],
 			},
 		],
 	},

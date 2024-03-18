@@ -1,13 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 
-const AdminDashboard = () => {
+export default function Customers() {
 	return (
 		<div className="d-flex">
 			<AdminNavbar priv={"admin"} />
-			<h1>Welcome Admin</h1>
+			<h1>Customers</h1>
 		</div>
 	);
-};
-
-export default AdminDashboard;
+}

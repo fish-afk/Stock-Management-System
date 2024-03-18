@@ -2,7 +2,6 @@ import { useNavigate, Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AiFillHome } from "react-icons/ai";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
-import { FaWarehouse } from "react-icons/fa";
 import { FcStatistics } from "react-icons/fc";
 import { MdManageHistory } from "react-icons/md";
 import { RiHistoryFill } from "react-icons/ri";
