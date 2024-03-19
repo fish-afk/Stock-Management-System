@@ -74,6 +74,7 @@ async function verifyRefreshToken(refreshToken, username, res) {
 
 function verifyJWT(req, res, next) {
 	// Get the user's username from the decoded token
+	console.log(req.body)
 	const username = req.body["username"];
 	const token = req.body["jwt_key"];
 

@@ -4,30 +4,28 @@ import { useEffect } from "react";
 import axios from "axios";
 import BASEURL from "../../constants/apiBaseUrl";
 import SystemUserTable from "../../components/SystemUsersTable";
+import { useNavigate } from "react-router-dom";
 
 export default function SystemUsers() {
+	const [Users, setUsers] = useState([]);
 
-    const [Users, setUsers] = useState([])
-
-    useEffect(() => {
-        const func = async () => {
-            const userData = JSON.parse(localStorage.getItem("userDataObject"));
-            const jwt_key = localStorage.getItem(
-							"stock-managment-system-auth-token",
-						);
-            const username = userData?.username;
-            let data = await axios.post(BASEURL + "/users/getallusers", {
+	const Navigate = useNavigate();
+	const func = async () => {
+		const userData = JSON.parse(localStorage.getItem("userDataObject"));
+		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
+		const username = userData?.username;
+		let data = await axios.post(BASEURL + "/users/getallusers", {
 			username,
-			jwt_key
-            });
-            const response = data?.data;
-            console.log(response);
+			jwt_key,
+		});
+		const response = data?.data;
+		console.log(response);
 
-            setUsers(response?.data)
-
-        }
-        func()
-    }, [])
+		setUsers(response?.data);
+	};
+	useEffect(() => {
+		func();
+	}, []);
 
 	return (
 		<div className="d-flex">

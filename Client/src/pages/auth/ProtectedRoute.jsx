@@ -11,16 +11,35 @@ const ProtectedRoute = ({ children }) => {
 		const checkAuthentication = async () => {
 			const accessToken = localStorage.getItem(
 				"stock-managment-system-auth-token",
-            );
+			);
+			
+			const refreshToken = localStorage.getItem(
+				"stock-managment-system-refresh-token",
+			);
             
             const userData = JSON.parse(localStorage.getItem('userDataObject'))
             const username = userData?.username;
-			const role_id = userData?.role_id;
 
 			let response = await axios.post(`${BASEURL}/users/confirmjwt`,{"jwt_key": accessToken,username: username});
 
             const data = response?.data;
-			setAuthenticated(data.auth);
+			
+			if (data?.auth == false || data?.auth == 'false') {
+				let response2 = await axios.post(`${BASEURL}/users/refresh`, {
+					refreshToken: refreshToken,
+					username: username,
+				});
+
+				const data2 = response2.data;
+
+				if (data2?.auth == true) {
+					localStorage.setItem("stock-managment-system-auth-token", data2.jwt);
+				}
+				setAuthenticated(data2?.auth)
+
+			} else {
+				setAuthenticated(data?.auth);
+			}
 			setLoading(false);
 		};
 

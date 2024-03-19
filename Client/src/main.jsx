@@ -65,23 +65,43 @@ const router = createBrowserRouter([
 					},
 					{
 						path: "system-users",
-						element: <SystemUsers />,
+						element: (
+							<ProtectedRoute>
+								<SystemUsers />
+							</ProtectedRoute>
+						),
 					},
 					{
 						path: "product-categories",
-						element: <ProductCategories />,
+						element: (
+							<ProtectedRoute>
+								<ProductCategories />
+							</ProtectedRoute>
+						),
 					},
 					{
 						path: "warehouses",
-						element: <Warehouses />,
+						element: (
+							<ProtectedRoute>
+								<Warehouses />
+							</ProtectedRoute>
+						),
 					},
 					{
 						path: "suppliers",
-						element: <Suppliers />,
+						element: (
+							<ProtectedRoute>
+								<Suppliers />
+							</ProtectedRoute>
+						),
 					},
 					{
 						path: "customers",
-						element: <Customers />,
+						element: (
+							<ProtectedRoute>
+								<Customers />
+							</ProtectedRoute>
+						),
 					},
 				],
 			},

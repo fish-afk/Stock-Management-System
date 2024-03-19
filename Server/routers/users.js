@@ -9,5 +9,7 @@ router.post("/register", userController.register);
 router.post("/login", userController.login);
 router.post("/refresh", userController.refresh);
 router.post("/confirmjwt", authMiddleware.confirmJWT);
+router.post('/deleteuser', authMiddleware.verifyJWT, userController.deleteUser)
+router.patch('/edituserrole', authMiddleware.verifyJWT, userController.editUserRole)
 
 module.exports = router;

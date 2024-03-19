@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import BASEURL from "../constants/apiBaseUrl";
+import axios from "axios";
 
 const SystemUserTable = ({ users }) => {
 	const Navigate = useNavigate();
@@ -16,8 +17,8 @@ const SystemUserTable = ({ users }) => {
 	};
 
 	const delete_user = async (user_username) => {
-		const msg = "Are you sure you want to remove this user?";
-		const txt = "This will un-link them from any projects they're attached to!";
+		const msg = "Are you sure you want to delete this user?";
+		const txt = "This action is irreversible";
 		const result = await Swal.fire({
 			title: msg,
 			text: txt,
@@ -29,26 +30,18 @@ const SystemUserTable = ({ users }) => {
 		});
 
 		if (result.isConfirmed) {
-			const token = localStorage.getItem("taskedit-accesstoken");
-			const username = localStorage.getItem("username");
-
-			const response = await fetch(`${BASEURL}/users/deleteuser`, {
-				headers: {
-					"taskedit-accesstoken": token,
-					username: username,
-					isadmin: "true",
-					"Content-Type": "application/json",
-				},
-				method: "DELETE",
-				body: JSON.stringify({
-					username: user_username,
-				}),
+			const userData = JSON.parse(localStorage.getItem("userDataObject"));
+			const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
+			const username = userData?.username;
+			let data = await axios.post(BASEURL + "/users/deleteuser", {
+				user_username,
+				jwt_key,
+				username,
 			});
+			const response = data?.data;
+			console.log(response);
 
-			const data = await response.json();
-			console.log(data);
-
-			if (data.status === "SUCCESS") {
+			if (response.status === "SUCCESS") {
 				Swal.fire({
 					title: "Deleted " + user_username + " Successfully",
 					timer: 3000,
@@ -64,6 +57,74 @@ const SystemUserTable = ({ users }) => {
 				}).then(() => {
 					location.reload();
 				});
+			}
+		}
+	};
+
+	const edit_user_role = async (user_username) => {
+		const msg = "User Role Change";
+		const txt =
+			"Select the role you would like to assign to user: " + user_username;
+		const result = await Swal.fire({
+			title: msg,
+			icon: "info",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Confirm",
+			html:
+				"<p>" +
+				txt +
+				"</p>" +
+				'<select id="userRole" class="swal2-select">' +
+				'<option value="warehouse operator">Warehouse Operator</option>' +
+				'<option value="stakeholder">Stakeholder</option>' +
+				'<option value="admin">Admin</option>' +
+				"</select>",
+			focusConfirm: false,
+			preConfirm: () => {
+				return document.getElementById("userRole").value;
+			},
+		});
+
+		if (result.isConfirmed) {
+			const selectedRole = result.value;
+			if (selectedRole) {
+				const userData = JSON.parse(localStorage.getItem("userDataObject"));
+				const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
+				const username = userData?.username;
+				const role_id =
+					selectedRole == "Admin"
+						? 1
+						: selectedRole == "warehouse operator"
+							? 2
+							: 3;
+				let data = await axios.patch(BASEURL + "/users/edituserrole", {
+					user_username,
+					role_id,
+					jwt_key,
+					username,
+				});
+				const response = data?.data;
+				console.log(response);
+
+				if (response.status === "SUCCESS") {
+					Swal.fire({
+						title: `Edit the role for ${user_username} Successfully`,
+						timer: 3000,
+						icon: "success",
+					}).then(() => {
+						location.reload();
+					});
+				} else {
+					Swal.fire({
+						title: "Error deleting user. Try later",
+						timer: 3000,
+						icon: "error",
+					}).then(() => {
+						location.reload();
+					});
+				}
 			}
 		}
 	};
@@ -91,22 +152,20 @@ const SystemUserTable = ({ users }) => {
 								{user.role_id == "1"
 									? "Admin"
 									: user.role_id == "2"
-									? "StakeHolder"
-									: "Warehouse Operator"}
+									? "Warehouse Operator"
+									: "Stakeholder"}
 							</td>
 							<td>
 								{user.role_id == "1" ? (
 									<></>
 								) : (
 									<button
-										className="btn btn-primary"
+										className="btn btn-primary pe-2 ps-2 pt-1 pb-1"
 										onClick={() => {
-											Navigate("/admin/edituser", {
-												state: { ...user },
-											});
+											edit_user_role(user.username);
 										}}
 									>
-										Edit
+										Edit Role
 									</button>
 								)}
 							</td>
@@ -115,7 +174,7 @@ const SystemUserTable = ({ users }) => {
 									<></>
 								) : (
 									<button
-										className="btn btn-danger"
+										className="btn btn-danger pe-2 ps-2 pt-1 pb-1"
 										onClick={() => {
 											delete_user(user.username);
 										}}
@@ -125,7 +184,9 @@ const SystemUserTable = ({ users }) => {
 								)}
 							</td>
 							<td>
-								<button className="btn btn-warning">See details</button>
+								<button className="btn btn-warning pe-2 ps-2 pt-1 pb-1">
+									See details
+								</button>
 							</td>
 						</tr>
 					))}

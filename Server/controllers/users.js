@@ -175,6 +175,62 @@ const resetPassword = async (req, res) => {
 	}
 };
 
+const deleteUser = async (req, res) => {
+	try {
+		if (req.decoded.role_id != 1) {
+			return res.send({status: 'FAILURE', message: 'insufficient privileges'})
+		}
+	
+		const username = req.body['user_username']
+
+		if (!username) {
+			return res.send({status: 'FAILURE', message: "Missing details"})
+		}
+		// Fetch all users excluding the password field
+		await mysql.pool.query(
+			"DELETE FROM Users WHERE username = ?", [username]
+		);
+
+		res.json({
+			status: "SUCCESS",
+			message: "User deleted successfully",
+		});
+	} catch (error) {
+		console.error(error);
+		res.json({ status: "FAILURE", message: "Internal server error" });
+	}
+}
+
+const editUserRole = async (req, res) => {
+	try {
+		if (req.decoded.role_id != 1) {
+			return res.send({
+				status: "FAILURE",
+				message: "insufficient privileges",
+			});
+		}
+
+		const username = req.body["user_username"];
+		const role_id = req.body['role_id']
+
+		
+
+		if (!username || !role_id) {
+			return res.send({ status: "FAILURE", message: "Missing details" });
+		}
+		// Fetch all users excluding the password field
+		await mysql.pool.query("UPDATE Users SET role_id = ? WHERE username = ?", [role_id, username]);
+
+		res.json({
+			status: "SUCCESS",
+			message: "User role changed successfully",
+		});
+	} catch (error) {
+		console.error(error);
+		res.json({ status: "FAILURE", message: "Internal server error" });
+	}
+};
+
 const refresh = async (req, res) => {
 	const refreshToken = req.body.refreshToken;
 	const username = req.body.username;
@@ -191,4 +247,6 @@ module.exports = {
 	resetPassword,
 	getAllUsers,
 	refresh,
+	deleteUser,
+	editUserRole
 };
