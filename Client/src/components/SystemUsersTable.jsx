@@ -110,7 +110,7 @@ const SystemUserTable = ({ users }) => {
 
 				if (response.status === "SUCCESS") {
 					Swal.fire({
-						title: `Edit the role for ${user_username} Successfully`,
+						title: `Edited the role for ${user_username} Successfully`,
 						timer: 3000,
 						icon: "success",
 					}).then(() => {

@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../Components/Navbar";
-import SERVER_URL from "../../Constants/server_url";
+import AdminNavbar from "../../components/AdminNavbar";
+import BASEURL from "../../constants/apiBaseUrl";
 import Swal from "sweetalert2";
+import axios from "axios";
 
-export default function AddNewSystemUser(){
-    const [formValues, setFormValues] = useState({});
+export default function AddNewSystemUser() {
+	const [formValues, setFormValues] = useState({});
+	const roleOptions = ["Admin", "Warehouse Operator", "StakeHolder"];
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		const {
-			username,
+			newUserUsername,
 			password,
 			email,
-			fullname,
+			firstName,
+			lastName,
 			confirm_password,
-			employee_title = "staff",
-			admin_key,
+			role = "Warehouse Operator",
 		} = formValues;
 
 		if (password !== confirm_password) {
@@ -28,37 +30,28 @@ export default function AddNewSystemUser(){
 			return;
 		}
 
-		const token = JSON.stringify(
-			localStorage.getItem("taskedit-accesstoken"),
-		).replaceAll('"', "");
-
-		const username_ = JSON.stringify(
-			localStorage.getItem("username"),
-		).replaceAll('"', "");
+		const userData = JSON.parse(localStorage.getItem("userDataObject"));
+		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
+		const username = userData?.username;
 
 		try {
-			const response = await fetch(`${SERVER_URL}/admins/register`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					"taskedit-accesstoken": token,
-					username: username_,
-					isadmin: "true",
-				},
-				body: JSON.stringify({
-					username,
-					password,
-					email,
-					fullname,
-					employee_title,
-					admin_key,
-				}),
+
+			const roleId = role == "Admin" ? 1 : role == 'Warehouse Operator' ? 2 : 3;
+ 			let response = await axios.post(BASEURL + "/users/register", {
+				jwt_key,
+				username,
+				newUserUsername,
+				firstName,
+				lastName,
+				password,
+				roleId,
+				email,
 			});
 
-			const data = await response.json();
+			const data = await response?.data;
 			if (data.status == "SUCCESS") {
 				Swal.fire({
-					title: "Registered successfully",
+					title: "User registered successfully",
 					timer: 3000,
 					icon: "success",
 				}).then(() => {
@@ -80,31 +73,51 @@ export default function AddNewSystemUser(){
 
 	return (
 		<div className="d-flex " style={{ height: "100vh" }}>
-			<Navbar priv="admin" />
+			<AdminNavbar priv="admin" />
 			<div className="container">
 				<div className="d-flex justify-content-center p-2">
-					<h1>Add new admin</h1>
+					<h3>Add new user</h3>
 				</div>
+
 				<form className="bg-dark p-5 rounded-3" onSubmit={handleSubmit}>
-					<div className="row mb-4">
+					<div className="form-outline mb-1">
+						<label className="text-white form-label" htmlFor="form6Example1">
+							Username
+						</label>
+						<input
+							required
+							type="text"
+							id="form6Example1"
+							className="form-control"
+							value={formValues.newUserUsername}
+							onChange={(e) =>
+								setFormValues({
+									...formValues,
+									newUserUsername: e.target.value,
+								})
+							}
+						/>
+					</div>
+
+					<div className="row mb-1">
 						<div className="col">
 							<div className="form-outline">
 								<label
 									className="text-white form-label"
 									htmlFor="form6Example1"
 								>
-									Username
+									First Name
 								</label>
 								<input
 									required
 									type="text"
-									id="form6Example1"
+									id="form6Example2"
 									className="form-control"
-									value={formValues.username}
+									value={formValues.firstName}
 									onChange={(e) =>
 										setFormValues({
 											...formValues,
-											username: e.target.value,
+											firstName: e.target.value,
 										})
 									}
 								/>
@@ -116,18 +129,18 @@ export default function AddNewSystemUser(){
 									className="text-white form-label"
 									htmlFor="form6Example1"
 								>
-									Fullname
+									Last Name
 								</label>
 								<input
 									required
 									type="text"
 									id="form6Example2"
 									className="form-control"
-									value={formValues.fullname}
+									value={formValues.lastName}
 									onChange={(e) =>
 										setFormValues({
 											...formValues,
-											fullname: e.target.value,
+											lastName: e.target.value,
 										})
 									}
 								/>
@@ -135,7 +148,7 @@ export default function AddNewSystemUser(){
 						</div>
 					</div>
 
-					<div className="form-outline mb-4">
+					<div className="form-outline mb-1">
 						<label className="text-white form-label" htmlFor="form6Example5">
 							Email
 						</label>
@@ -154,26 +167,30 @@ export default function AddNewSystemUser(){
 						/>
 					</div>
 
-					<div className="form-outline mb-4">
-						<label className="text-white form-label" htmlFor="form6Example1">
-							Employee title
+					<div className="form-outline mb-1">
+						<label className="text-white form-label" htmlFor="roleDropdown">
+							Role
 						</label>
-						<input
-							required
-							type="text"
-							id="form6Example2"
-							className="form-control"
-							value={formValues.employee_title}
+						<select
+							id="roleDropdown"
+							className="form-select"
+							value={formValues.role}
 							onChange={(e) =>
 								setFormValues({
 									...formValues,
-									employee_title: e.target.value,
+									role: e.target.value,
 								})
 							}
-						/>
+						>
+							{roleOptions.map((role) => (
+								<option key={role} value={role}>
+									{role}
+								</option>
+							))}
+						</select>
 					</div>
 
-					<div className="row mb-4">
+					<div className="row mb-1">
 						<div className="col">
 							<div className="form-outline">
 								<label
@@ -224,30 +241,9 @@ export default function AddNewSystemUser(){
 						</div>
 					</div>
 
-					<div className="form-outline">
-						<label className="text-warning form-label" htmlFor="form6Example1">
-							Admin Key{" "}
-							<em>(Secret Admin Key That You Have For Adding New Admins)</em>
-						</label>
-						<input
-							required
-							type="password"
-							minLength={8}
-							id="form6Example2"
-							className="form-control"
-							value={formValues.admin_key}
-							onChange={(e) =>
-								setFormValues({
-									...formValues,
-									admin_key: e.target.value,
-								})
-							}
-						/>
-					</div>
-
 					<div className="d-flex justify-content-center p-4">
-						<button className="btn btn-primary" onClick={(e) => handleSubmit}>
-							Add Admin
+						<button className="btn btn-info" onClick={(e) => handleSubmit}>
+							Add User
 						</button>
 					</div>
 				</form>

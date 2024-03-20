@@ -39,7 +39,7 @@ export default function SystemUsers() {
 					<button
 						className="btn btn-primary me-5 ms-5"
 						onClick={() => {
-							Navigate("/admin/newfreelancer");
+							Navigate("/admin/pages/system-users/new");
 						}}
 					>
 						<b>+</b> Add New User
