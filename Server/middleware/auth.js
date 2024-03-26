@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Mysql = require("../models/_mysql");
 
+
 const JWT_SECRET = process.env.JWT_SECRET;
 const REFRESH_SECRET = process.env.REFRESH_SECRET;
 
@@ -41,40 +42,41 @@ const generateRefreshToken = async (username, role_id = 3) => {
 };
 
 async function verifyRefreshToken(refreshToken, username, res) {
-	const query = `SELECT * FROM users WHERE auth_refresh_token = ? and username = ?`;
+	try {
+		const query = `SELECT * FROM users WHERE auth_refresh_token = ? AND username = ?`;
+		const [results] = await Mysql.pool.query(query, [refreshToken, username]);
 
-	Mysql.pool.query(query, [refreshToken, username], (err, result) => {
-		if (err || !result) {
+		
+		if (!results || results.length == 0) {
 			return res.send({
-				status: "FAILURE",
+				auth: false,
 				message: "Token not found, login in again",
 			});
-		} else {
-			jwt.verify(refreshToken, REFRESH_SECRET, (err, decoded) => {
-				if (err) {
-					return res.send({ auth: false, message: err.message });
-				}
-				if (decoded.exp < Date.now() / 1000) {
-					return res.send("Refresh token has expired");
-				}
-				// If the JWT is valid, save the decoded user information in the request object
-				// so that it is available for the next middleware function
-				if (decoded.username != username) {
-					return res.send({ auth: false, message: "Token mismatch" }); // Token is not this users, but another users
-				}
+		}
 
-				return res.send({
-					status: true,
-					jwt: generateJwtToken(username, decoded.role_id, "normal"),
-				});
+		const decoded = jwt.verify(refreshToken, REFRESH_SECRET);
+		if (decoded.exp < Date.now() / 1000) {
+			return res.send({
+				auth: false,
+				message: "Refresh token has expired",
 			});
 		}
-	});
+		if (decoded.username != username) {
+			return res.send({ auth: false, message: "Token mismatch" });
+		}
+
+		const jwtToken = generateJwtToken(username, decoded.role_id, "normal");
+		return res.send({ auth: true, jwt: jwtToken });
+	} catch (error) {
+		console.error("Error verifying refresh token:", error);
+		return res
+			.status(500)
+			.send({ auth: false, message: "Internal Server Error" });
+	}
 }
 
 function verifyJWT(req, res, next) {
 	// Get the user's username from the decoded token
-	console.log(req.body)
 	const username = req.body["username"];
 	const token = req.body["jwt_key"];
 

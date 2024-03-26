@@ -26,11 +26,24 @@ const getAllUsers = async (req, res) => {
 
 const register = async (req, res) => {
 	try {
-		const { username, password, firstName, lastName, email, roleId } = req.body;
+
+		if (req.decoded.role_id != 1) {
+			return res.send({
+				status: "FAILURE",
+				message: "insufficient privileges",
+			});
+		}
+
+		const { newUserUsername, password, firstName, lastName, email, roleId = 2 } = req.body;
+		
+		
+		if (!newUserUsername || !password || !firstName || !lastName || !email || !roleId) {
+			return res.send({ status: "FAILURE", message: "Missing details" });
+		}
 
 		const username_regex = /^[a-zA-Z0-9_]+$/;
 
-		if (!username_regex.test(username.toLowerCase())) {
+		if (!username_regex.test(newUserUsername.toLowerCase())) {
 			return res.json({
 				status: "FAILURE",
 				message:
@@ -41,7 +54,7 @@ const register = async (req, res) => {
 		// Check if username already exists
 		const [existingUser] = await mysql.pool.query(
 			"SELECT * FROM Users WHERE username = ?",
-			[username],
+			[newUserUsername],
 		);
 		if (existingUser.length > 0) {
 			return res.json({
@@ -56,11 +69,11 @@ const register = async (req, res) => {
 		// Create a new user
 		const [result] = await mysql.pool.query(
 			"INSERT INTO Users (username, password, first_name, last_name, email, role_id) VALUES (?, ?, ?, ?, ?, ?)",
-			[username, hashedPassword, firstName, lastName, email, roleId],
+			[newUserUsername, hashedPassword, firstName, lastName, email, roleId],
 		);
 
 		res.json({
-			status: "FAILURE",
+			status: "SUCCESS",
 			message: "User registered successfully",
 		}); // Include the generated user ID
 	} catch (error) {
