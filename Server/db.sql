@@ -5,7 +5,9 @@ USE StockManagementSystem_001356993;
 
 CREATE TABLE IF NOT EXISTS `Categories` (
   `category_id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `category_name` VARCHAR(255)
+  `category_name` VARCHAR(255),
+  `category_description` TEXT NULL,
+  `category_image_name` TEXT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `Suppliers` (
@@ -63,6 +65,7 @@ CREATE TABLE IF NOT EXISTS `Products` (
   `unit_price` DECIMAL(10,2),
   `quantity_in_stock` INT,
   `category_id` INT,
+  `product_image` TEXT,
   `warehouse_location_id` INT,
   `last_edited_by` VARCHAR(255)
 );

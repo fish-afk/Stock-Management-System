@@ -1,16 +1,23 @@
 const {pool} = require("../models/_mysql");
 
-function getAllCategories(req, res) {
-	const query = "SELECT * FROM Categories";
-
-	pool.query(query, (err, results) => {
-		if (!err && results) {
-			return res.send({ status: "SUCCESS", data: results });
-		} else {
-			console.log(err);
-			return res.send({ status: "FAILURE", message: "Unknown error" });
+async function getAllCategories(req, res) {
+	try {
+		if (req.decoded.role_id != 1) {
+			return res.send({
+				status: "FAILURE",
+				message: "insufficient privileges",
+			});
 		}
-	});
+		
+		const query = "SELECT * FROM Categories";
+		const [categories] = await pool.query(query);
+
+		return res.send({ status: "SUCCESS", message: "Product Categories Retrieved", data: categories });
+			
+	} catch (error) {
+		console.error(error);
+		res.json({ status: "FAILURE", message: "Internal server error" });
+	}
 }
 
 async function deleteCategory(req, res) {
