@@ -4,15 +4,16 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import BASEURL from "../../constants/apiBaseUrl";
 import axios from "axios";
+import IMAGESBASEURL from "../../constants/imagesBaseUrl";
 
 export default function ListRoles() {
 	const Navigate = useNavigate();
 	const [ProductCategories, setProductCategories] = useState([]);
 
-	const delete_category = (Role_id) => {
-		const msg = "Are you sure you want to remove this Role?";
-		const txt = "This will un-link it from any freelancers its attached to !";
-		Swal.fire({
+	const delete_category = async (categoryId) => {
+		const msg = "Are you sure you want to delete this Product Category?";
+		const txt = "This action is irreversible";
+		const result = await Swal.fire({
 			title: msg,
 			text: txt,
 			icon: "warning",
@@ -20,53 +21,41 @@ export default function ListRoles() {
 			confirmButtonColor: "#3085d6",
 			cancelButtonColor: "#d33",
 			confirmButtonText: "Yes",
-		}).then(async (result) => {
-			if (result.isConfirmed) {
-				const token = JSON.stringify(
-					localStorage.getItem("taskedit-accesstoken"),
-				).replaceAll('"', "");
-
-				const username = JSON.stringify(
-					localStorage.getItem("username"),
-				).replaceAll('"', "");
-
-				const response = await fetch(`${SERVER_URL}/roles/deleterole`, {
-					headers: {
-						"taskedit-accesstoken": token,
-						username: username,
-						isadmin: "true",
-						"Content-Type": "application/json",
-					},
-
-					method: "DELETE",
-					body: JSON.stringify({
-						id: Role_id,
-					}),
-				});
-
-				const data = await response.json();
-
-				console.log(data);
-
-				if (data.status == "SUCCESS") {
-					Swal.fire({
-						title: "Deleted Role with id: " + Role_id + " Successfully",
-						timer: 3000,
-						icon: "success",
-					}).then(() => {
-						location.reload();
-					});
-				} else {
-					Swal.fire({
-						title: "Error deleting Role. Try later",
-						timer: 3000,
-						icon: "error",
-					}).then(() => {
-						location.reload();
-					});
-				}
-			}
 		});
+
+		if (result.isConfirmed) {
+			const userData = JSON.parse(localStorage.getItem("userDataObject"));
+			const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
+			const username = userData?.username;
+			let data = await axios.post(
+				BASEURL + "/productcategories/deletecategory",
+				{
+					categoryId,
+					jwt_key,
+					username,
+				},
+			);
+			const response = data?.data;
+			console.log(response);
+
+			if (response.status === "SUCCESS") {
+				Swal.fire({
+					title: "Deleted Category with ID " + categoryId + " Successfully",
+					timer: 3000,
+					icon: "success",
+				}).then(() => {
+					location.reload();
+				});
+			} else {
+				Swal.fire({
+					title: "Error deleting user. Try later",
+					timer: 3000,
+					icon: "error",
+				}).then(() => {
+					location.reload();
+				});
+			}
+		}
 	};
 
 	const func = async () => {
@@ -92,19 +81,39 @@ export default function ListRoles() {
 	return (
 		<div className="d-flex">
 			<AdminNavbar />
-			<div className="container">
+			<div
+				className="container pb-5 overflow-auto"
+				style={{ maxHeight: "100vh" }}
+			>
 				<div className="title text-center p-1">
 					<h1 className="fw-light">Current Product Categories In The System</h1>
 				</div>
+				<div className="d-flex justify-content-center p-4">
+					<button
+						className="btn btn-primary fw-bold"
+						onClick={() => {
+							Navigate("/admin/pages/product-categories/new");
+						}}
+					>
+						+ Add New Product Category
+					</button>
+				</div>
 
-				<div
-					className="container-fluid mt-1 overflow-auto"
-					style={{ maxHeight: "75vh" }}
-				>
+				<div className="container-fluid mt-1">
 					<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 						{ProductCategories.map((ProductCategory) => (
 							<div className="col" key={ProductCategory.category_id}>
-								<div className="card h-100 bg-black text-white p-2">
+								<div
+									className="card h-100 text-white p-2 bg-dark"
+									style={{
+										backgroundImage: `url(${IMAGESBASEURL}/${
+											ProductCategory.category_image_name || "none"
+										})`,
+										backgroundSize: "cover",
+										backgroundPosition: "center",
+										backgroundRepeat: "no-repeat",
+									}}
+								>
 									<div className="card-body">
 										<h5 className="card-title">
 											{ProductCategory.category_name}
@@ -135,17 +144,6 @@ export default function ListRoles() {
 							</div>
 						))}
 					</div>
-				</div>
-
-				<div className="d-flex justify-content-center pt-4">
-					<button
-						className="btn btn-primary fw-bold"
-						onClick={() => {
-							Navigate("/admin/pages/product-categories/new");
-						}}
-					>
-						+ Add New Product Category
-					</button>
 				</div>
 			</div>
 		</div>

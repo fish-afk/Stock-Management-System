@@ -23,6 +23,7 @@ import Warehouses from "./pages/admin/Warehouses";
 import Suppliers from "./pages/admin/Suppliers";
 import Customers from "./pages/admin/Customers";
 import AddNewSystemUser from "./pages/admin/AddNewSystemUser";
+import AddNewProductCategory from "./pages/admin/AddNewProductCategory";
 
 const router = createBrowserRouter([
 	{
@@ -87,11 +88,24 @@ const router = createBrowserRouter([
 					},
 					{
 						path: "product-categories",
-						element: (
-							<ProtectedRoute>
-								<ProductCategories />
-							</ProtectedRoute>
-						),
+						children: [
+							{
+								index: true,
+								element: (
+									<ProtectedRoute>
+										<ProductCategories />
+									</ProtectedRoute>
+								),
+							},
+							{
+								path: 'new',
+								element: (
+									<ProtectedRoute>
+										<AddNewProductCategory/>
+									</ProtectedRoute>
+								)
+							}
+						]
 					},
 					{
 						path: "warehouses",

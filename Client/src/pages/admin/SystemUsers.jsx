@@ -30,7 +30,10 @@ export default function SystemUsers() {
 	return (
 		<div className="d-flex">
 			<AdminNavbar priv={"admin"} />
-			<div className="container">
+			<div
+				className="container pb-5 overflow-auto"
+				style={{ maxHeight: "100vh" }}
+			>
 				<div className="title text-center p-3">
 					<h1 className="fw-light">System Users list</h1>
 				</div>

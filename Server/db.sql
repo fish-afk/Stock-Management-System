@@ -37,16 +37,14 @@ CREATE TABLE IF NOT EXISTS `Roles` (
   `role_name` VARCHAR(255)
 );
 
-CREATE TABLE IF NOT EXISTS `Warehouse_Locations` (
-  `location_id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `location_name` VARCHAR(255),
-  `description` VARCHAR(255)
-);
 
 CREATE TABLE IF NOT EXISTS `Warehouses` (
   `warehouse_id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `warehouse_name` VARCHAR(255),
-  `location_id` INT
+  `warehouse_description` TEXT,
+  `image_url` TEXT,
+  `max_storage_capacity` INT,
+  `current_storage_amount` INT
 );
 
 CREATE TABLE IF NOT EXISTS `Purchases` (
@@ -66,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `Products` (
   `quantity_in_stock` INT,
   `category_id` INT,
   `product_image` TEXT,
-  `warehouse_location_id` INT,
+  `warehouse_id` INT,
   `last_edited_by` VARCHAR(255)
 );
 
@@ -83,15 +81,13 @@ CREATE TABLE IF NOT EXISTS `Sales` (
 
 ALTER TABLE `Users` ADD FOREIGN KEY (`role_id`) REFERENCES `Roles` (`role_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
-ALTER TABLE `Warehouses` ADD FOREIGN KEY (`location_id`) REFERENCES `Warehouse_Locations` (`location_id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
 ALTER TABLE `Purchases` ADD FOREIGN KEY (`supplier_id`) REFERENCES `Suppliers` (`supplier_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 ALTER TABLE `Purchases` ADD FOREIGN KEY (`product_id`) REFERENCES `Products` (`product_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 ALTER TABLE `Products` ADD FOREIGN KEY (`category_id`) REFERENCES `Categories` (`category_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
-ALTER TABLE `Products` ADD FOREIGN KEY (`warehouse_location_id`) REFERENCES `Warehouse_Locations` (`location_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Products` ADD FOREIGN KEY (`warehouse_id`) REFERENCES `Warehouses` (`warehouse_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 ALTER TABLE `Products` ADD FOREIGN KEY (`last_edited_by`) REFERENCES `Users` (`username`) ON DELETE SET NULL ON UPDATE CASCADE;
 

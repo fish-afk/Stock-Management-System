@@ -1,4 +1,4 @@
-const {pool} = require("../models/_mysql");
+const { pool } = require("../models/_mysql");
 
 async function getAllCategories(req, res) {
 	try {
@@ -8,12 +8,15 @@ async function getAllCategories(req, res) {
 				message: "insufficient privileges",
 			});
 		}
-		
+
 		const query = "SELECT * FROM Categories";
 		const [categories] = await pool.query(query);
 
-		return res.send({ status: "SUCCESS", message: "Product Categories Retrieved", data: categories });
-			
+		return res.send({
+			status: "SUCCESS",
+			message: "Product Categories Retrieved",
+			data: categories,
+		});
 	} catch (error) {
 		console.error(error);
 		res.json({ status: "FAILURE", message: "Internal server error" });
@@ -21,13 +24,26 @@ async function getAllCategories(req, res) {
 }
 
 async function deleteCategory(req, res) {
-	let categoryId = req.body["category_id"];
+	if (req.decoded.role_id != 1) {
+		return res.send({
+			status: "FAILURE",
+			message: "insufficient privileges",
+		});
+	}
+
+	let categoryId = req.body["categoryId"];
+
+	if (!categoryId) {
+		return res.send({
+			status: "FAILURE",
+			message: "missing details",
+		});
+	}
 
 	try {
-		await pool.query(
-			"DELETE FROM Categories WHERE category_id = ?",
-			[categoryId],
-		);
+		await pool.query("DELETE FROM Categories WHERE category_id = ?", [
+			categoryId,
+		]);
 		return res.send({
 			status: "SUCCESS",
 			message: `Category with ID ${categoryId} deleted successfully.`,
@@ -46,10 +62,10 @@ async function editCategory(req, res) {
 	const category = { category_name };
 
 	try {
-		await pool.query(
-			"UPDATE Categories SET ? WHERE category_id = ?",
-			[category, category_id],
-		);
+		await pool.query("UPDATE Categories SET ? WHERE category_id = ?", [
+			category,
+			category_id,
+		]);
 		return res.send({
 			status: "SUCCESS",
 			message: "Category updated successfully",
@@ -63,9 +79,12 @@ async function editCategory(req, res) {
 }
 
 async function addCategory(req, res) {
-	const { category_name } = req.body;
+	const { category_name, category_description } = req.body;
 
-	const category = { category_name };
+	// Get the uploaded file details from req.file
+	const category_image_name = req.file ? req.file.filename : null; // Assuming filename is stored in req.file
+
+	const category = { category_name, category_description, category_image_name };
 
 	try {
 		await pool.query("INSERT INTO Categories SET ?", category);
@@ -73,11 +92,9 @@ async function addCategory(req, res) {
 			status: "SUCCESS",
 			message: "Category added successfully",
 		});
-	} catch (err) {
-		console.log(err);
-		return res
-			.status(500)
-			.send({ status: "FAILURE", message: "Unknown error" });
+	} catch (error) {
+		console.log(error);
+		return res.send({ status: "FAILURE", message: "Internal Server Error" });
 	}
 }
 

@@ -69,12 +69,12 @@ const ProtectedRoute = ({ children }) => {
 
 	if (loading) {
 		return (
-			<div className="h-100 d-flex align-items-center justify-content-center">
+			<div class="position-absolute top-50 start-50 translate-middle">
 				<ThreeCircles
 					visible={true}
 					height="100"
 					width="100"
-					color="blue"
+					color="black"
 					ariaLabel="three-circles-loading"
 					wrapperStyle={{}}
 					wrapperClass=""
