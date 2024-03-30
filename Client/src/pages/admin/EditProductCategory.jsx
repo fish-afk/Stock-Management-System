@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 import BASEURL from "../../constants/apiBaseUrl";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useParams, useLocation } from "react-router-dom";
 
-export default function AddNewProductCategory() {
+export default function EditProductCategory() {
+	const params = useParams();
+	const locationHook = useLocation();
 	const [formValues, setFormValues] = useState({
-		category_name: "",
-		category_description: "",
+		category_name: locationHook.state.category_name,
+		category_description: locationHook.state.category_description,
 	});
+
+
 	const [categoryImage, setCategoryImage] = useState(null);
 
 	const handleFileChange = (e) => {
@@ -29,18 +34,19 @@ export default function AddNewProductCategory() {
 			const formData = new FormData();
 			formData.append("jwt_key", jwt_key);
 			formData.append("username", username);
+			formData.append("category_id", params.category_id);
 			formData.append("category_name", category_name);
 			formData.append("category_description", category_description);
 			formData.append("category_image", categoryImage);
 
 			axios
-				.post(BASEURL + "/productcategories/addnewcategory", formData)
+				.post(BASEURL + "/productcategories/editcategory", formData)
 				.then(async (response) => {
 					const data = await response?.data;
 
 					if (data.status == "SUCCESS") {
 						Swal.fire({
-							title: "Added New Category successfully!",
+							title: "Edited Category successfully!",
 							timer: 3000,
 							icon: "success",
 						}).then(() => {
@@ -87,6 +93,7 @@ export default function AddNewProductCategory() {
 						<input
 							required
 							type="text"
+							defaultValue={locationHook.state.category_name}
 							id="category_name"
 							className="form-control"
 							value={formValues.category_name}
@@ -126,7 +133,6 @@ export default function AddNewProductCategory() {
 							Category Image
 						</label>
 						<input
-							
 							type="file"
 							id="category_image"
 							className="form-control"
@@ -136,7 +142,7 @@ export default function AddNewProductCategory() {
 
 					<div className="d-flex justify-content-center p-4">
 						<button type="submit" className="btn btn-info">
-							Add Category
+							Edit Category
 						</button>
 					</div>
 				</form>

@@ -17,6 +17,11 @@ router.post(
 	userController.addCategory,
 );
 
+router.post(
+	"/editcategory",
+	upload.single("category_image"),
+	userController.editCategory,
+);
 
 router.post(
 	"/deletecategory",

@@ -124,9 +124,13 @@ export default function ListRoles() {
 										<button
 											className="btn btn-warning me-2"
 											onClick={() => {
-												Navigate("/admin/editrole", {
-													state: { ...ProductCategory },
-												});
+												Navigate(
+													"/admin/pages/product-categories/edit/" +
+														ProductCategory.category_id,
+													{
+														state: { ...ProductCategory },
+													},
+												);
 											}}
 										>
 											Edit

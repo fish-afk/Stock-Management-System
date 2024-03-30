@@ -57,9 +57,12 @@ async function deleteCategory(req, res) {
 }
 
 async function editCategory(req, res) {
-	const { category_id, category_name } = req.body;
+	const { category_name, category_description, category_id } = req.body;
 
-	const category = { category_name };
+	// Get the uploaded file details from req.file
+	const category_image_name = req.file ? req.file.filename : null; // Assuming filename is stored in req.file
+
+	const category = { category_name, category_description, category_image_name };
 
 	try {
 		await pool.query("UPDATE Categories SET ? WHERE category_id = ?", [

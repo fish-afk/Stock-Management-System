@@ -24,6 +24,7 @@ import Suppliers from "./pages/admin/Suppliers";
 import Customers from "./pages/admin/Customers";
 import AddNewSystemUser from "./pages/admin/AddNewSystemUser";
 import AddNewProductCategory from "./pages/admin/AddNewProductCategory";
+import EditProductCategory from "./pages/admin/EditProductCategory";
 
 const router = createBrowserRouter([
 	{
@@ -98,14 +99,22 @@ const router = createBrowserRouter([
 								),
 							},
 							{
-								path: 'new',
+								path: "new",
 								element: (
 									<ProtectedRoute>
-										<AddNewProductCategory/>
+										<AddNewProductCategory />
 									</ProtectedRoute>
-								)
-							}
-						]
+								),
+							},
+							{
+								path: "edit/:category_id",
+								element: (
+									<ProtectedRoute>
+										<EditProductCategory />
+									</ProtectedRoute>
+								),
+							},
+						],
 					},
 					{
 						path: "warehouses",

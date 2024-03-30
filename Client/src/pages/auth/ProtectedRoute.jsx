@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import BASEURL from "../../constants/apiBaseUrl";
-import axios from "axios";
 import { ThreeCircles } from "react-loader-spinner";
 
 const ProtectedRoute = ({ children }) => {
@@ -9,6 +8,7 @@ const ProtectedRoute = ({ children }) => {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
+		
 		const checkAuthentication = () => {
 			const accessToken = localStorage.getItem(
 				"stock-managment-system-auth-token",
