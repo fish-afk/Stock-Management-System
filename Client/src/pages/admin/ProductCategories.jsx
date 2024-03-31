@@ -27,12 +27,15 @@ export default function ListRoles() {
 			const userData = JSON.parse(localStorage.getItem("userDataObject"));
 			const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
 			const username = userData?.username;
-			let data = await axios.post(
+			const reqData = {
+				username,
+				jwt_key,
+				categoryId,
+			};
+			let data = await axios.delete(
 				BASEURL + "/productcategories/deletecategory",
 				{
-					categoryId,
-					jwt_key,
-					username,
+					data: reqData
 				},
 			);
 			const response = data?.data;
@@ -72,7 +75,7 @@ export default function ListRoles() {
 		const response = data?.data;
 		console.log(response);
 
-		setProductCategories(response?.data);
+		setProductCategories(response?.data == undefined ? [] : response?.data);
 	};
 	useEffect(() => {
 		func();

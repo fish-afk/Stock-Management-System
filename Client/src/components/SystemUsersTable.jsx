@@ -7,14 +7,6 @@ import axios from "axios";
 
 const SystemUserTable = ({ users }) => {
 	const Navigate = useNavigate();
-	const [show, setShow] = useState(false);
-	const [userchosen, setuserChosen] = useState(null);
-
-	const handleClose = () => setShow(false);
-	const handleShow = (user) => {
-		setShow(true);
-		setuserChosen(user);
-	};
 
 	const delete_user = async (user_username) => {
 		const msg = "Are you sure you want to delete this user?";
@@ -33,11 +25,12 @@ const SystemUserTable = ({ users }) => {
 			const userData = JSON.parse(localStorage.getItem("userDataObject"));
 			const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
 			const username = userData?.username;
-			let data = await axios.post(BASEURL + "/users/deleteuser", {
+			const reqData = {
 				user_username,
 				jwt_key,
 				username,
-			});
+			};
+			let data = await axios.delete(BASEURL + "/users/deleteuser", {data: reqData});
 			const response = data?.data;
 			console.log(response);
 
@@ -76,7 +69,7 @@ const SystemUserTable = ({ users }) => {
 				"<p>" +
 				txt +
 				"</p>" +
-				'<select id="userRole" class="swal2-select">' +
+				'<select id="userRole" className="swal2-select">' +
 				'<option value="warehouse operator">Warehouse Operator</option>' +
 				'<option value="stakeholder">Stakeholder</option>' +
 				'<option value="admin">Admin</option>' +
@@ -91,14 +84,16 @@ const SystemUserTable = ({ users }) => {
 			const selectedRole = result.value;
 			if (selectedRole) {
 				const userData = JSON.parse(localStorage.getItem("userDataObject"));
-				const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
+				const jwt_key = localStorage.getItem(
+					"stock-managment-system-auth-token",
+				);
 				const username = userData?.username;
 				const role_id =
 					selectedRole == "Admin"
 						? 1
 						: selectedRole == "warehouse operator"
-							? 2
-							: 3;
+						? 2
+						: 3;
 				let data = await axios.patch(BASEURL + "/users/edituserrole", {
 					user_username,
 					role_id,
@@ -192,79 +187,6 @@ const SystemUserTable = ({ users }) => {
 					))}
 				</tbody>
 			</table>
-
-			<Modal show={show} onHide={handleClose} variant="dark">
-				<Modal.Header closeButton>
-					<Modal.Title>Send Message</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<Form>
-						<Form.Group>
-							<Form.Label>Send message to {userchosen?.username}</Form.Label>
-							<Form.Control
-								required
-								minLength={50}
-								as="textarea"
-								id="message"
-								type="text"
-								placeholder="Enter message here"
-							/>
-						</Form.Group>
-					</Form>
-				</Modal.Body>
-				<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose}>
-						Close
-					</Button>
-					<Button
-						variant="primary"
-						onClick={async () => {
-							const message = document.getElementById("message").value;
-
-							if (message?.length < 7) {
-								alert("Message not long enough");
-								return;
-							}
-							const token = localStorage.getItem("taskedit-accesstoken");
-							const username = localStorage.getItem("username");
-
-							const response = await fetch(`${BASEURL}/messages/sendmessage`, {
-								headers: {
-									"taskedit-accesstoken": token,
-									username: username,
-									isadmin: "true",
-									"Content-Type": "application/json",
-								},
-								method: "POST",
-								body: JSON.stringify({
-									Message: message,
-									to: userchosen?.username,
-									to_usertype: "user",
-								}),
-							});
-
-							const data = await response.json();
-							console.log(data);
-
-							if (data.status === "SUCCESS") {
-								Swal.fire({
-									title: "Message sent",
-									timer: 3000,
-									icon: "success",
-								});
-							} else {
-								Swal.fire({
-									title: "An error occurred, try later",
-									timer: 3000,
-									icon: "error",
-								});
-							}
-						}}
-					>
-						Send
-					</Button>
-				</Modal.Footer>
-			</Modal>
 		</div>
 	);
 };

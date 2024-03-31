@@ -1,16 +1,19 @@
 const {pool} = require("../models/_mysql");
 
-function getAllSuppliers(req, res) {
-	const query = "SELECT * FROM Suppliers";
+async function getAllSuppliers(req, res) {
+	try {
+		const query = "SELECT * FROM suppliers";
+		const [Suppliers] = await pool.query(query);
 
-	pool.query(query, (err, results) => {
-		if (!err && results) {
-			return res.send({ status: "SUCCESS", data: results });
-		} else {
-			console.log(err);
-			return res.send({ status: "FAILURE", message: "Unknown error" });
-		}
-	});
+		return res.send({
+			status: "SUCCESS",
+			message: "Suppliers Retrieved",
+			data: Suppliers,
+		});
+	} catch (error) {
+		console.error(error);
+		res.json({ status: "FAILURE", message: "Internal server error" });
+	}
 }
 
 async function deleteSupplier(req, res) {
@@ -34,9 +37,9 @@ async function deleteSupplier(req, res) {
 }
 
 async function editSupplier(req, res) {
-	const { supplier_id, supplier_name, email } = req.body;
+	const { supplier_id, supplier_name, email, phone } = req.body;
 
-	const supplier = { supplier_name, email };
+	const supplier = { supplier_name, email, phone };
 
 	try {
 		await pool.query(

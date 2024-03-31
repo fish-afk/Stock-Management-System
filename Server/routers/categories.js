@@ -23,7 +23,7 @@ router.post(
 	userController.editCategory,
 );
 
-router.post(
+router.delete(
 	"/deletecategory",
 	authMiddleware.verifyJWT,
 	userController.deleteCategory,

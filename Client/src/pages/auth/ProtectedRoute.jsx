@@ -8,7 +8,6 @@ const ProtectedRoute = ({ children }) => {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		
 		const checkAuthentication = () => {
 			const accessToken = localStorage.getItem(
 				"stock-managment-system-auth-token",
@@ -69,7 +68,7 @@ const ProtectedRoute = ({ children }) => {
 
 	if (loading) {
 		return (
-			<div class="position-absolute top-50 start-50 translate-middle">
+			<div className="position-absolute top-50 start-50 translate-middle">
 				<ThreeCircles
 					visible={true}
 					height="100"

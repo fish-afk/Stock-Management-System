@@ -58,6 +58,19 @@ const AdminNavbar = () => {
 					</Link>
 				</li>
 				<li>
+					<Link to="/admin/pages/customers" className="nav-link text-white">
+						<BsPersonFillGear className="bi me-2 mb-1" />
+						Customers
+					</Link>
+				</li>
+				<li>
+					<Link to="/admin/pages/suppliers" className="nav-link text-white">
+						<BsPersonLinesFill className="bi me-2 mb-1" />
+						Suppliers
+					</Link>
+				</li>
+
+				<li>
 					<Link
 						to="/admin/pages/product-categories"
 						className="nav-link text-white"
@@ -70,18 +83,6 @@ const AdminNavbar = () => {
 					<Link to="/admin/pages/warehouses" className="nav-link text-white">
 						<FaWarehouse className="bi me-2 mb-1" />
 						Warehouses
-					</Link>
-				</li>
-				<li>
-					<Link to="/admin/pages/suppliers" className="nav-link text-white">
-						<BsPersonLinesFill className="bi me-2 mb-1" />
-						Suppliers
-					</Link>
-				</li>
-				<li>
-					<Link to="/admin/pages/customers" className="nav-link text-white">
-						<BsPersonFillGear className="bi me-2 mb-1" />
-						Customers
 					</Link>
 				</li>
 			</ul>

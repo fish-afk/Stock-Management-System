@@ -1,26 +1,28 @@
-const {pool} = require("../models/_mysql");
+const { pool } = require("../models/_mysql");
 
-function getAllCustomers(req, res) {
-	const query = "SELECT * FROM Customers";
+async function getAllCustomers(req, res) {
+	try {
+		const query = "SELECT * FROM customers";
+		const [Customers] = await pool.query(query);
 
-	pool.query(query, (err, results) => {
-		if (!err && results) {
-			return res.send({ status: "SUCCESS", data: results });
-		} else {
-			console.log(err);
-			return res.send({ status: "FAILURE", message: "Unknown error" });
-		}
-	});
+		return res.send({
+			status: "SUCCESS",
+			message: "Customers Retrieved",
+			data: Customers,
+		});
+	} catch (error) {
+		console.error(error);
+		res.json({ status: "FAILURE", message: "Internal server error" });
+	}
 }
 
 async function deleteCustomer(req, res) {
 	let customerId = req.body["customer_id"];
 
 	try {
-		await pool.query(
-			"DELETE FROM Customers WHERE customer_id = ?",
-			[customerId],
-		);
+		await pool.query("DELETE FROM Customers WHERE customer_id = ?", [
+			customerId,
+		]);
 		return res.send({
 			status: "SUCCESS",
 			message: `Customer with ID ${customerId} deleted successfully.`,
@@ -39,10 +41,10 @@ async function editCustomer(req, res) {
 	const customer = { customer_name, email };
 
 	try {
-		await pool.query(
-			"UPDATE Customers SET ? WHERE customer_id = ?",
-			[customer, customer_id],
-		);
+		await pool.query("UPDATE Customers SET ? WHERE customer_id = ?", [
+			customer,
+			customer_id,
+		]);
 		return res.send({
 			status: "SUCCESS",
 			message: "Customer updated successfully",
@@ -56,9 +58,9 @@ async function editCustomer(req, res) {
 }
 
 async function addCustomer(req, res) {
-	const { customer_name, email } = req.body;
+	const { customer_name, email, phone } = req.body;
 
-	const customer = { customer_name, email };
+	const customer = { customer_name, email, phone };
 
 	try {
 		await pool.query("INSERT INTO Customers SET ?", customer);

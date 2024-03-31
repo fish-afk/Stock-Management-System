@@ -24,7 +24,11 @@ import Suppliers from "./pages/admin/Suppliers";
 import Customers from "./pages/admin/Customers";
 import AddNewSystemUser from "./pages/admin/AddNewSystemUser";
 import AddNewProductCategory from "./pages/admin/AddNewProductCategory";
+import AddNewCustomer from "./pages/admin/AddNewCustomer";
+import AddNewSupplier from "./pages/admin/AddNewSupplier";
 import EditProductCategory from "./pages/admin/EditProductCategory";
+import EditCustomer from "./pages/admin/EditCustomer";
+import EditSupplier from "./pages/admin/EditSupplier";
 
 const router = createBrowserRouter([
 	{
@@ -126,19 +130,61 @@ const router = createBrowserRouter([
 					},
 					{
 						path: "suppliers",
-						element: (
-							<ProtectedRoute>
-								<Suppliers />
-							</ProtectedRoute>
-						),
+						children: [
+							{
+								index: true,
+								element: (
+									<ProtectedRoute>
+										<Suppliers />
+									</ProtectedRoute>
+								),
+							},
+							{
+								path: "new",
+								element: (
+									<ProtectedRoute>
+										<AddNewSupplier />
+									</ProtectedRoute>
+								),
+							},
+							{
+								path: "edit/:supplier_id",
+								element: (
+									<ProtectedRoute>
+										<EditSupplier />
+									</ProtectedRoute>
+								),
+							},
+						],
 					},
 					{
 						path: "customers",
-						element: (
-							<ProtectedRoute>
-								<Customers />
-							</ProtectedRoute>
-						),
+						children: [
+							{
+								index: true,
+								element: (
+									<ProtectedRoute>
+										<Customers />
+									</ProtectedRoute>
+								),
+							},
+							{
+								path: "new",
+								element: (
+									<ProtectedRoute>
+										<AddNewCustomer />
+									</ProtectedRoute>
+								),
+							},
+							{
+								path: "edit/:customer_id",
+								element: (
+									<ProtectedRoute>
+										<EditCustomer />
+									</ProtectedRoute>
+								),
+							},
+						],
 					},
 				],
 			},

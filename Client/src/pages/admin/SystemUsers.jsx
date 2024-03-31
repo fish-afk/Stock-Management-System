@@ -21,7 +21,7 @@ export default function SystemUsers() {
 		const response = data?.data;
 		console.log(response);
 
-		setUsers(response?.data);
+		setUsers(response?.data == undefined ? [] : response?.data);
 	};
 	useEffect(() => {
 		func();
