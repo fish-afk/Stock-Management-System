@@ -41,7 +41,7 @@ export default function Suppliers() {
 					<button
 						className="btn btn-primary me-5 ms-5"
 						onClick={() => {
-							Navigate("/admin/pages/Suppliers/new");
+							Navigate("/admin/pages/suppliers/new");
 						}}
 					>
 						<b>+</b> Add New Supplier
