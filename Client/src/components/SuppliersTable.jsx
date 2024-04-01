@@ -56,7 +56,7 @@ const SuppliersTable = ({ Suppliers }) => {
 
 	return (
 		<div className="container-fluid">
-			<table className="table table-hover table-dark p-5">
+			<table className="table table-hover table-info table-striped table-bordered p-5">
 				<thead className="thead-dark">
 					<tr>
 						<th scope="col">Supplier ID</th>

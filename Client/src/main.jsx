@@ -4,6 +4,7 @@ import Login from "./pages/auth/Login";
 import Logout from "./pages/auth/Logout";
 import "./css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../scss/custom.scss"
 import {
 	createBrowserRouter,
 	Navigate,

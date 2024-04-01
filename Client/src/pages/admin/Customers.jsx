@@ -39,7 +39,7 @@ export default function Customers() {
 
 				<div className="d-flex justify-content-end">
 					<button
-						className="btn btn-primary me-5 ms-5"
+						className="btn btn-primary me-5 ms-5 mb-2"
 						onClick={() => {
 							Navigate("/admin/pages/customers/new");
 						}}
