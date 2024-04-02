@@ -1,11 +1,17 @@
-import { useNavigate, Link } from "react-router-dom";
+import React from "react";
+import {
+	CDBSidebar,
+	CDBSidebarContent,
+	CDBSidebarFooter,
+	CDBSidebarHeader,
+	CDBSidebarMenu,
+	CDBSidebarMenuItem,
+	CDBBtn,
+} from "cdbreact";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { AiFillHome } from "react-icons/ai";
-import { BsPersonLinesFill, BsPersonFillGear } from "react-icons/bs";
-import { GoPerson } from "react-icons/go";
-import { MdCategory } from "react-icons/md";
-import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
-import { FaWarehouse } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { CDBIcon } from "cdbreact";
 
 const AdminNavbar = () => {
 	const Navigate = useNavigate();
@@ -14,115 +20,93 @@ const AdminNavbar = () => {
 		console.log(element);
 		element.style.display = "none";
 	};
+
 	return (
 		<div
-			id="navbar1"
-			className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark navbar1"
-			style={{ width: "19%", height: "100vh" }}
+			style={{ display: "flex", height: "100vh", overflow: "scroll initial" }}
 		>
-			<Link
-				to="#"
-				className="d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-			>
-				<span className="fs-6 pe-2 ps-3">Shihab Enterprises</span>
-				<button
-					className="bg-dark button"
-					onClick={() => {
-						hidenav(document.getElementById("navbar1"));
-					}}
-				>
-					<MdOutlineKeyboardArrowLeft
-						className="ms-2 me-2 mb-1"
-						color="white"
-					/>
-				</button>
-			</Link>
-
-			<hr />
-
-			<ul className="nav nav-pills flex-column mb-auto">
-				<li className="nav-item">
+			<CDBSidebar textColor="#fff" backgroundColor="#111">
+				<CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
 					<Link
-						to={`/admin/dashboard`}
-						className="nav-link text-white"
-						aria-current="page"
+						to="#"
+						className="text-decoration-none"
+						style={{ color: "inherit" }}
 					>
-						<AiFillHome className="bi me-2 mb-1" />
-						Home
+						Shihab Enterprises
 					</Link>
-				</li>
-				<li>
-					<Link to="/admin/pages/system-users" className="nav-link text-white">
-						<GoPerson className="bi me-2 mb-1" />
-						System Users
-					</Link>
-				</li>
-				<li>
-					<Link to="/admin/pages/customers" className="nav-link text-white">
-						<BsPersonFillGear className="bi me-2 mb-1" />
-						Customers
-					</Link>
-				</li>
-				<li>
-					<Link to="/admin/pages/suppliers" className="nav-link text-white">
-						<BsPersonLinesFill className="bi me-2 mb-1" />
-						Suppliers
-					</Link>
-				</li>
+				</CDBSidebarHeader>
 
-				<li>
-					<Link
-						to="/admin/pages/product-categories"
-						className="nav-link text-white"
+				<CDBSidebarContent className="sidebar-content">
+					<CDBSidebarMenu>
+						<Link to="/admin/dashboard">
+							<CDBSidebarMenuItem icon="home">Home</CDBSidebarMenuItem>
+						</Link>
+						<Link to="/admin/pages/system-users">
+							<CDBSidebarMenuItem icon="users">System Users</CDBSidebarMenuItem>
+						</Link>
+						<Link to="/admin/pages/customers">
+							<CDBSidebarMenuItem icon="money-bill">
+								Customers
+							</CDBSidebarMenuItem>
+						</Link>
+						<Link to="/admin/pages/suppliers">
+							<CDBSidebarMenuItem icon="truck">Suppliers</CDBSidebarMenuItem>
+						</Link>
+						<Link to="/admin/pages/product-categories">
+							<CDBSidebarMenuItem icon="shapes">
+								Product Categories
+							</CDBSidebarMenuItem>
+						</Link>
+						<Link to="/admin/pages/warehouses">
+							<CDBSidebarMenuItem icon="warehouse">
+								Warehouses
+							</CDBSidebarMenuItem>
+						</Link>
+					</CDBSidebarMenu>
+				</CDBSidebarContent>
+
+				<CDBSidebarFooter style={{ textAlign: "center" }} className="p-2">
+					<CDBBtn
+						className="container text-white btn mb-3"
+						outline
+						onClick={() => {
+							Navigate("/admin/editprofile");
+						}}
 					>
-						<MdCategory className="bi me-2 mb-1" />
-						Product Categories
-					</Link>
-				</li>
-				<li>
-					<Link to="/admin/pages/warehouses" className="nav-link text-white">
-						<FaWarehouse className="bi me-2 mb-1" />
-						Warehouses
-					</Link>
-				</li>
-			</ul>
-			<hr />
-
-			<div
-				className="container text-white btn btn-primary mb-3"
-				onClick={() => {
-					Navigate("/admin/editprofile");
-				}}
-			>
-				<p className="fs-7 m-0">Edit Profile</p>
-			</div>
-			<div
-				className="container text-white btn btn-primary mb-3"
-				onClick={() => {
-					Navigate("/admin/changepassword");
-				}}
-			>
-				<p className="fs-7 m-0">Change Password</p>
-			</div>
-			<div
-				className="container text-white btn btn-primary"
-				onClick={() => {
-					Swal.fire({
-						title: "Are you sure you want to logout?",
-						icon: "warning",
-						showCancelButton: true,
-						confirmButtonColor: "#3085d6",
-						cancelButtonColor: "#d33",
-						confirmButtonText: "Yes",
-					}).then((result) => {
-						if (result.isConfirmed) {
-							Navigate(`/logout`);
-						}
-					});
-				}}
-			>
-				<p className="fs-7 m-0">Logout</p>
-			</div>
+						<p className="fs-7 m-0">Edit Profile</p>
+					</CDBBtn>
+					<CDBBtn
+						className="container text-white btn mb-3"
+						outline
+						onClick={() => {
+							Navigate("/admin/changepassword");
+						}}
+					>
+						<p className="fs-7 m-0">Change Password</p>
+					</CDBBtn>
+					<CDBBtn
+						className="container text-white btn"
+						color="danger"
+						outline
+						onClick={() => {
+							Swal.fire({
+								title: "Are you sure you want to logout?",
+								icon: "warning",
+								showCancelButton: true,
+								confirmButtonColor: "#3085d6",
+								cancelButtonColor: "#d33",
+								confirmButtonText: "Yes",
+							}).then((result) => {
+								if (result.isConfirmed) {
+									Navigate(`/logout`);
+								}
+							});
+						}}
+					>
+						<p className="fs-7 m-0">Logout</p>
+					</CDBBtn>
+				</CDBSidebarFooter>
+			</CDBSidebar>
 		</div>
 	);
 };
