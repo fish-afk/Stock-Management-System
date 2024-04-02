@@ -34,7 +34,7 @@ export default function Customers() {
 				style={{ maxHeight: "100vh" }}
 			>
 				<div className="title text-center p-3">
-					<h1 className="fw-light">System Customers list</h1>
+					<h1 className="fw-light">Customers list</h1>
 				</div>
 
 				<div className="d-flex justify-content-end">

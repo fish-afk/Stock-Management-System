@@ -115,7 +115,7 @@ const SystemUserTable = ({ users }) => {
 					});
 				} else {
 					Swal.fire({
-						title: "Error deleting user. Try later",
+						title: "Error editing role for user. Try later",
 						timer: 3000,
 						icon: "error",
 					}).then(() => {

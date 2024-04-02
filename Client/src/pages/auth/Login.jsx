@@ -57,7 +57,7 @@ const Login = () => {
 	};
 
 	return (
-		<div className="sign-in__wrapper bg-black">
+		<div className="sign-in__wrapper bg-dark">
 			{/* Overlay */}
 			<div className="sign-in__backdrop"></div>
 			{/* Form */}

@@ -81,7 +81,7 @@ export default function EditSupplier() {
 			<AdminNavbar priv="admin" />
 			<div className="container">
 				<div className="d-flex justify-content-center p-2">
-					<h3>Edit supplier</h3>
+					<h3>Edit Supplier</h3>
 				</div>
 
 				<form className="bg-dark p-5 rounded-3" onSubmit={handleSubmit}>

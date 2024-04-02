@@ -2,11 +2,13 @@ const bcrypt = require("bcrypt"); // For password hashing
 const mysql = require("../models/_mysql");
 const authMiddleware = require("../middleware/auth");
 
-
 const getAllUsers = async (req, res) => {
 	try {
 		if (req.decoded.role_id != 1) {
-			return res.send({status: 'FAILURE', message: 'insufficient privileges'})
+			return res.send({
+				status: "FAILURE",
+				message: "insufficient privileges",
+			});
 		}
 		// Fetch all users excluding the password field
 		const [users] = await mysql.pool.query(
@@ -16,7 +18,7 @@ const getAllUsers = async (req, res) => {
 		res.json({
 			status: "SUCCESS",
 			message: "Users retrieved successfully",
-			data: users
+			data: users,
 		});
 	} catch (error) {
 		console.error(error);
@@ -26,7 +28,6 @@ const getAllUsers = async (req, res) => {
 
 const register = async (req, res) => {
 	try {
-
 		if (req.decoded.role_id != 1) {
 			return res.send({
 				status: "FAILURE",
@@ -34,10 +35,23 @@ const register = async (req, res) => {
 			});
 		}
 
-		const { newUserUsername, password, firstName, lastName, email, roleId = 2 } = req.body;
-		
-		
-		if (!newUserUsername || !password || !firstName || !lastName || !email || !roleId) {
+		const {
+			newUserUsername,
+			password,
+			firstName,
+			lastName,
+			email,
+			roleId = 2,
+		} = req.body;
+
+		if (
+			!newUserUsername ||
+			!password ||
+			!firstName ||
+			!lastName ||
+			!email ||
+			!roleId
+		) {
 			return res.send({ status: "FAILURE", message: "Missing details" });
 		}
 
@@ -148,9 +162,9 @@ const login = async (req, res) => {
 	}
 };
 
-const resetPassword = async (req, res) => {
+const changePassword = async (req, res) => {
 	try {
-		const { username, currentPassword, newPassword } = req.body;
+		const { username, currentpass, newpass } = req.body;
 
 		// Find the user by username
 		const [user] = await mysql.pool.query(
@@ -162,7 +176,7 @@ const resetPassword = async (req, res) => {
 		}
 
 		// Compare the current password provided with the stored password
-		const match = await bcrypt.compare(currentPassword, user[0].password);
+		const match = await bcrypt.compare(currentpass, user[0].password);
 		if (!match) {
 			return res.json({
 				status: "FAILURE",
@@ -173,7 +187,7 @@ const resetPassword = async (req, res) => {
 		// Generate a random password (replace with a secure random password generation method
 
 		// Hash the new password
-		const hashedPassword = await bcrypt.hash(newPassword, 10);
+		const hashedPassword = await bcrypt.hash(newpass, 10);
 
 		// Update the user's password
 		await mysql.pool.query("UPDATE Users SET password = ? WHERE username = ?", [
@@ -181,28 +195,62 @@ const resetPassword = async (req, res) => {
 			username,
 		]);
 
-		res.json({ status: "FAILURE", message: "Password reset successful" });
+		res.json({ status: "SUCCESS", message: "Password reset successfully" });
 	} catch (error) {
 		console.error(error);
 		res.json({ status: "FAILURE", message: "Internal server error" });
 	}
 };
 
+const EditProfile = async (req, res) => {
+	const username = req.decoded["username"];
+
+	const { first_name, last_name, email, phone } = req.body;
+
+	const object = { first_name, last_name, email, phone };
+
+	try {
+		const [results] = await mysql.pool.query('UPDATE Users SET ? WHERE username = ?', [object, username]);
+
+		if (results.affectedRows == 1) {
+			return res.json({
+				status: "SUCCESS",
+				message: "Profile updated successfully",
+			});
+		} else {
+			return res.json({
+				status: "FAILURE",
+				message: "Could not find user",
+			});
+		}
+	} catch (error) {
+		console.log(error);
+		res.json({ status: "FAILURE", message: "Internal server error" });
+	}
+	
+
+};
+
+const resetPassword = async (req, res) => {
+	
+}
+
 const deleteUser = async (req, res) => {
 	try {
 		if (req.decoded.role_id != 1) {
-			return res.send({status: 'FAILURE', message: 'insufficient privileges'})
+			return res.send({
+				status: "FAILURE",
+				message: "insufficient privileges",
+			});
 		}
-	
-		const username = req.body['user_username']
+
+		const username = req.body["user_username"];
 
 		if (!username) {
-			return res.send({status: 'FAILURE', message: "Missing details"})
+			return res.send({ status: "FAILURE", message: "Missing details" });
 		}
 		// Fetch all users excluding the password field
-		await mysql.pool.query(
-			"DELETE FROM Users WHERE username = ?", [username]
-		);
+		await mysql.pool.query("DELETE FROM Users WHERE username = ?", [username]);
 
 		res.json({
 			status: "SUCCESS",
@@ -212,7 +260,7 @@ const deleteUser = async (req, res) => {
 		console.error(error);
 		res.json({ status: "FAILURE", message: "Internal server error" });
 	}
-}
+};
 
 const editUserRole = async (req, res) => {
 	try {
@@ -224,15 +272,16 @@ const editUserRole = async (req, res) => {
 		}
 
 		const username = req.body["user_username"];
-		const role_id = req.body['role_id']
-
-		
+		const role_id = req.body["role_id"];
 
 		if (!username || !role_id) {
 			return res.send({ status: "FAILURE", message: "Missing details" });
 		}
 		// Fetch all users excluding the password field
-		await mysql.pool.query("UPDATE Users SET role_id = ? WHERE username = ?", [role_id, username]);
+		await mysql.pool.query("UPDATE Users SET role_id = ? WHERE username = ?", [
+			role_id,
+			username,
+		]);
 
 		res.json({
 			status: "SUCCESS",
@@ -261,5 +310,7 @@ module.exports = {
 	getAllUsers,
 	refresh,
 	deleteUser,
-	editUserRole
+	editUserRole,
+	EditProfile,
+	changePassword
 };

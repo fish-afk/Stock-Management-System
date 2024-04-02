@@ -1,8 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
 const security = require("./middleware/Security");
-const path = require("path"); 
+const path = require("path");
+const rateLimit = require("express-rate-limit");
+
+require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -10,22 +12,40 @@ const app = express();
 app.use(express.json({ limit: "20mb" }));
 app.use(cors({ origin: "*" }));
 app.use(security.securityMiddleware);
-
-// Serve static files from the /images folder
-app.use("/static/images", express.static(path.join(__dirname, "images")));
+app.use("/static/images", express.static(path.join(__dirname, "images"))); //serve static images
 
 const usersRouter = require("./routers/users");
 const productCategoriesRouter = require("./routers/categories");
-const customersRouter = require('./routers/customers');
-const suppliersRouter = require('./routers/suppliers')
+const customersRouter = require("./routers/customers");
+const suppliersRouter = require("./routers/suppliers");
 
-app.use("/api/users", usersRouter);
-app.use("/api/productcategories", productCategoriesRouter);
-app.use("/api/customers", customersRouter);
-app.use('/api/suppliers', suppliersRouter)
+const rateLimiter = rateLimit({
+	windowMs: 3 * 60 * 1000, // 3 minutes
+	max: 200, // Limit each IP to 200 requests
+	message: {
+		status: "FAILURE",
+		message: "Too many requests, please try again later",
+	},
+	standardHeaders: true,
+	legacyHeaders: false, // Disable the RateLimit headers
+});
 
-app.get("/", (req, res) => {
-	res.send("working");
+app.set("trust proxy", 1); // to trust loadbalancers like nginx so that, that ip doesn`t get rate limited.
+
+app.use("/api/users", rateLimiter, usersRouter);
+app.use("/api/productcategories", rateLimiter, productCategoriesRouter);
+app.use("/api/customers", rateLimiter, customersRouter);
+app.use("/api/suppliers", rateLimiter, suppliersRouter);
+
+app.get("/", rateLimiter, (req, res) => {
+	res.send("working test route");
+});
+
+//resolve all other routes to 404
+app.get("*", rateLimiter, (req, res) => {
+	res
+		.status(404)
+		.send({ status: "FAILURE", message: "Error 404 api route not found" });
 });
 
 app.listen(PORT, () => {

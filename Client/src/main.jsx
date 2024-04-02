@@ -4,21 +4,24 @@ import Login from "./pages/auth/Login";
 import Logout from "./pages/auth/Logout";
 import "./css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../scss/custom.scss"
 import {
 	createBrowserRouter,
-	Navigate,
 	RouterProvider,
 } from "react-router-dom";
+
 import Redirector from "./pages/auth/Redirector";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import StakeHolderDashboard from "./pages/stakeHolder/StakeHolderDashboard";
-import WarehouseOperatorDashboard from "./pages/warehouseOperator/WarehouseOperatorDashboard";
 import ProtectedRoute from "./pages/auth/ProtectedRoute";
 import ResetPassword from "./pages/auth/ResetPassword";
 
+//warehouse operator pages
+import WarehouseOperatorDashboard from "./pages/warehouseOperator/WarehouseOperatorDashboard";
+
+//stakeholder pages
+import StakeHolderDashboard from "./pages/stakeHolder/StakeHolderDashboard";
+
 // admin pages
 import SystemUsers from "./pages/admin/SystemUsers";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 import ProductCategories from "./pages/admin/ProductCategories";
 import Warehouses from "./pages/admin/Warehouses";
 import Suppliers from "./pages/admin/Suppliers";
@@ -30,6 +33,8 @@ import AddNewSupplier from "./pages/admin/AddNewSupplier";
 import EditProductCategory from "./pages/admin/EditProductCategory";
 import EditCustomer from "./pages/admin/EditCustomer";
 import EditSupplier from "./pages/admin/EditSupplier";
+import EditProfileAdmin from "./pages/admin/EditProfile";
+import ChangePasswordAdmin from "./pages/admin/ChangePassword";
 
 const router = createBrowserRouter([
 	{
@@ -60,6 +65,24 @@ const router = createBrowserRouter([
 				element: (
 					<ProtectedRoute>
 						<AdminDashboard />
+					</ProtectedRoute>
+				),
+			},
+
+			{
+				path: "editprofile",
+				element: (
+					<ProtectedRoute>
+						<EditProfileAdmin />
+					</ProtectedRoute>
+				),
+			},
+
+			{
+				path: "changepassword",
+				element: (
+					<ProtectedRoute>
+						<ChangePasswordAdmin />
 					</ProtectedRoute>
 				),
 			},

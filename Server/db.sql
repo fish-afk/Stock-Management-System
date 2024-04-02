@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `Users` (
   `auth_refresh_token` TEXT,
   `last_name` VARCHAR(255),
   `email` VARCHAR(255),
+  `phone` VARCHAR(255),
   `role_id` INT
 );
 
@@ -46,7 +47,6 @@ CREATE TABLE IF NOT EXISTS `Warehouses` (
   `warehouse_description` TEXT,
   `image_url` TEXT,
   `max_storage_capacity` INT,
-  `current_storage_amount` INT
 );
 
 CREATE TABLE IF NOT EXISTS `Purchases` (

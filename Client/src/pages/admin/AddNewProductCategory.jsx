@@ -76,7 +76,7 @@ export default function AddNewProductCategory() {
 			<AdminNavbar priv="admin" />
 			<div className="container">
 				<div className="d-flex justify-content-center p-2">
-					<h3>Add new Category</h3>
+					<h3>Add New Product Category</h3>
 				</div>
 
 				<form className="bg-dark p-5 rounded-3" onSubmit={handleSubmit}>
@@ -126,7 +126,6 @@ export default function AddNewProductCategory() {
 							Category Image
 						</label>
 						<input
-							
 							type="file"
 							id="category_image"
 							className="form-control"
