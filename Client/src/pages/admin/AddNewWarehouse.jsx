@@ -67,13 +67,23 @@ export default function AddNewWarehouse() {
 				})
 				.catch((error) => {
 					console.log(error);
-					Swal.fire({
-						title: "Only Images Allowed !",
-						timer: 30000,
-						icon: "error",
-					}).then(() => {
-						location.reload();
-					});
+					if (error.response.status >= 500) {
+						Swal.fire({
+							title: "Only Images Allowed For Image Field !",
+							timer: 30000,
+							icon: "error",
+						}).then(() => {
+							location.reload();
+						});
+					} else {
+						Swal.fire({
+							title: error.response.data.message,
+							timer: 30000,
+							icon: "error",
+						}).then(() => {
+							location.reload();
+						});
+					}
 				});
 		} catch (err) {
 			console.error(err);
@@ -179,6 +189,7 @@ export default function AddNewWarehouse() {
 							Warehouse Image
 						</label>
 						<input
+							accept="image/jpeg,image/png,image/jpg,image/bmp,image/webp"
 							type="file"
 							id="warehouse_image"
 							className="form-control"

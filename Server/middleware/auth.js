@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Mysql = require("../models/_mysql");
 
-
 const JWT_SECRET = process.env.JWT_SECRET;
 const REFRESH_SECRET = process.env.REFRESH_SECRET;
 
@@ -46,7 +45,6 @@ async function verifyRefreshToken(refreshToken, username, res) {
 		const query = `SELECT * FROM users WHERE auth_refresh_token = ? AND username = ?`;
 		const [results] = await Mysql.pool.query(query, [refreshToken, username]);
 
-		
 		if (!results || results.length == 0) {
 			return res.send({
 				auth: false,
@@ -81,20 +79,20 @@ function verifyJWT(req, res, next) {
 	const token = req.body["jwt_key"];
 
 	if (!token || !username) {
-		return res.send({ status: false, message: "Missing auth fields !" });
+		return res.send({ status: "FAILURE", message: "Missing auth fields !" });
 	}
 	// Verify the JWT and check that it is valid
 	jwt.verify(token, JWT_SECRET, (err, decoded) => {
 		if (err) {
-			return res.send({ status: false, message: err.message });
+			return res.send({ status: "FAILURE", message: err.message });
 		}
 		if (decoded.exp < Date.now() / 1000) {
-			return res.send({ status: false, message: "JWT has expired" });
+			return res.send({ status: "FAILURE", message: "JWT has expired" });
 		}
 		// If the JWT is valid, save the decoded user information in the request object
 		// so that it is available for the next middleware function
 		if (decoded.username != username) {
-			return res.send({ status: false, message: "Token mismatch" }); // Token is not this users, but another users
+			return res.send({ status: "FAILURE", message: "Token mismatch" }); // Token is not this users, but another users
 		}
 
 		req.decoded = decoded;
@@ -127,6 +125,8 @@ function confirmJWT(req, res) {
 		return res.send({ auth: true, message: "jwt valid and working" });
 	});
 }
+
+
 
 module.exports = {
 	generateJwtToken,

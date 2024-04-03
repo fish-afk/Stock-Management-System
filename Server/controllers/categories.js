@@ -1,4 +1,5 @@
 const { pool } = require("../models/_mysql");
+const jwt = require("jsonwebtoken");
 
 async function getAllCategories(req, res) {
 	try {
@@ -56,8 +57,63 @@ async function deleteCategory(req, res) {
 	}
 }
 
+// this function below is used for specific usecases....
+function verifyJWTInterMediate(username, token, expected_privs = [], res) {
+	let status = true;
+	if (!token || !username) {
+		status = false;
+		return res
+			.status(401)
+			.send({ status: "FAILURE", message: "Missing auth fields !" });
+	}
+	// Verify the JWT and check that it is valid
+	jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+		if (err) {
+			status = false;
+			return res.status(401).send({ status: "FAILURE", message: err.message });
+		}
+		if (decoded.exp < Date.now() / 1000) {
+			status = false;
+			return res
+				.status(401)
+				.send({ status: "FAILURE", message: "JWT has expired" });
+		}
+
+		if (!expected_privs.includes(decoded.role_id)) {
+			status = false;
+			return res
+				.status(401)
+				.send({ status: "FAILURE", message: "Insufficient privileges" });
+		}
+		// If the JWT is valid, save the decoded user information in the request object
+		// so that it is available for the next middleware function
+		if (decoded.username != username) {
+			status = false;
+			return res
+				.status(401)
+				.send({ status: "FAILURE", message: "Token mismatch" }); // Token is not this users, but another users
+		}
+	});
+
+	return status;
+}
+
 async function editCategory(req, res) {
-	const { category_name, category_description, category_id } = req.body;
+	const {
+		category_name,
+		category_description,
+		category_id,
+		username,
+		jwt_key,
+	} = req.body;
+
+	const expected_privs = [1, "1"]; // admin role id
+
+	let status = verifyJWTInterMediate(username, jwt_key, expected_privs, res);
+
+	if (status != true) {
+		return;
+	}
 
 	// Get the uploaded file details from req.file
 	const category_image_name = req.file ? req.file.filename : null; // Assuming filename is stored in req.file
@@ -89,7 +145,15 @@ async function editCategory(req, res) {
 }
 
 async function addCategory(req, res) {
-	const { category_name, category_description } = req.body;
+	const { category_name, category_description, username, jwt_key } = req.body;
+
+	const expected_privs = [1, "1"]; // admin role id
+
+	let status = verifyJWTInterMediate(username, jwt_key, expected_privs, res);
+
+	if (status != true) {
+		return;
+	}
 
 	// Get the uploaded file details from req.file
 	const category_image_name = req.file ? req.file.filename : null; // Assuming filename is stored in req.file

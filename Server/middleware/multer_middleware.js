@@ -2,11 +2,7 @@ const multer = require("multer");
 const path = require("path");
 
 // Define an array of allowed file extensions
-const allowedFileExtensions = [
-	".jpeg",
-	".jpg",
-	".png",
-];
+const allowedFileExtensions = [".jpeg", ".jpg", ".png", ".bmp", ".webp"];
 
 // Create a custom file filter function
 const fileFilter = (req, file, cb) => {
@@ -20,7 +16,7 @@ const fileFilter = (req, file, cb) => {
 		cb(null, true);
 	} else {
 		// Reject the file
-		cb({ message: "File type not supported", status: false });
+		cb({ message: "File type not supported", status: "FAILURE" });
 	}
 };
 
