@@ -18,6 +18,7 @@ const usersRouter = require("./routers/users");
 const productCategoriesRouter = require("./routers/categories");
 const customersRouter = require("./routers/customers");
 const suppliersRouter = require("./routers/suppliers");
+const warehousesRouter = require('./routers/warehouses')
 
 const rateLimiter = rateLimit({
 	windowMs: 3 * 60 * 1000, // 3 minutes
@@ -36,6 +37,7 @@ app.use("/api/users", rateLimiter, usersRouter);
 app.use("/api/productcategories", rateLimiter, productCategoriesRouter);
 app.use("/api/customers", rateLimiter, customersRouter);
 app.use("/api/suppliers", rateLimiter, suppliersRouter);
+app.use('/api/warehouses', rateLimiter, warehousesRouter)
 
 app.get("/", rateLimiter, (req, res) => {
 	res.send("working test route");

@@ -45,7 +45,8 @@ CREATE TABLE IF NOT EXISTS `Warehouses` (
   `warehouse_id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `warehouse_name` VARCHAR(255),
   `warehouse_description` TEXT,
-  `image_url` TEXT,
+  `warehouse_location` TEXT,
+  `image_name` TEXT,
   `max_storage_capacity` INT,
 );
 

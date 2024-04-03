@@ -144,7 +144,7 @@ export default function EditSupplier() {
 
 					<div className="d-flex justify-content-center p-4">
 						<button type="submit" className="btn btn-info">
-							Edit Supplier
+							SAVE CHANGES
 						</button>
 					</div>
 				</form>

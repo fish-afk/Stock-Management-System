@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 import BASEURL from "../../constants/apiBaseUrl";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useParams, useLocation } from "react-router-dom";
 
-export default function EditProductCategory() {
+export default function EditWarehouse() {
 	const params = useParams();
 	const locationHook = useLocation();
+
 	const [formValues, setFormValues] = useState({
-		category_name: locationHook.state.category_name,
-		category_description: locationHook.state.category_description,
+		warehouse_name: locationHook.state.warehouse_name,
+		warehouse_description: locationHook.state.warehouse_description,
+		warehouse_location: locationHook.state.warehouse_location,
+		max_storage_capacity: locationHook.state.max_storage_capacity,
 	});
 
-	const [categoryImage, setCategoryImage] = useState(null);
+	const [warehouseImage, setCategoryImage] = useState(null);
 
 	const handleFileChange = (e) => {
 		const file = e.target.files[0];
@@ -23,7 +26,12 @@ export default function EditProductCategory() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		const { category_name, category_description } = formValues;
+		const {
+			warehouse_name,
+			warehouse_description,
+			warehouse_location,
+			max_storage_capacity,
+		} = formValues;
 
 		const userData = JSON.parse(localStorage.getItem("userDataObject"));
 		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
@@ -33,13 +41,15 @@ export default function EditProductCategory() {
 			const formData = new FormData();
 			formData.append("jwt_key", jwt_key);
 			formData.append("username", username);
-			formData.append("category_id", params.category_id);
-			formData.append("category_name", category_name);
-			formData.append("category_description", category_description);
-			formData.append("category_image", categoryImage);
+			formData.append("warehouse_id", params.warehouse_id);
+			formData.append("warehouse_name", warehouse_name);
+			formData.append("warehouse_description", warehouse_description);
+			formData.append("warehouse_location", warehouse_location);
+			formData.append("max_storage_capacity", max_storage_capacity);
+			formData.append("warehouse_image", warehouseImage);
 
 			axios
-				.post(BASEURL + "/productcategories/editcategory", formData)
+				.post(BASEURL + "/warehouses/editwarehouse", formData)
 				.then(async (response) => {
 					const data = await response?.data;
 
@@ -81,24 +91,68 @@ export default function EditProductCategory() {
 			<AdminNavbar priv="admin" />
 			<div className="container">
 				<div className="d-flex justify-content-center p-2">
-					<h3>Edit Product Category</h3>
+					<h3>Add New Warehouse</h3>
 				</div>
 
 				<form className="bg-dark p-5 rounded-3" onSubmit={handleSubmit}>
+					<div className="row">
+						<div className="form-outline mb-3 col">
+							<label className="text-white form-label" htmlFor="warehouse_name">
+								Warehouse Name
+							</label>
+							<input
+								required
+								type="text"
+								id="warehouse_name"
+								className="form-control"
+								value={formValues.warehouse_name}
+								onChange={(e) =>
+									setFormValues({
+										...formValues,
+										warehouse_name: e.target.value,
+									})
+								}
+							/>
+						</div>
+						<div className="form-outline mb-3 col">
+							<label
+								className="text-white form-label"
+								htmlFor="warehouse_location"
+							>
+								Warehouse location
+							</label>
+							<input
+								required
+								type="text"
+								id="warehouse_location"
+								className="form-control"
+								value={formValues.warehouse_location}
+								onChange={(e) =>
+									setFormValues({
+										...formValues,
+										warehouse_location: e.target.value,
+									})
+								}
+							/>
+						</div>
+					</div>
 					<div className="form-outline mb-3">
-						<label className="text-white form-label" htmlFor="category_name">
-							Category Name
+						<label
+							className="text-white form-label"
+							htmlFor="warehouse_description"
+						>
+							Warehouse Description
 						</label>
 						<input
 							required
 							type="text"
-							id="category_name"
+							id="warehouse_description"
 							className="form-control"
-							value={formValues.category_name}
+							value={formValues.warehouse_description}
 							onChange={(e) =>
 								setFormValues({
 									...formValues,
-									category_name: e.target.value,
+									warehouse_description: e.target.value,
 								})
 							}
 						/>
@@ -107,38 +161,38 @@ export default function EditProductCategory() {
 					<div className="form-outline mb-3">
 						<label
 							className="text-white form-label"
-							htmlFor="category_description"
+							htmlFor="max_storage_capacity"
 						>
-							Category Description
+							Maximum Storage Capacity (Metric Tons)
 						</label>
 						<input
 							required
-							type="text"
-							id="category_description"
+							type="number"
+							id="max_storage_capacity"
 							className="form-control"
-							value={formValues.category_description}
+							value={formValues.max_storage_capacity}
 							onChange={(e) =>
 								setFormValues({
 									...formValues,
-									category_description: e.target.value,
+									max_storage_capacity: e.target.value,
 								})
 							}
 						/>
 					</div>
 
 					<div className="form-outline mb-5">
-						<label className="text-white form-label" htmlFor="category_image">
-							Category Image
+						<label className="text-white form-label" htmlFor="warehouse_image">
+							Warehouse Image
 						</label>
 						<input
 							type="file"
-							id="category_image"
+							id="warehouse_image"
 							className="form-control"
 							onChange={handleFileChange}
 						/>
 					</div>
 
-					<div className="d-flex justify-content-center p-4">
+					<div className="d-flex justify-content-center p-2">
 						<button type="submit" className="btn btn-info">
 							SAVE CHANGES
 						</button>

@@ -30,11 +30,14 @@ import AddNewSystemUser from "./pages/admin/AddNewSystemUser";
 import AddNewProductCategory from "./pages/admin/AddNewProductCategory";
 import AddNewCustomer from "./pages/admin/AddNewCustomer";
 import AddNewSupplier from "./pages/admin/AddNewSupplier";
+import AddNewWarehouse from "./pages/admin/AddNewWarehouse";
 import EditProductCategory from "./pages/admin/EditProductCategory";
 import EditCustomer from "./pages/admin/EditCustomer";
 import EditSupplier from "./pages/admin/EditSupplier";
+import EditWarehouse from "./pages/admin/EditWarehouse";
 import EditProfileAdmin from "./pages/admin/EditProfile";
 import ChangePasswordAdmin from "./pages/admin/ChangePassword";
+
 
 const router = createBrowserRouter([
 	{
@@ -146,11 +149,32 @@ const router = createBrowserRouter([
 					},
 					{
 						path: "warehouses",
-						element: (
-							<ProtectedRoute>
-								<Warehouses />
-							</ProtectedRoute>
-						),
+						children: [
+							{
+								index: true,
+								element: (
+									<ProtectedRoute>
+										<Warehouses />
+									</ProtectedRoute>
+								),
+							},
+							{
+								path: "new",
+								element: (
+									<ProtectedRoute>
+										<AddNewWarehouse />
+									</ProtectedRoute>
+								),
+							},
+							{
+								path: "edit/:warehouse_id",
+								element: (
+									<ProtectedRoute>
+										<EditWarehouse />
+									</ProtectedRoute>
+								),
+							},
+						],
 					},
 					{
 						path: "suppliers",

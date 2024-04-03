@@ -51,7 +51,7 @@ export default function ListRoles() {
 				});
 			} else {
 				Swal.fire({
-					title: "Error deleting user. Try later",
+					title: "Error deleting category. Try later",
 					timer: 3000,
 					icon: "error",
 				}).then(() => {

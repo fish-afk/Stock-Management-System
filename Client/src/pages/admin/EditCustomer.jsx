@@ -6,8 +6,8 @@ import axios from "axios";
 import { useParams, useLocation } from "react-router-dom";
 
 export default function EditCustomer() {
-    const params = useParams();
-    const locationHook = useLocation();
+	const params = useParams();
+	const locationHook = useLocation();
 	const [formValues, setFormValues] = useState({
 		customer_name: locationHook.state.customer_name,
 		email: locationHook.state.email,
@@ -22,7 +22,7 @@ export default function EditCustomer() {
 		const userData = JSON.parse(localStorage.getItem("userDataObject"));
 		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
 		const username = userData?.username;
-    
+
 		try {
 			axios
 				.patch(BASEURL + "/customers/editCustomer", {
@@ -144,7 +144,7 @@ export default function EditCustomer() {
 
 					<div className="d-flex justify-content-center p-4">
 						<button type="submit" className="btn btn-info">
-							Edit Customer
+							SAVE CHANGES
 						</button>
 					</div>
 				</form>

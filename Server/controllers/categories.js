@@ -52,7 +52,7 @@ async function deleteCategory(req, res) {
 		console.log(err);
 		return res
 			.status(500)
-			.send({ status: "FAILURE", message: "Unknown error" });
+			.send({ status: "FAILURE", message: "Internal Server Error" });
 	}
 }
 
@@ -65,10 +65,17 @@ async function editCategory(req, res) {
 	const category = { category_name, category_description, category_image_name };
 
 	try {
-		await pool.query("UPDATE Categories SET ? WHERE category_id = ?", [
-			category,
-			category_id,
-		]);
+		const [results] = await pool.query(
+			"UPDATE Categories SET ? WHERE category_id = ?",
+			[category, category_id],
+		);
+
+		if (results.affectedRows == 0) {
+			return res.send({
+				status: "FAILURE",
+				message: "Category not found",
+			});
+		}
 		return res.send({
 			status: "SUCCESS",
 			message: "Category updated successfully",

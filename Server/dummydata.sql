@@ -20,3 +20,11 @@ INSERT INTO `users` (`username`, `password`, `first_name`, `last_name`, `email`,
 INSERT INTO `users` (`username`, `password`, `first_name`, `last_name`, `email`, `role_id`, `auth_refresh_token`) VALUES ('asdsad', '$2b$10$dMac45Uq0XVp.5UP4t50meqN8oXSmg6NV3hIzHOvtDBSSb2gYGRxG', 'john', 'doe', 'john3@exampl.com', 3, NULL);
 INSERT INTO `users` (`username`, `password`, `first_name`, `last_name`, `email`, `role_id`, `auth_refresh_token`) VALUES ('john_doe_st', '$2b$10$dMac45Uq0XVp.5UP4t50meqN8oXSmg6NV3hIzHOvtDBSSb2gYGRxG', 'john', 'doe', 'john3@exampl.com', 3, NULL);
 INSERT INTO `users` (`username`, `password`, `first_name`, `last_name`, `email`, `role_id`, `auth_refresh_token`) VALUES ('s', '$2b$10$dMac45Uq0XVp.5UP4t50meqN8oXSmg6NV3hIzHOvtDBSSb2gYGRxG', 'john', 'doe', 'john3@exampl.com', 3, NULL);
+
+INSERT INTO `Warehouses` 
+(`warehouse_name`, `warehouse_description`, `warehouse_location`, `image_name`, `max_storage_capacity`) 
+VALUES 
+('Warehouse A', 'Large warehouse for storing various goods', '123 Main St, Anytown, USA', 'warehouse_a_image.jpg', 10000),
+('Warehouse B', 'Temperature-controlled warehouse for perishable items', '456 Elm St, Othertown, USA', 'warehouse_b_image.jpg', 5000),
+('Warehouse C', 'Small warehouse specializing in electronics storage', '789 Oak St, Anycity, USA', 'warehouse_c_image.jpg', 2000),
+('Warehouse D', 'Medium-sized warehouse for general storage purposes', '321 Pine St, Anothercity, USA', 'warehouse_d_image.jpg', 8000);
