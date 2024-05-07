@@ -11,15 +11,9 @@ import {
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { CDBIcon } from "cdbreact";
 
 const AdminNavbar = () => {
 	const Navigate = useNavigate();
-
-	const hidenav = (element) => {
-		console.log(element);
-		element.style.display = "none";
-	};
 
 	return (
 		<div

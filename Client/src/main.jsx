@@ -45,6 +45,23 @@ const router = createBrowserRouter([
 		element: <Redirector />,
 	},
 	{
+		path: "*",
+		element: (
+			<div>
+				<h1
+					style={{ display: "flex", justifyContent: "center" }}
+					className="mt-5"
+				>
+					Error 404: Page Not found
+				</h1>
+				<br />
+				<a href="/" style={{ display: "flex", justifyContent: "center" }}>
+					<h4>Back to home</h4>
+				</a>
+			</div>
+		),
+	},
+	{
 		path: "/login",
 		element: <Login />,
 	},
