@@ -15,6 +15,7 @@ import ResetPassword from "./pages/auth/ResetPassword";
 
 //warehouse operator pages
 import WarehouseOperatorDashboard from "./pages/warehouseOperator/WarehouseOperatorDashboard";
+import Products from "./pages/warehouseOperator/Products";
 
 //stakeholder pages
 import StakeHolderDashboard from "./pages/stakeHolder/StakeHolderDashboard";
@@ -52,7 +53,7 @@ const router = createBrowserRouter([
 					style={{ display: "flex", justifyContent: "center" }}
 					className="mt-5"
 				>
-					Error 404: Page Not found
+					Error 404: Page not found
 				</h1>
 				<br />
 				<a href="/" style={{ display: "flex", justifyContent: "center" }}>
@@ -271,6 +272,29 @@ const router = createBrowserRouter([
 					</ProtectedRoute>
 				),
 			},
+
+			{
+				path: "pages",
+				children: [
+					{
+						index: true,
+						element: <Redirector />,
+					},
+					{
+						path: "products",
+						children: [
+							{
+								index: true,
+								element: (
+									<ProtectedRoute>
+										<Products />
+									</ProtectedRoute>
+								),
+							}
+						]
+					}
+				]
+			}
 		],
 	},
 

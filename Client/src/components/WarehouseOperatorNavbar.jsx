@@ -31,26 +31,26 @@ const WarehouseOperatorNavbar = () => {
 
 				<CDBSidebarContent className="sidebar-content">
 					<CDBSidebarMenu>
-						<Link to="/admin/dashboard">
+						<Link to="/warehouse-operator/dashboard">
 							<CDBSidebarMenuItem icon="home">Home</CDBSidebarMenuItem>
 						</Link>
-						<Link to="/admin/pages/system-users">
+						<Link to="/warehouse-operator/pages/products">
 							<CDBSidebarMenuItem icon="box">Products</CDBSidebarMenuItem>
 						</Link>
-						<Link to="/admin/pages/customers">
+						<Link to="/warehouse-operator/pages/purchases">
 							<CDBSidebarMenuItem icon="money-bill">
 								Purchases
 							</CDBSidebarMenuItem>
 						</Link>
-						<Link to="/admin/pages/suppliers">
+						<Link to="/warehouse-operator/pages/sales">
 							<CDBSidebarMenuItem icon="money-bill">Sales</CDBSidebarMenuItem>
 						</Link>
-						<Link to="/admin/pages/product-categories">
+						<Link to="/warehouse-operator/pages/product-categories">
 							<CDBSidebarMenuItem icon="shapes">
 								Product Categories
 							</CDBSidebarMenuItem>
 						</Link>
-						<Link to="/admin/pages/warehouses">
+						<Link to="/warehouse-operator/pages/warehouses">
 							<CDBSidebarMenuItem icon="warehouse">
 								Warehouses
 							</CDBSidebarMenuItem>
@@ -63,7 +63,7 @@ const WarehouseOperatorNavbar = () => {
 						className="container text-white btn mb-3"
 						outline
 						onClick={() => {
-							Navigate("/admin/editprofile");
+							Navigate("/warehouse-operator/editprofile");
 						}}
 					>
 						<p className="fs-7 m-0">Edit Profile</p>
@@ -72,7 +72,7 @@ const WarehouseOperatorNavbar = () => {
 						className="container text-white btn mb-3"
 						outline
 						onClick={() => {
-							Navigate("/admin/changepassword");
+							Navigate("/warehouse-operator/changepassword");
 						}}
 					>
 						<p className="fs-7 m-0">Change Password</p>

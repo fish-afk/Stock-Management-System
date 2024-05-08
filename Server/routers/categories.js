@@ -1,4 +1,4 @@
-const userController = require("../controllers/categories");
+const categoryController = require("../controllers/categories");
 const authMiddleware = require("../middleware/auth");
 const express = require("express");
 const { upload } = require("../middleware/multer_middleware");
@@ -8,25 +8,25 @@ const router = express.Router();
 router.post(
 	"/getallproductcategories",
 	authMiddleware.verifyJWT,
-	userController.getAllCategories,
+	categoryController.getAllCategories,
 );
 
 router.post(
 	"/addnewcategory",
   	upload.single('category_image'),
-	userController.addCategory,
+	categoryController.addCategory,
 );
 
 router.post(
 	"/editcategory",
 	upload.single("category_image"),
-	userController.editCategory,
+	categoryController.editCategory,
 );
 
 router.delete(
 	"/deletecategory",
 	authMiddleware.verifyJWT,
-	userController.deleteCategory,
+	categoryController.deleteCategory,
 );
 
 module.exports = router;
