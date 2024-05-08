@@ -3,13 +3,6 @@ const jwt = require("jsonwebtoken");
 
 async function getAllCategories(req, res) {
 	try {
-		if (req.decoded.role_id != 1) {
-			return res.send({
-				status: "FAILURE",
-				message: "insufficient privileges",
-			});
-		}
-
 		const query = "SELECT * FROM Categories";
 		const [categories] = await pool.query(query);
 

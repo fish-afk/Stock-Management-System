@@ -11,7 +11,7 @@ export default function Products() {
 	const [Products, setProducts] = useState([]);
 
 	const delete_product = async (productId) => {
-		const msg = "Are you sure you want to delete this Product Category?";
+		const msg = "Are you sure you want to delete this Product?";
 		const txt = "This action is irreversible";
 		const result = await Swal.fire({
 			title: msg,
@@ -32,7 +32,7 @@ export default function Products() {
 				jwt_key,
 				productId,
 			};
-			let data = await axios.delete(BASEURL + "/product/deleteproduct", {
+			let data = await axios.delete(BASEURL + "/products/deleteproduct", {
 				data: reqData,
 			});
 			const response = data?.data;
@@ -93,7 +93,7 @@ export default function Products() {
 					<button
 						className="btn btn-primary fw-bold"
 						onClick={() => {
-							Navigate("/admin/pages/product-categories/new");
+							Navigate("/warehouse-operator/pages/products/new");
 						}}
 					>
 						+ Add New Product
@@ -108,7 +108,7 @@ export default function Products() {
 									className="card h-100 text-white p-2 bg-dark"
 									style={{
 										backgroundImage: `url(${IMAGESBASEURL}/${
-											Product.product_image_name || "none"
+											Product.product_image || "none"
 										})`,
 										backgroundSize: "cover",
 										backgroundPosition: "center",
@@ -117,12 +117,12 @@ export default function Products() {
 								>
 									<div className="card-body">
 										<h5 className="card-title">{Product.product_name}</h5>
-										<p className="card-text">{Product.product_description}</p>
+										<p className="card-text">{Product.description}</p>
 										<button
 											className="btn btn-warning me-2"
 											onClick={() => {
 												Navigate(
-													"/admin/pages/product-categories/edit/" +
+													"/warehouse-operator/pages/products/edit/" +
 														Product.product_id,
 													{
 														state: { ...Product },

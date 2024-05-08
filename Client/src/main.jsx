@@ -16,6 +16,8 @@ import ResetPassword from "./pages/auth/ResetPassword";
 //warehouse operator pages
 import WarehouseOperatorDashboard from "./pages/warehouseOperator/WarehouseOperatorDashboard";
 import Products from "./pages/warehouseOperator/Products";
+import AddNewProduct from "./pages/warehouseOperator/AddNewProduct";
+import EditProduct from "./pages/warehouseOperator/EditProduct";
 
 //stakeholder pages
 import StakeHolderDashboard from "./pages/stakeHolder/StakeHolderDashboard";
@@ -290,11 +292,27 @@ const router = createBrowserRouter([
 										<Products />
 									</ProtectedRoute>
 								),
-							}
-						]
-					}
-				]
-			}
+							},
+							{
+								path: "new",
+								element: (
+									<ProtectedRoute>
+										<AddNewProduct />
+									</ProtectedRoute>
+								),
+							},
+							{
+								path: "edit/:product_id",
+								element: (
+									<ProtectedRoute>
+										<EditProduct />
+									</ProtectedRoute>
+								),
+							},
+						],
+					},
+				],
+			},
 		],
 	},
 

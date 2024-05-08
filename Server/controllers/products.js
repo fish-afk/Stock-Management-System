@@ -66,7 +66,7 @@ async function addProduct(req, res) {
 		unit_price,
 		quantity_in_stock,
 		category_id,
-		warehouse_location_id,
+		warehouse_id,
 		username,
 		jwt_key,
 	} = req.body;
@@ -80,7 +80,7 @@ async function addProduct(req, res) {
 	}
 
 	// Get the uploaded file details from req.file
-	const product_image_name = req.file ? req.file.filename : null; // Assuming filename is stored in req.file
+	const product_image = req.file ? req.file.filename : null; // Assuming filename is stored in req.file
 
 	const product = {
 		product_name,
@@ -88,9 +88,9 @@ async function addProduct(req, res) {
 		unit_price,
 		quantity_in_stock,
 		category_id,
-		product_image_name,
-		warehouse_location_id,
-		username,
+		product_image,
+		warehouse_id,
+		last_edited_by: username,
 	};
 
 	try {
@@ -116,7 +116,7 @@ async function editProduct(req, res) {
 		unit_price,
 		quantity_in_stock,
 		category_id,
-		warehouse_location_id,
+		warehouse_id,
 		username,
 		jwt_key,
 	} = req.body;
@@ -130,7 +130,7 @@ async function editProduct(req, res) {
 	}
 
 	// Get the uploaded file details from req.file
-	const product_image_name = req.file ? req.file.filename : null; // Assuming filename is stored in req.file
+	const product_image = req.file ? req.file.filename : null; // Assuming filename is stored in req.file
 
 	const product = {
 		product_name,
@@ -138,9 +138,9 @@ async function editProduct(req, res) {
 		unit_price,
 		quantity_in_stock,
 		category_id,
-		product_image_name,
-		warehouse_location_id,
-		username,
+		product_image,
+		warehouse_id,
+		last_edited_by: username,
 	};
 
 	try {
@@ -161,7 +161,8 @@ async function editProduct(req, res) {
 }
 
 async function deleteProduct(req, res) {
-	let productId = req.body["product_id"];
+	let productId = req.body["productId"];
+
 
 	try {
 		await pool.query("DELETE FROM Products WHERE product_id = ?", [productId]);

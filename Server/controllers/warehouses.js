@@ -3,13 +3,7 @@ const jwt = require('jsonwebtoken')
 
 async function getAllWarehouses(req, res) {
 	try {
-		if (req.decoded.role_id != 1) {
-			return res.send({
-				status: "FAILURE",
-				message: "insufficient privileges",
-			});
-		}
-
+		
 		const query = "SELECT * FROM Warehouses";
 		const [Warehouses] = await pool.query(query);
 
