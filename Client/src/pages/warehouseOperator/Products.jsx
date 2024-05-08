@@ -118,6 +118,13 @@ export default function Products() {
 									<div className="card-body">
 										<h5 className="card-title">{Product.product_name}</h5>
 										<p className="card-text">{Product.description}</p>
+										<br />
+										<p className="card-text">
+											Unit Selling Price : K{Product.unit_price}
+										</p>
+										<p className="card-text">
+											Quantity Available: {Product.quantity_in_stock}
+										</p>
 										<button
 											className="btn btn-warning me-2"
 											onClick={() => {

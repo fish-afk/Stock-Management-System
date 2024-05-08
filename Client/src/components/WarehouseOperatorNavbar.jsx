@@ -63,7 +63,7 @@ const WarehouseOperatorNavbar = () => {
 						className="container text-white btn mb-3"
 						outline
 						onClick={() => {
-							Navigate("/warehouse-operator/editprofile");
+							Navigate("/editprofile/wh");
 						}}
 					>
 						<p className="fs-7 m-0">Edit Profile</p>
@@ -72,7 +72,7 @@ const WarehouseOperatorNavbar = () => {
 						className="container text-white btn mb-3"
 						outline
 						onClick={() => {
-							Navigate("/warehouse-operator/changepassword");
+							Navigate("/changepassword/wh");
 						}}
 					>
 						<p className="fs-7 m-0">Change Password</p>

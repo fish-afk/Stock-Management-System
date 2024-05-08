@@ -13,46 +13,46 @@ export default function AddNewProduct() {
 		category_id: "",
 		warehouse_id: "",
 	});
-    const [productImage, setProductImage] = useState(null);
-    const [categories, setCategories] = useState([]);
-    const [warehouses, setWarehouses] = useState([])
+	const [productImage, setProductImage] = useState(null);
+	const [categories, setCategories] = useState([]);
+	const [warehouses, setWarehouses] = useState([]);
 
-    const getCategories = async () => {
-			const userData = JSON.parse(localStorage.getItem("userDataObject"));
-			const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
-			const username = userData?.username;
-			let data = await axios.post(
-				BASEURL + "/productcategories/getallproductcategories",
-				{
-					username,
-					jwt_key,
-				},
-			);
-			const response = data?.data;
-			console.log(response);
-
-			setCategories(response?.data == undefined ? [] : response?.data);
-    };
-
-    const getWarehouses = async () => {
-			const userData = JSON.parse(localStorage.getItem("userDataObject"));
-			const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
-			const username = userData?.username;
-			let data = await axios.post(BASEURL + "/warehouses/getallwarehouses", {
+	const getCategories = async () => {
+		const userData = JSON.parse(localStorage.getItem("userDataObject"));
+		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
+		const username = userData?.username;
+		let data = await axios.post(
+			BASEURL + "/productcategories/getallproductcategories",
+			{
 				username,
 				jwt_key,
-			});
-			const response = data?.data;
-			console.log(response);
+			},
+		);
+		const response = data?.data;
+		console.log(response);
 
-			setWarehouses(response?.data == undefined ? [] : response?.data);
-		};
+		setCategories(response?.data == undefined ? [] : response?.data);
+	};
 
-    useEffect(() => {
-        getCategories();
-        getWarehouses()
-    }, [])
-    
+	const getWarehouses = async () => {
+		const userData = JSON.parse(localStorage.getItem("userDataObject"));
+		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
+		const username = userData?.username;
+		let data = await axios.post(BASEURL + "/warehouses/getallwarehouses", {
+			username,
+			jwt_key,
+		});
+		const response = data?.data;
+		console.log(response);
+
+		setWarehouses(response?.data == undefined ? [] : response?.data);
+	};
+
+	useEffect(() => {
+		getCategories();
+		getWarehouses();
+	}, []);
+
 	const handleFileChange = (e) => {
 		const file = e.target.files[0];
 		setProductImage(file);
@@ -80,11 +80,11 @@ export default function AddNewProduct() {
 			formData.append("username", username);
 			formData.append("product_name", product_name);
 			formData.append("description", description);
-            formData.append("product_image", productImage);
-            formData.append("unit_price", unit_price);
-            formData.append("quantity_in_stock", quantity_in_stock);
-            formData.append("category_id", category_id);
-            formData.append("warehouse_id", warehouse_id);
+			formData.append("product_image", productImage);
+			formData.append("unit_price", unit_price);
+			formData.append("quantity_in_stock", quantity_in_stock);
+			formData.append("category_id", category_id);
+			formData.append("warehouse_id", warehouse_id);
 
 			axios
 				.post(BASEURL + "/products/addnewproduct", formData)
@@ -184,7 +184,7 @@ export default function AddNewProduct() {
 					<div className="row mb-1">
 						<div className="form-outline mb-3 col">
 							<label className="text-white form-label" htmlFor="unit_price">
-								Unit Price
+								Unit Price (K)
 							</label>
 							<input
 								required

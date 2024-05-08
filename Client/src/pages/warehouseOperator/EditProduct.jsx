@@ -6,9 +6,9 @@ import WarehouseOperatorNavbar from "../../components/WarehouseOperatorNavbar";
 import { useParams, useLocation } from "react-router-dom";
 
 export default function EditProduct() {
-    const params = useParams();
+	const params = useParams();
 	const locationHook = useLocation();
-    
+
 	const [formValues, setFormValues] = useState({
 		product_name: locationHook.state.product_name,
 		description: locationHook.state.description,
@@ -16,8 +16,8 @@ export default function EditProduct() {
 		quantity_in_stock: locationHook.state.quantity_in_stock,
 		category_id: locationHook.state.category_id,
 		warehouse_id: locationHook.state.warehouse_id,
-    });
-    
+	});
+
 	const [productImage, setProductImage] = useState(null);
 	const [categories, setCategories] = useState([]);
 	const [warehouses, setWarehouses] = useState([]);
@@ -89,8 +89,8 @@ export default function EditProduct() {
 			formData.append("unit_price", unit_price);
 			formData.append("quantity_in_stock", quantity_in_stock);
 			formData.append("category_id", category_id);
-            formData.append("warehouse_id", warehouse_id);
-            formData.append("product_id", params.product_id);
+			formData.append("warehouse_id", warehouse_id);
+			formData.append("product_id", params.product_id);
 
 			axios
 				.post(BASEURL + "/products/editproduct", formData)
@@ -190,7 +190,7 @@ export default function EditProduct() {
 					<div className="row mb-1">
 						<div className="form-outline mb-3 col">
 							<label className="text-white form-label" htmlFor="unit_price">
-								Unit Price
+								Unit Price (K)
 							</label>
 							<input
 								required
@@ -250,7 +250,7 @@ export default function EditProduct() {
 								required
 								id="category_id"
 								className="form-select"
-                                value={formValues.category_id}
+								value={formValues.category_id}
 								onChange={(e) =>
 									setFormValues({
 										...formValues,

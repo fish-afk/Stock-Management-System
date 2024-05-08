@@ -18,6 +18,8 @@ import WarehouseOperatorDashboard from "./pages/warehouseOperator/WarehouseOpera
 import Products from "./pages/warehouseOperator/Products";
 import AddNewProduct from "./pages/warehouseOperator/AddNewProduct";
 import EditProduct from "./pages/warehouseOperator/EditProduct";
+import ProductCategoriesWh from "./pages/warehouseOperator/ProductCategories";
+import WarehousesWh from "./pages/warehouseOperator/Warehouses";
 
 //stakeholder pages
 import StakeHolderDashboard from "./pages/stakeHolder/StakeHolderDashboard";
@@ -38,8 +40,8 @@ import EditProductCategory from "./pages/admin/EditProductCategory";
 import EditCustomer from "./pages/admin/EditCustomer";
 import EditSupplier from "./pages/admin/EditSupplier";
 import EditWarehouse from "./pages/admin/EditWarehouse";
-import EditProfileAdmin from "./pages/admin/EditProfile";
-import ChangePasswordAdmin from "./pages/admin/ChangePassword";
+import EditProfile from "./pages/auth/EditProfile";
+import ChangePassword from "./pages/auth/ChangePassword";
 
 
 const router = createBrowserRouter([
@@ -73,8 +75,24 @@ const router = createBrowserRouter([
 		element: <Logout />,
 	},
 	{
-		path: "/reset-password",
+		path: "/reset-password/:priv",
 		element: <ResetPassword />,
+	},
+	{
+		path: "/editprofile/:privs",
+		element: (
+			<ProtectedRoute>
+				<EditProfile />
+			</ProtectedRoute>
+		),
+	},
+	{
+		path: "/changepassword/:privs",
+		element: (
+			<ProtectedRoute>
+				<ChangePassword />
+			</ProtectedRoute>
+		),
 	},
 	{
 		path: "/admin",
@@ -88,24 +106,6 @@ const router = createBrowserRouter([
 				element: (
 					<ProtectedRoute>
 						<AdminDashboard />
-					</ProtectedRoute>
-				),
-			},
-
-			{
-				path: "editprofile",
-				element: (
-					<ProtectedRoute>
-						<EditProfileAdmin />
-					</ProtectedRoute>
-				),
-			},
-
-			{
-				path: "changepassword",
-				element: (
-					<ProtectedRoute>
-						<ChangePasswordAdmin />
 					</ProtectedRoute>
 				),
 			},
@@ -306,6 +306,32 @@ const router = createBrowserRouter([
 								element: (
 									<ProtectedRoute>
 										<EditProduct />
+									</ProtectedRoute>
+								),
+							},
+						],
+					},
+					{
+						path: "product-categories",
+						children: [
+							{
+								index: true,
+								element: (
+									<ProtectedRoute>
+										<ProductCategoriesWh />
+									</ProtectedRoute>
+								),
+							},
+						],
+					},
+					{
+						path: "warehouses",
+						children: [
+							{
+								index: true,
+								element: (
+									<ProtectedRoute>
+										<WarehousesWh />
 									</ProtectedRoute>
 								),
 							},

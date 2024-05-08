@@ -58,7 +58,7 @@ const StakeholderNavbar = () => {
 						className="container text-white btn mb-3"
 						outline
 						onClick={() => {
-							Navigate("/stakeholder/editprofile");
+							Navigate("/editprofile/st");
 						}}
 					>
 						<p className="fs-7 m-0">Edit Profile</p>
@@ -67,7 +67,7 @@ const StakeholderNavbar = () => {
 						className="container text-white btn mb-3"
 						outline
 						onClick={() => {
-							Navigate("/stakeholder/changepassword");
+							Navigate("/changepassword/st");
 						}}
 					>
 						<p className="fs-7 m-0">Change Password</p>

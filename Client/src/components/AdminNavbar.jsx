@@ -64,7 +64,7 @@ const AdminNavbar = () => {
 						className="container text-white btn mb-3"
 						outline
 						onClick={() => {
-							Navigate("/admin/editprofile");
+							Navigate("/editprofile/adm");
 						}}
 					>
 						<p className="fs-7 m-0">Edit Profile</p>
@@ -73,7 +73,7 @@ const AdminNavbar = () => {
 						className="container text-white btn mb-3"
 						outline
 						onClick={() => {
-							Navigate("/admin/changepassword");
+							Navigate("/changepassword/adm");
 						}}
 					>
 						<p className="fs-7 m-0">Change Password</p>

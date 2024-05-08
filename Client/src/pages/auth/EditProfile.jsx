@@ -4,15 +4,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import BASEURL from "../../constants/apiBaseUrl";
 import Swal from "sweetalert2";
+import { useParams } from "react-router-dom";
+import WarehouseOperatorNavbar from "../../components/WarehouseOperatorNavbar";
+import StakeholderNavbar from "../../components/StakeHolderNavbar";
 
-export default function EditProfileAdmin() {
+export default function EditProfile() {
 	const [formValues, setFormValues] = useState({});
-
-	useEffect(() => {
-		const func = async () => {};
-
-		func();
-	}, []);
+	const params = useParams();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -55,7 +53,7 @@ export default function EditProfileAdmin() {
 
 	return (
 		<div className="d-flex">
-			<AdminNavbar priv="admin" />
+			{params.privs == "adm" ? <AdminNavbar priv="admin" /> : params.privs == "wh" ? <WarehouseOperatorNavbar /> : <StakeholderNavbar />}
 			<div className="container">
 				<div className="d-flex justify-content-center p-4">
 					<h1>Update your details</h1>
