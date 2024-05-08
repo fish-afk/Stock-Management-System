@@ -20,6 +20,8 @@ import AddNewProduct from "./pages/warehouseOperator/AddNewProduct";
 import EditProduct from "./pages/warehouseOperator/EditProduct";
 import ProductCategoriesWh from "./pages/warehouseOperator/ProductCategories";
 import WarehousesWh from "./pages/warehouseOperator/Warehouses";
+import Purchases from "./pages/warehouseOperator/Purchases";
+import Sales from "./pages/warehouseOperator/Sales";
 
 //stakeholder pages
 import StakeHolderDashboard from "./pages/stakeHolder/StakeHolderDashboard";
@@ -332,6 +334,32 @@ const router = createBrowserRouter([
 								element: (
 									<ProtectedRoute>
 										<WarehousesWh />
+									</ProtectedRoute>
+								),
+							},
+						],
+					},
+					{
+						path: "sales",
+						children: [
+							{
+								index: true,
+								element: (
+									<ProtectedRoute>
+										<Sales />
+									</ProtectedRoute>
+								),
+							},
+						],
+					},
+					{
+						path: "purchases",
+						children: [
+							{
+								index: true,
+								element: (
+									<ProtectedRoute>
+										<Purchases />
 									</ProtectedRoute>
 								),
 							},

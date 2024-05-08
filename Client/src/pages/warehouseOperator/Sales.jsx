@@ -1,11 +1,10 @@
 import React from 'react'
 import WarehouseOperatorNavbar from '../../components/WarehouseOperatorNavbar'
 
-export default function Purchases() {
+export default function Sales() {
   return (
-		<div>
-			<WarehouseOperatorNavbar />
-			Purchases
-		</div>
-	);
+      <div>
+          <WarehouseOperatorNavbar/>
+          Sales</div>
+  )
 }
