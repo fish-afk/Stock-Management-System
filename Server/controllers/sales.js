@@ -153,7 +153,7 @@ async function addSale(req, res) {
 		product_id,
 		quantity,
 		unit_price,
-		sale_proof_image
+		proof_of_sale_image: sale_proof_image,
 	};
 
 	try {

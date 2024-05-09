@@ -148,7 +148,7 @@ async function addPurchase(req, res) {
 		purchase_date,
 		quantity,
 		unit_price,
-		purchase_proof_image
+		proof_of_purchase_image: purchase_proof_image,
 	};
 
 	try {

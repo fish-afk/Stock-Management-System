@@ -13,13 +13,13 @@ router.post(
 
 router.post(
 	"/addnewpurchase",
-	upload2.single("purchase_image"),
+	upload2.single("purchase_proof_image"),
 	purchasesController.addPurchase,
 );
 
 router.post(
 	"/editpurchase",
-	upload2.single("purchase_image"),
+	upload2.single("purchase_proof_image"),
 	purchasesController.editPurchase,
 );
 

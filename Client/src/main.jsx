@@ -22,6 +22,8 @@ import ProductCategoriesWh from "./pages/warehouseOperator/ProductCategories";
 import WarehousesWh from "./pages/warehouseOperator/Warehouses";
 import Purchases from "./pages/warehouseOperator/Purchases";
 import Sales from "./pages/warehouseOperator/Sales";
+import AddNewPurchase from "./pages/warehouseOperator/AddNewPurchase";
+import AddNewSale from "./pages/warehouseOperator/AddNewSale";
 
 //stakeholder pages
 import StakeHolderDashboard from "./pages/stakeHolder/StakeHolderDashboard";
@@ -44,6 +46,8 @@ import EditSupplier from "./pages/admin/EditSupplier";
 import EditWarehouse from "./pages/admin/EditWarehouse";
 import EditProfile from "./pages/auth/EditProfile";
 import ChangePassword from "./pages/auth/ChangePassword";
+
+
 
 
 const router = createBrowserRouter([
@@ -350,6 +354,14 @@ const router = createBrowserRouter([
 									</ProtectedRoute>
 								),
 							},
+							{
+								path: 'new',
+								element: (
+									<ProtectedRoute>
+										<AddNewSale/>
+									</ProtectedRoute>
+								)
+							}
 						],
 					},
 					{
@@ -363,6 +375,14 @@ const router = createBrowserRouter([
 									</ProtectedRoute>
 								),
 							},
+							{
+								path: 'new',
+								element: (
+									<ProtectedRoute>
+										<AddNewPurchase/>
+									</ProtectedRoute>
+								)
+							}
 						],
 					},
 				],

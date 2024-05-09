@@ -13,13 +13,13 @@ router.post(
 
 router.post(
 	"/addnewsale",
-	upload1.single("sale_image"),
+	upload1.single("sale_proof_image"),
 	salesController.addSale,
 );
 
 router.post(
 	"/editsale",
-	upload1.single("sale_image"),
+	upload1.single("sale_proof_image"),
 	salesController.editSale,
 );
 
