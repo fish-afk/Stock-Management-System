@@ -1,7 +1,7 @@
 const categoryController = require("../controllers/categories");
 const authMiddleware = require("../middleware/auth");
 const express = require("express");
-const { upload } = require("../middleware/multer_middleware");
+const { upload5 } = require("../middleware/multer_middleware");
 
 const router = express.Router();
 
@@ -13,13 +13,13 @@ router.post(
 
 router.post(
 	"/addnewcategory",
-  	upload.single('category_image'),
+  	upload5.single('category_image'),
 	categoryController.addCategory,
 );
 
 router.post(
 	"/editcategory",
-	upload.single("category_image"),
+	upload5.single("category_image"),
 	categoryController.editCategory,
 );
 

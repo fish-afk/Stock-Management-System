@@ -106,7 +106,7 @@ export default function Warehouses() {
 								<div
 									className="card h-100 text-white p-3 bg-dark"
 									style={{
-										backgroundImage: `url(${IMAGESBASEURL}/${
+										backgroundImage: `url(${IMAGESBASEURL}/warehouses/${
 											warehouse.image_name || "none"
 										})`,
 										backgroundSize: "cover",

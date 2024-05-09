@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const security = require("./middleware/Security");
+const {createDirectories} = require('./middleware/multer_middleware')
 const path = require("path");
 const rateLimit = require("express-rate-limit");
 
@@ -20,6 +21,7 @@ const customersRouter = require("./routers/customers");
 const suppliersRouter = require("./routers/suppliers");
 const warehousesRouter = require('./routers/warehouses')
 const productsRouter = require('./routers/products');
+
 
 const rateLimiter = rateLimit({
 	windowMs: 3 * 60 * 1000, // 3 minutes
@@ -53,5 +55,6 @@ app.get("*", rateLimiter, (req, res) => {
 });
 
 app.listen(PORT, () => {
+	createDirectories();
 	console.log("Server Listening on Port " + PORT);
 });

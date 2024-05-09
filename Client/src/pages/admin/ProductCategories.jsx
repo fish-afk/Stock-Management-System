@@ -109,7 +109,7 @@ export default function ProductCategories() {
 								<div
 									className="card h-100 text-white p-2 bg-dark"
 									style={{
-										backgroundImage: `url(${IMAGESBASEURL}/${
+										backgroundImage: `url(${IMAGESBASEURL}/product_categories/${
 											ProductCategory.category_image_name || "none"
 										})`,
 										backgroundSize: "cover",

@@ -3,6 +3,8 @@ CREATE DATABASE StockManagementSystem_001356993;
 USE StockManagementSystem_001356993;
 
 
+
+
 CREATE TABLE IF NOT EXISTS `Categories` (
   `category_id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `category_name` VARCHAR(255),
@@ -47,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `Warehouses` (
   `warehouse_description` TEXT,
   `warehouse_location` TEXT,
   `image_name` TEXT,
-  `max_storage_capacity` INT,
+  `max_storage_capacity` INT
 );
 
 CREATE TABLE IF NOT EXISTS `Purchases` (
@@ -56,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `Purchases` (
   `product_id` INT,
   `purchase_date` DATE,
   `quantity` INT,
+  `proof_of_purchase_image` TEXT,
   `unit_price` DECIMAL(10,2)
 );
 
@@ -77,9 +80,8 @@ CREATE TABLE IF NOT EXISTS `Sales` (
   `customer_id` INT,
   `product_id` INT,
   `quantity` INT,
-  `unit_price` DECIMAL(10,2),
-  `total_price` DECIMAL(10,2),
-  `order_completed` BOOLEAN
+  `proof_of_sale_image` TEXT,
+  `unit_price` DECIMAL(10,2)
 );
 
 ALTER TABLE `Users` ADD FOREIGN KEY (`role_id`) REFERENCES `Roles` (`role_id`) ON DELETE SET NULL ON UPDATE CASCADE;

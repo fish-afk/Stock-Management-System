@@ -1,7 +1,7 @@
 const warehouseController = require("../controllers/warehouses");
 const authMiddleware = require("../middleware/auth");
 const express = require("express");
-const { upload } = require("../middleware/multer_middleware");
+const { upload3 } = require("../middleware/multer_middleware");
 
 const router = express.Router();
 
@@ -13,13 +13,13 @@ router.post(
 
 router.post(
 	"/addnewwarehouse",
-	upload.single("warehouse_image"),
+	upload3.single("warehouse_image"),
 	warehouseController.addWarehouse,
 );
 
 router.post(
 	"/editwarehouse",
-	upload.single("warehouse_image"),
+	upload3.single("warehouse_image"),
 	warehouseController.editWarehouse,
 );
 

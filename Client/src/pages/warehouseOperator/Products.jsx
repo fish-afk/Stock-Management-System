@@ -107,7 +107,7 @@ export default function Products() {
 								<div
 									className="card h-100 text-white p-2 bg-dark"
 									style={{
-										backgroundImage: `url(${IMAGESBASEURL}/${
+										backgroundImage: `url(${IMAGESBASEURL}/products/${
 											Product.product_image || "none"
 										})`,
 										backgroundSize: "cover",
