@@ -24,9 +24,13 @@ import Purchases from "./pages/warehouseOperator/Purchases";
 import Sales from "./pages/warehouseOperator/Sales";
 import AddNewPurchase from "./pages/warehouseOperator/AddNewPurchase";
 import AddNewSale from "./pages/warehouseOperator/AddNewSale";
+import EditSale from "./pages/warehouseOperator/EditSale";
+import EditPurchase from "./pages/warehouseOperator/EditPurchase";
 
 //stakeholder pages
 import StakeHolderDashboard from "./pages/stakeHolder/StakeHolderDashboard";
+import PurchasesSt from "./pages/stakeHolder/Purchases";
+import SalesSt from "./pages/stakeHolder/Sales";
 
 // admin pages
 import SystemUsers from "./pages/admin/SystemUsers";
@@ -355,13 +359,21 @@ const router = createBrowserRouter([
 								),
 							},
 							{
-								path: 'new',
+								path: "new",
 								element: (
 									<ProtectedRoute>
-										<AddNewSale/>
+										<AddNewSale />
 									</ProtectedRoute>
-								)
-							}
+								),
+							},
+							{
+								path: "edit/:sale_id",
+								element: (
+									<ProtectedRoute>
+										<EditSale />
+									</ProtectedRoute>
+								),
+							},
 						],
 					},
 					{
@@ -376,13 +388,21 @@ const router = createBrowserRouter([
 								),
 							},
 							{
-								path: 'new',
+								path: "new",
 								element: (
 									<ProtectedRoute>
-										<AddNewPurchase/>
+										<AddNewPurchase />
 									</ProtectedRoute>
-								)
-							}
+								),
+							},
+							{
+								path: "edit/:purchase_id",
+								element: (
+									<ProtectedRoute>
+										<EditPurchase />
+									</ProtectedRoute>
+								),
+							},
 						],
 					},
 				],
@@ -404,6 +424,43 @@ const router = createBrowserRouter([
 						<StakeHolderDashboard />
 					</ProtectedRoute>
 				),
+			},
+
+			{
+				path: "pages",
+				children: [
+					{
+						index: true,
+						element: <Redirector />,
+					},
+					
+					{
+						path: "sales",
+						children: [
+							{
+								index: true,
+								element: (
+									<ProtectedRoute>
+										<SalesSt />
+									</ProtectedRoute>
+								),
+							},
+						],
+					},
+					{
+						path: "purchases",
+						children: [
+							{
+								index: true,
+								element: (
+									<ProtectedRoute>
+										<PurchasesSt />
+									</ProtectedRoute>
+								),
+							},
+						],
+					},
+				],
 			},
 		],
 	},

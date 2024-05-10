@@ -1,11 +1,10 @@
 import Swal from "sweetalert2";
 import { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import BASEURL from "../constants/apiBaseUrl";
 import axios from "axios";
 
-const SalesTable = ({ sales }) => {
+const SalesTable = ({ sales, crud }) => {
 	const Navigate = useNavigate();
 	const [record, setrecord] = useState(null);
 
@@ -68,24 +67,46 @@ const SalesTable = ({ sales }) => {
 					</tr>
 				</thead>
 				<tbody>
-					{sales.map((purchase, index) => (
+					{sales.map((sale, index) => (
 						<tr key={index}>
-							<td>{purchase.sale_id}</td>
-							<td>{purchase.customer_id}</td>
-							<td>{purchase.product_id}</td>
-							<td>{purchase.sale_date}</td>
-							<td>{purchase.unit_price}</td>
-							<td>{purchase.quantity}</td>
-							<td>
-								<button
-									className="btn btn-danger pe-2 ps-2 pt-1 pb-1"
-									onClick={() => {
-										delete_sale(purchase.sale_id);
-									}}
-								>
-									Remove
-								</button>
-							</td>
+							<td>{sale.sale_id}</td>
+							<td>{sale.customer_id}</td>
+							<td>{sale.product_id}</td>
+							<td>{sale.sale_date}</td>
+							<td>{sale.unit_price}</td>
+							<td>{sale.quantity}</td>
+							{crud == true ? (
+								<>
+									<td>
+										<button
+											className="btn btn-warning pe-2 ps-2 pt-1 pb-1"
+											onClick={() => {
+												Navigate(
+													"/warehouse-operator/pages/sales/edit/" +
+														sale.sale_id,
+													{
+														state: { ...sale },
+													},
+												);
+											}}
+										>
+											Edit Sale
+										</button>
+									</td>
+									<td>
+										<button
+											className="btn btn-danger pe-2 ps-2 pt-1 pb-1"
+											onClick={() => {
+												delete_sale(sale.sale_id);
+											}}
+										>
+											Remove
+										</button>
+									</td>
+								</>
+							) : (
+								<></>
+							)}
 						</tr>
 					))}
 				</tbody>

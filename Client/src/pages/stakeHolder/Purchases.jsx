@@ -1,5 +1,5 @@
 import React from 'react'
-import WarehouseOperatorNavbar from '../../components/WarehouseOperatorNavbar'
+import StakeholderNavbar from '../../components/StakeHolderNavbar';
 import PurchasesTable from '../../components/PurchasesTable';
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
@@ -31,29 +31,20 @@ export default function PurchasesSt() {
 
   return (
 		<div className="d-flex">
-			<WarehouseOperatorNavbar />
+			<StakeholderNavbar />
 			<div
 				className="container pb-5 overflow-auto"
 				style={{ maxHeight: "100vh" }}
 			>
-				<div className="title text-center p-1">
+				<div className="title text-center p-4">
 					<h1 className="fw-light">
 						{purchases.length < 1
 							? "No purchases made yet"
 							: "Record of all the purchases made so far"}
 					</h1>
 				</div>
-				<div className="d-flex justify-content-center p-4">
-					<button
-						className="btn btn-primary fw-bold"
-						onClick={() => {
-							Navigate("/warehouse-operator/pages/purchases/new");
-						}}
-					>
-						+ Add New Purchase
-					</button>
-				</div>
-				<PurchasesTable purchases={purchases} crud={true} />
+				
+				<PurchasesTable purchases={purchases} crud={false} />
 			</div>
 		</div>
 	);

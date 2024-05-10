@@ -1,12 +1,12 @@
 import React from "react";
-import WarehouseOperatorNavbar from "../../components/WarehouseOperatorNavbar";
+import StakeholderNavbar from "../../components/StakeHolderNavbar";
 import SalesTable from "../../components/SalesTable";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import BASEURL from "../../constants/apiBaseUrl";
 
-export default function Sales() {
+export default function SalesSt() {
 	const Navigate = useNavigate();
 	const [sales, setSales] = useState([]);
 
@@ -29,29 +29,20 @@ export default function Sales() {
 
 	return (
 		<div className="d-flex">
-			<WarehouseOperatorNavbar />
+			<StakeholderNavbar />
 			<div
 				className="container pb-5 overflow-auto"
 				style={{ maxHeight: "100vh" }}
 			>
-				<div className="title text-center p-1">
+				<div className="title text-center p-4">
 					<h1 className="fw-light">
 						{sales.length < 1
 							? "No sales made yet"
 							: "Record of all the sales made so far"}
 					</h1>
 				</div>
-				<div className="d-flex justify-content-center p-4">
-					<button
-						className="btn btn-primary fw-bold"
-						onClick={() => {
-							Navigate("/warehouse-operator/pages/sales/new");
-						}}
-					>
-						+ Add New Sale
-					</button>
-				</div>
-				<SalesTable sales={sales} crud={true} />
+				
+				<SalesTable sales={sales} crud={false} />
 			</div>
 		</div>
 	);

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import BASEURL from "../constants/apiBaseUrl";
 import axios from "axios";
 
-const PurchasesTable = ({ purchases }) => {
+const PurchasesTable = ({ purchases, crud }) => {
 	const Navigate = useNavigate();
 	const [record, setrecord] = useState(null);
 
@@ -76,16 +76,39 @@ const PurchasesTable = ({ purchases }) => {
 							<td>{purchase.purchase_date}</td>
 							<td>{purchase.unit_price}</td>
 							<td>{purchase.quantity}</td>
-							<td>
-								<button
-									className="btn btn-danger pe-2 ps-2 pt-1 pb-1"
-									onClick={() => {
-										delete_purchase(purchase.purchase_id);
-									}}
-								>
-									Remove
-								</button>
-							</td>
+
+							{crud == true ? (
+								<>
+									<td>
+										<button
+											className="btn btn-warning pe-2 ps-2 pt-1 pb-1"
+											onClick={() => {
+												Navigate(
+													"/warehouse-operator/pages/purchases/edit/" +
+														purchase.purchase_id,
+													{
+														state: { ...purchase },
+													},
+												);
+											}}
+										>
+											Edit Purchase
+										</button>
+									</td>
+									<td>
+										<button
+											className="btn btn-danger pe-2 ps-2 pt-1 pb-1"
+											onClick={() => {
+												delete_purchase(purchase.purchase_id);
+											}}
+										>
+											Remove
+										</button>
+									</td>
+								</>
+							) : (
+								<></>
+							)}
 						</tr>
 					))}
 				</tbody>
