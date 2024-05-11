@@ -56,9 +56,11 @@ function BarChart() {
 		],
 	});
 
-	return <div>
-		<Bar data={userData} />
-	</div>;
+	return (
+		<div>
+			<Bar width="600vw" height={"250vh"} data={userData} />
+		</div>
+	);
 }
 
 export default BarChart;

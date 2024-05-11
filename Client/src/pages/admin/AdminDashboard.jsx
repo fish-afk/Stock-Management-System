@@ -1,60 +1,15 @@
 import React, { useEffect } from "react";
 import AdminNavbar from "../../components/navbars/AdminNavbar";
-import LineChart from "../../components/charts/SystemUsageChart";
+import MemoryUsageChart from "../../components/charts/MemoryUsageChart";
+import DiskStorageChart from "../../components/charts/DiskStorageChart";
+import CrashesChart from "../../components/charts/CrashesChart";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { FaRegUserCircle } from "react-icons/fa";
 
 const AdminDashboard = () => {
-	const Data = [
-		{
-			id: 1,
-			year: 2016,
-			userGain: 80000,
-			userLost: 823,
-		},
-		{
-			id: 2,
-			year: 2017,
-			userGain: 45677,
-			userLost: 345,
-		},
-		{
-			id: 3,
-			year: 2018,
-			userGain: 78888,
-			userLost: 555,
-		},
-		{
-			id: 4,
-			year: 2019,
-			userGain: 90000,
-			userLost: 4555,
-		},
-		{
-			id: 5,
-			year: 2020,
-			userGain: 4300,
-			userLost: 234,
-		},
-	];
-	const [chartData, setChartData] = useState({
-		labels: Data.map((data) => data.year),
-		datasets: [
-			{
-				label: "Users Gained ",
-				data: Data.map((data) => data.userGain),
-				backgroundColor: [
-					"rgba(75,192,192,1)",
-					"#ecf0f1",
-					"#50AF95",
-					"#f3ba2f",
-					"#2a71d0",
-				],
-				borderColor: "black",
-				borderWidth: 2,
-			},
-		],
-	});
 
+	
 	const getDate = () => {
 		const today = new Date();
 		const day = today.getDate();
@@ -80,35 +35,77 @@ const AdminDashboard = () => {
 		return formattedDate;
 	};
 
+	const username = JSON.stringify(
+		JSON.parse(localStorage.getItem("userDataObject")).username,
+	).replaceAll('"', "");
+
 	return (
 		<div className="d-flex">
 			<AdminNavbar />
+
 			<div className="text-end">
-				<div className="d-flex text-end">
-					<h5 className="p-4">{getDate()}</h5>
-					<h5 className="p-4">Admin</h5>
+				<div className="d-flex justify-content-between align-items-center">
+					<div className="text-start">
+						<h5 className="p-3">
+							<em>{getDate()}</em>
+						</h5>
+					</div>
+					<div>
+						
+						<h5 className="p-3 text-end">
+							
+							<FaRegUserCircle className="me-2" size={20}/>
+							<em>{username} : Admin</em>
+						</h5>
+					</div>
 				</div>
 
-				<LineChart chartData={chartData} />
+				<div className="text-start p-3 pt-2">
+					<h4 className="text-primary">
+						<em>System stats 📈</em>
+					</h4>
 
+					<div className="d-flex p-3">
+						<MemoryUsageChart />
+						<DiskStorageChart />
+						<CrashesChart />
+					</div>
+				</div>
 				<div className="text-start p-3">
 					<h4 className="text-primary">
-						<em>Quick shortcuts</em>
+						<em>Quick shortcuts 🔗</em>
 					</h4>
 					<div>
-						<button className="btn btn-primary me-4 ps-4 pe-4">Add user</button>
-						<button className="btn btn-primary m-4 ps-4 pe-4">
+						<Link
+							to="/admin/pages/system-users/new"
+							className="btn btn-primary me-4 ps-4 pe-4"
+						>
+							Add user
+						</Link>
+						<Link
+							to="/admin/pages/customers/new"
+							className="btn btn-primary m-4 ps-4 pe-4"
+						>
 							Add customer
-						</button>
-						<button className="btn btn-primary m-4 ps-4 pe-4">
+						</Link>
+						<Link
+							to="/admin/pages/suppliers/new"
+							className="btn btn-primary m-4 ps-4 pe-4"
+						>
 							Add supplier
-						</button>
-						<button className="btn btn-primary m-4 ps-4 pe-4">
+						</Link>
+						<Link
+							to="/admin/pages/product-categories/new"
+							className="btn btn-primary m-4 ps-4 pe-4"
+						>
 							Add product category
-						</button>
-						<button className="btn btn-primary m-4 ps-4 pe-4">
+						</Link>
+						<Link
+							to="/admin/pages/warehouses/new"
+							className="btn btn-primary m-4 ps-4 pe-4"
+						>
 							Add warehouse
-						</button>
+						</Link>
 						<button className="btn btn-primary m-4 ps-4 pe-4">
 							Export system Data as CSV
 						</button>
@@ -117,7 +114,7 @@ const AdminDashboard = () => {
 
 				<div className="text-start p-3 pt-1">
 					<h4 className="text-danger">
-						<em>Danger Zone</em>
+						<em>Danger Zone ⚠️</em>
 					</h4>
 					<div>
 						<button className="btn btn-danger me-4 ps-4 pe-4">
