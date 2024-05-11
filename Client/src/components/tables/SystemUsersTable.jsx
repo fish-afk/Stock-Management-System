@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 import { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import BASEURL from "../constants/apiBaseUrl";
+import BASEURL from "../../constants/apiBaseUrl";
 import axios from "axios";
 
 const SystemUserTable = ({ users }) => {

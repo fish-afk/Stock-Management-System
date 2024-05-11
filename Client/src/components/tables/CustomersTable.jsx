@@ -2,14 +2,14 @@ import Swal from "sweetalert2";
 import { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import BASEURL from "../constants/apiBaseUrl";
+import BASEURL from "../../constants/apiBaseUrl";
 import axios from "axios";
 
-const SuppliersTable = ({ Suppliers }) => {
+const CustomersTable = ({ customers }) => {
 	const Navigate = useNavigate();
 	const [userchosen, setuserChosen] = useState(null);
 
-	const delete_supplier = async (supplier_id) => {
+	const delete_customer = async (customer_id) => {
 		const msg = "Are you sure you want to delete this user?";
 		const txt = "This action is irreversible";
 		const result = await Swal.fire({
@@ -26,9 +26,9 @@ const SuppliersTable = ({ Suppliers }) => {
 			const userData = JSON.parse(localStorage.getItem("userDataObject"));
 			const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
 			const username = userData?.username;
-			const reqData = { supplier_id, jwt_key, username };
+			const reqData = { customer_id, jwt_key, username };
 
-			let data = await axios.delete(BASEURL + "/suppliers/deletesupplier", {
+			let data = await axios.delete(BASEURL + "/customers/deletecustomer", {
 				data: reqData,
 			});
 			const response = data?.data;
@@ -36,7 +36,7 @@ const SuppliersTable = ({ Suppliers }) => {
 
 			if (response.status === "SUCCESS") {
 				Swal.fire({
-					title: "Deleted " + supplier_id + " Successfully",
+					title: "Deleted " + customer_id + " Successfully",
 					timer: 3000,
 					icon: "success",
 				}).then(() => {
@@ -44,7 +44,7 @@ const SuppliersTable = ({ Suppliers }) => {
 				});
 			} else {
 				Swal.fire({
-					title: "Error deleting supplier. Try later",
+					title: "Error deleting customer. Try later",
 					timer: 3000,
 					icon: "error",
 				}).then(() => {
@@ -56,27 +56,27 @@ const SuppliersTable = ({ Suppliers }) => {
 
 	return (
 		<div className="container-fluid">
-			<table className="table table-hover table-info table-striped table-bordered p-5">
+			<table className="table table-hover table-warning table-striped table-bordered p-5">
 				<thead className="thead-dark">
 					<tr>
-						<th scope="col">Supplier ID</th>
+						<th scope="col">Customer ID</th>
 						<th scope="col">Name</th>
 						<th scope="col">Email</th>
 						<th scope="col">Phone</th>
 					</tr>
 				</thead>
 				<tbody>
-					{Suppliers.map((supplier, index) => (
+					{customers.map((customer, index) => (
 						<tr key={index}>
-							<td>{supplier.supplier_id}</td>
-							<td>{supplier.supplier_name}</td>
-							<td>{supplier.email}</td>
-							<td>{supplier.phone}</td>
+							<td>{customer.customer_id}</td>
+							<td>{customer.customer_name}</td>
+							<td>{customer.email}</td>
+							<td>{customer.phone}</td>
 							<td>
 								<button
 									className="btn btn-danger pe-2 ps-2 pt-1 pb-1"
 									onClick={() => {
-										delete_supplier(supplier.supplier_id);
+										delete_customer(customer.customer_id);
 									}}
 								>
 									Remove
@@ -87,14 +87,14 @@ const SuppliersTable = ({ Suppliers }) => {
 									className="btn btn-warning pe-2 ps-2 pt-1 pb-1"
 									onClick={() => {
 										Navigate(
-											"/admin/pages/suppliers/edit/" + supplier.supplier_id,
+											"/admin/pages/customers/edit/" + customer.customer_id,
 											{
-												state: { ...supplier },
+												state: { ...customer },
 											},
 										);
 									}}
 								>
-									Edit Supplier
+									Edit Customer
 								</button>
 							</td>
 							<td>
@@ -110,4 +110,4 @@ const SuppliersTable = ({ Suppliers }) => {
 	);
 };
 
-export default SuppliersTable;
+export default CustomersTable;

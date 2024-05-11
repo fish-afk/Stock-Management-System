@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import AdminNavbar from "../../components/AdminNavbar";
+import AdminNavbar from "../../components/navbars/AdminNavbar";
 import { useEffect } from "react";
 import axios from "axios";
 import BASEURL from "../../constants/apiBaseUrl";
-import SuppliersTable from "../../components/SuppliersTable";
+import SuppliersTable from "../../components/tables/SuppliersTable";
 import { useNavigate } from "react-router-dom";
 
 export default function Suppliers() {

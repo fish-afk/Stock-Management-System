@@ -1,6 +1,6 @@
 import React from "react";
-import StakeholderNavbar from "../../components/StakeHolderNavbar";
-import SalesTable from "../../components/SalesTable";
+import StakeholderNavbar from "../../components/navbars/StakeHolderNavbar";
+import SalesTable from "../../components/tables/SalesTable";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -41,7 +41,7 @@ export default function SalesSt() {
 							: "Record of all the sales made so far"}
 					</h1>
 				</div>
-				
+
 				<SalesTable sales={sales} crud={false} />
 			</div>
 		</div>

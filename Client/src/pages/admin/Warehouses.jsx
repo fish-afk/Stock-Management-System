@@ -1,5 +1,5 @@
 import React from "react";
-import AdminNavbar from "../../components/AdminNavbar";
+import AdminNavbar from "../../components/navbars/AdminNavbar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Warehouses() {
 	const [warehouses, setWarehouses] = useState([]);
-	const Navigate = useNavigate()
+	const Navigate = useNavigate();
 	const func = async () => {
 		const userData = JSON.parse(localStorage.getItem("userDataObject"));
 		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
@@ -49,12 +49,9 @@ export default function Warehouses() {
 				jwt_key,
 				warehouseId,
 			};
-			let data = await axios.delete(
-				BASEURL + "/warehouses/deletewarehouse",
-				{
-					data: reqData,
-				},
-			);
+			let data = await axios.delete(BASEURL + "/warehouses/deletewarehouse", {
+				data: reqData,
+			});
 			const response = data?.data;
 			console.log(response);
 
@@ -141,12 +138,7 @@ export default function Warehouses() {
 										>
 											Remove
 										</button>
-										<button
-											className="btn btn-info"
-											onClick={() => {
-												
-											}}
-										>
+										<button className="btn btn-info" onClick={() => {}}>
 											Inspect
 										</button>
 									</div>

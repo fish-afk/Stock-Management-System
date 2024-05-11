@@ -56,7 +56,9 @@ function BarChart() {
 		],
 	});
 
-	return <Bar data={userData} />;
+	return <div>
+		<Bar data={userData} />
+	</div>;
 }
 
 export default BarChart;

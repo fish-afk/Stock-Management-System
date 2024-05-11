@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import AdminNavbar from "../../components/AdminNavbar";
+import AdminNavbar from "../../components/navbars/AdminNavbar";
 import { useEffect } from "react";
 import axios from "axios";
 import BASEURL from "../../constants/apiBaseUrl";
-import SystemUserTable from "../../components/SystemUsersTable";
+import SystemUserTable from "../../components/tables/SystemUsersTable";
 import { useNavigate } from "react-router-dom";
 
 export default function SystemUsers() {

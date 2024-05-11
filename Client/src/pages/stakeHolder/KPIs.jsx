@@ -1,9 +1,9 @@
-import React from 'react'
-import StakeHolderNavbar from "../../components/StakeHolderNavbar";
-import BarChart from '../../components/PurchasesChart';
+import React from "react";
+import StakeHolderNavbar from "../../components/navbars/StakeHolderNavbar";
+import BarChart from "../../components/charts/PurchasesChart";
 
 export default function KPIs() {
-  return (
+	return (
 		<div className="d-flex">
 			<StakeHolderNavbar />
 			<div>

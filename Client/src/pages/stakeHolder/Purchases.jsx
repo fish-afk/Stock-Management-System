@@ -1,15 +1,14 @@
-import React from 'react'
-import StakeholderNavbar from '../../components/StakeHolderNavbar';
-import PurchasesTable from '../../components/PurchasesTable';
-import { useState, useEffect } from 'react';
+import React from "react";
+import StakeholderNavbar from "../../components/navbars/StakeHolderNavbar";
+import PurchasesTable from "../../components/tables/PurchasesTable";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 import BASEURL from "../../constants/apiBaseUrl";
-
 
 export default function PurchasesSt() {
 	const Navigate = useNavigate();
-	const [purchases, setPurchases] = useState([])
+	const [purchases, setPurchases] = useState([]);
 
 	const func = async () => {
 		const userData = JSON.parse(localStorage.getItem("userDataObject"));
@@ -28,8 +27,7 @@ export default function PurchasesSt() {
 		func();
 	}, []);
 
-
-  return (
+	return (
 		<div className="d-flex">
 			<StakeholderNavbar />
 			<div
@@ -43,7 +41,7 @@ export default function PurchasesSt() {
 							: "Record of all the purchases made so far"}
 					</h1>
 				</div>
-				
+
 				<PurchasesTable purchases={purchases} crud={false} />
 			</div>
 		</div>

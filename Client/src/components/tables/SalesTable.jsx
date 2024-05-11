@@ -1,15 +1,14 @@
 import Swal from "sweetalert2";
 import { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import BASEURL from "../constants/apiBaseUrl";
+import BASEURL from "../../constants/apiBaseUrl";
 import axios from "axios";
 
-const PurchasesTable = ({ purchases, crud }) => {
+const SalesTable = ({ sales, crud }) => {
 	const Navigate = useNavigate();
 	const [record, setrecord] = useState(null);
 
-	const delete_purchase = async (purchase_id) => {
+	const delete_sale = async (sale_id) => {
 		const msg = "Are you sure you want to delete this record?";
 		const txt = "This action is irreversible";
 		const result = await Swal.fire({
@@ -26,9 +25,9 @@ const PurchasesTable = ({ purchases, crud }) => {
 			const userData = JSON.parse(localStorage.getItem("userDataObject"));
 			const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
 			const username = userData?.username;
-			const reqData = { purchase_id, jwt_key, username };
+			const reqData = { sale_id, jwt_key, username };
 
-			let data = await axios.delete(BASEURL + "/purchases/deletepurchase", {
+			let data = await axios.delete(BASEURL + "/sales/deletesale", {
 				data: reqData,
 			});
 			const response = data?.data;
@@ -36,7 +35,7 @@ const PurchasesTable = ({ purchases, crud }) => {
 
 			if (response.status === "SUCCESS") {
 				Swal.fire({
-					title: "Deleted " + purchase_id + " Successfully",
+					title: "Deleted " + sale_id + " Successfully",
 					timer: 3000,
 					icon: "success",
 				}).then(() => {
@@ -56,27 +55,26 @@ const PurchasesTable = ({ purchases, crud }) => {
 
 	return (
 		<div className="container-fluid">
-			<table className="table table-hover table-info table-striped table-bordered p-5">
+			<table className="table table-hover table-success table-striped table-bordered p-5">
 				<thead className="thead-dark">
 					<tr>
-						<th scope="col">Purchase ID</th>
+						<th scope="col">Sale ID</th>
 						<th scope="col">Supplier ID</th>
 						<th scope="col">Product ID</th>
-						<th scope="col">Purchase Date</th>
+						<th scope="col">Sale Date</th>
 						<th scope="col">Unit Price</th>
 						<th scope="col">Quantity</th>
 					</tr>
 				</thead>
 				<tbody>
-					{purchases.map((purchase, index) => (
+					{sales.map((sale, index) => (
 						<tr key={index}>
-							<td>{purchase.purchase_id}</td>
-							<td>{purchase.supplier_id}</td>
-							<td>{purchase.product_id}</td>
-							<td>{purchase.purchase_date}</td>
-							<td>{purchase.unit_price}</td>
-							<td>{purchase.quantity}</td>
-
+							<td>{sale.sale_id}</td>
+							<td>{sale.customer_id}</td>
+							<td>{sale.product_id}</td>
+							<td>{sale.sale_date}</td>
+							<td>{sale.unit_price}</td>
+							<td>{sale.quantity}</td>
 							{crud == true ? (
 								<>
 									<td>
@@ -84,22 +82,22 @@ const PurchasesTable = ({ purchases, crud }) => {
 											className="btn btn-warning pe-2 ps-2 pt-1 pb-1"
 											onClick={() => {
 												Navigate(
-													"/warehouse-operator/pages/purchases/edit/" +
-														purchase.purchase_id,
+													"/warehouse-operator/pages/sales/edit/" +
+														sale.sale_id,
 													{
-														state: { ...purchase },
+														state: { ...sale },
 													},
 												);
 											}}
 										>
-											Edit Purchase
+											Edit Sale
 										</button>
 									</td>
 									<td>
 										<button
 											className="btn btn-danger pe-2 ps-2 pt-1 pb-1"
 											onClick={() => {
-												delete_purchase(purchase.purchase_id);
+												delete_sale(sale.sale_id);
 											}}
 										>
 											Remove
@@ -117,4 +115,4 @@ const PurchasesTable = ({ purchases, crud }) => {
 	);
 };
 
-export default PurchasesTable;
+export default SalesTable;

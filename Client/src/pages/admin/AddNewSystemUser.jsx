@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AdminNavbar from "../../components/AdminNavbar";
+import AdminNavbar from "../../components/navbars/AdminNavbar";
 import BASEURL from "../../constants/apiBaseUrl";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -35,9 +35,8 @@ export default function AddNewSystemUser() {
 		const username = userData?.username;
 
 		try {
-
-			const roleId = role == "Admin" ? 1 : role == 'Warehouse Operator' ? 2 : 3;
- 			let response = await axios.post(BASEURL + "/users/register", {
+			const roleId = role == "Admin" ? 1 : role == "Warehouse Operator" ? 2 : 3;
+			let response = await axios.post(BASEURL + "/users/register", {
 				jwt_key,
 				username,
 				newUserUsername,
