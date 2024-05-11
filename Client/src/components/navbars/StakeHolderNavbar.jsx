@@ -34,20 +34,20 @@ const StakeholderNavbar = () => {
 						<Link to="/stakeholder/dashboard">
 							<CDBSidebarMenuItem icon="home">Home</CDBSidebarMenuItem>
 						</Link>
-						<Link to="/stakeholder/pages/statistics">
-							<CDBSidebarMenuItem fa icon="chart-bar">Statistics</CDBSidebarMenuItem>
-						</Link>
+
 						<Link to="/stakeholder/pages/kpis">
 							<CDBSidebarMenuItem fa icon="chart-line">
-								KPIs
+								KPIs and Data
 							</CDBSidebarMenuItem>
-						</Link>
-						<Link to="/stakeholder/pages/sales">
-							<CDBSidebarMenuItem icon="money-bill">Sales</CDBSidebarMenuItem>
 						</Link>
 						<Link to="/stakeholder/pages/purchases">
 							<CDBSidebarMenuItem icon="money-bill">
-								Purchases
+								Purchases Log
+							</CDBSidebarMenuItem>
+						</Link>
+						<Link to="/stakeholder/pages/sales">
+							<CDBSidebarMenuItem icon="money-bill">
+								Sales Log
 							</CDBSidebarMenuItem>
 						</Link>
 					</CDBSidebarMenu>

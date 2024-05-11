@@ -1,64 +1,50 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
-import { Chart as ChartJS } from "chart.js/auto";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import BASEURL from "../../constants/apiBaseUrl";
 
 function BarChart() {
-	const UserData = [
-		{
-			id: 1,
-			year: 2016,
-			userGain: 8000,
-			userLost: 823,
-		},
-		{
-			id: 2,
-			year: 2017,
-			userGain: 4677,
-			userLost: 345,
-		},
-		{
-			id: 3,
-			year: 2018,
-			userGain: 7888,
-			userLost: 555,
-		},
-		{
-			id: 4,
-			year: 2019,
-			userGain: 9000,
-			userLost: 4555,
-		},
-		{
-			id: 5,
-			year: 2020,
-			userGain: 4300,
-			userLost: 234,
-		},
-	];
 
-	const [userData, setUserData] = useState({
-		labels: UserData.map((data) => data.year),
+	const [purchases, setPurchases] = useState([]);
+
+	const func = async () => {
+		const userData = JSON.parse(localStorage.getItem("userDataObject"));
+		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
+		const username = userData?.username;
+		let data = await axios.post(BASEURL + "/purchases/getallpurchases", {
+			username,
+			jwt_key,
+		});
+		const response = data?.data;
+		console.log(response);
+
+		setPurchases(response?.data == undefined ? [] : response?.data);
+	};
+	useEffect(() => {
+		func();
+	}, []);
+
+
+	const data = {
+		labels: purchases.map((data) => new Date(data.purchase_date).getDay()),
 		datasets: [
 			{
-				label: "Freelancer numbers",
-				data: UserData.map((data) => data.userGain),
+				label: "Purchases",
+				data: purchases.map((data) => data.quantity * data.unit_price),
 				backgroundColor: [
-					"rgba(75,192,192,1)",
-					"#ecf0f1",
-					"#50AF95",
-					"#f3ba2f",
-					"#2a71d0",
+					"pink",
+					
 				],
 				borderColor: "black",
 				borderWidth: 2,
 			},
 		],
-	});
+	}
 
 	return (
 		<div>
-			<Bar width="600vw" height={"250vh"} data={userData} />
+			<Bar width="600vw" height={"250vh"} data={data} />
 		</div>
 	);
 }
