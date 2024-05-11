@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import BASEURL from "../../constants/apiBaseUrl";
 import axios from "axios";
 import IMAGESBASEURL from "../../constants/imagesBaseUrl";
-import WarehouseOperatorNavbar from "../../components/WarehouseOperatorNavbar";
+import WarehouseOperatorNavbar from "../../components/navbars/WarehouseOperatorNavbar";
 
 export default function Products() {
 	const Navigate = useNavigate();

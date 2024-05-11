@@ -1,6 +1,6 @@
 import React from 'react'
-import WarehouseOperatorNavbar from '../../components/WarehouseOperatorNavbar'
-import PurchasesTable from '../../components/PurchasesTable';
+import WarehouseOperatorNavbar from '../../components/navbars/WarehouseOperatorNavbar'
+import PurchasesTable from '../../components/tables/PurchasesTable';
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';

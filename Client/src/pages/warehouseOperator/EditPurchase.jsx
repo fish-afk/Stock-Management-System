@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import BASEURL from "../../constants/apiBaseUrl";
 import Swal from "sweetalert2";
 import axios from "axios";
-import WarehouseOperatorNavbar from "../../components/WarehouseOperatorNavbar";
+import WarehouseOperatorNavbar from "../../components/navbars/WarehouseOperatorNavbar";
 import { useParams, useLocation } from "react-router-dom";
 
 export default function EditPurchase() {
-    const params = useParams();
+	const params = useParams();
 	const locationHook = useLocation();
 
 	const [formValues, setFormValues] = useState({
@@ -14,9 +14,9 @@ export default function EditPurchase() {
 		product_id: locationHook.state.product_id,
 		purchase_date: locationHook.state.purchase_date,
 		quantity: locationHook.state.purchase_date,
-		unit_price: locationHook.state.unit_price
-    });
-    
+		unit_price: locationHook.state.unit_price,
+	});
+
 	const [purchaseImage, setPurchaseImage] = useState(null);
 	const [products, setProducts] = useState([]);
 	const [suppliers, setSuppliers] = useState([]);
@@ -72,8 +72,8 @@ export default function EditPurchase() {
 		try {
 			const formData = new FormData();
 			formData.append("jwt_key", jwt_key);
-            formData.append("username", username);
-            formData.append("purchase_id", params.purchase_id);
+			formData.append("username", username);
+			formData.append("purchase_id", params.purchase_id);
 			formData.append("supplier_id", supplier_id);
 			formData.append("product_id", product_id);
 			formData.append("unit_price", unit_price);

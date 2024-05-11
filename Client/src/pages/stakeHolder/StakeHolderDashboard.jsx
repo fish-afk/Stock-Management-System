@@ -1,5 +1,5 @@
 import React from "react";
-import StakeHolderNavbar from "../../components/StakeHolderNavbar";
+import StakeHolderNavbar from "../../components/navbars/StakeHolderNavbar";
 
 export default function StakeHolderDashboard() {
 	return (

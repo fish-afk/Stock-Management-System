@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AdminNavbar from "../../components/AdminNavbar";
+import AdminNavbar from "../../components/navbars/AdminNavbar";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import BASEURL from "../../constants/apiBaseUrl";
@@ -35,7 +35,7 @@ export default function ProductCategories() {
 			let data = await axios.delete(
 				BASEURL + "/productcategories/deletecategory",
 				{
-					data: reqData
+					data: reqData,
 				},
 			);
 			const response = data?.data;

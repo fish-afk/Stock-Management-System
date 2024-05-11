@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import BASEURL from "../../constants/apiBaseUrl";
 import Swal from "sweetalert2";
 import axios from "axios";
-import WarehouseOperatorNavbar from "../../components/WarehouseOperatorNavbar";
+import WarehouseOperatorNavbar from "../../components/navbars/WarehouseOperatorNavbar";
 
 export default function AddNewPurchase() {
 	const [formValues, setFormValues] = useState({
 		supplier_id: "",
-        product_id: "",
-        purchase_date: "",
-        quantity: "",
-        unit_price: ""
+		product_id: "",
+		purchase_date: "",
+		quantity: "",
+		unit_price: "",
 	});
 	const [purchaseImage, setPurchaseImage] = useState(null);
 	const [products, setProducts] = useState([]);
@@ -20,13 +20,10 @@ export default function AddNewPurchase() {
 		const userData = JSON.parse(localStorage.getItem("userDataObject"));
 		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
 		const username = userData?.username;
-		let data = await axios.post(
-			BASEURL + "/products/getallproducts",
-			{
-				username,
-				jwt_key,
-			},
-		);
+		let data = await axios.post(BASEURL + "/products/getallproducts", {
+			username,
+			jwt_key,
+		});
 		const response = data?.data;
 		console.log(response);
 
@@ -60,13 +57,8 @@ export default function AddNewPurchase() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		const {
-			supplier_id,
-			product_id,
-			purchase_date,
-			quantity,
-			unit_price,
-		} = formValues;
+		const { supplier_id, product_id, purchase_date, quantity, unit_price } =
+			formValues;
 
 		const userData = JSON.parse(localStorage.getItem("userDataObject"));
 		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
@@ -110,7 +102,8 @@ export default function AddNewPurchase() {
 					console.log(error);
 					if (error.response.status >= 500) {
 						Swal.fire({
-							title: "Only Images, PDFs and DOCX files Allowed For document Field !",
+							title:
+								"Only Images, PDFs and DOCX files Allowed For document Field !",
 							timer: 30000,
 							icon: "error",
 						}).then(() => {

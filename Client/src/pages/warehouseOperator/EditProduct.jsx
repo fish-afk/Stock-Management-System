@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import BASEURL from "../../constants/apiBaseUrl";
 import Swal from "sweetalert2";
 import axios from "axios";
-import WarehouseOperatorNavbar from "../../components/WarehouseOperatorNavbar";
+import WarehouseOperatorNavbar from "../../components/navbars/WarehouseOperatorNavbar";
 import { useParams, useLocation } from "react-router-dom";
 
 export default function EditProduct() {

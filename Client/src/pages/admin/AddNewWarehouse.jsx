@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AdminNavbar from "../../components/AdminNavbar";
+import AdminNavbar from "../../components/navbars/AdminNavbar";
 import BASEURL from "../../constants/apiBaseUrl";
 import Swal from "sweetalert2";
 import axios from "axios";

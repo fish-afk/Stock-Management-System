@@ -1,12 +1,12 @@
 import React from "react";
-import AdminNavbar from "../../components/AdminNavbar";
+import AdminNavbar from "../../components/navbars/AdminNavbar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import BASEURL from "../../constants/apiBaseUrl";
 import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
-import WarehouseOperatorNavbar from "../../components/WarehouseOperatorNavbar";
-import StakeholderNavbar from "../../components/StakeHolderNavbar";
+import WarehouseOperatorNavbar from "../../components/navbars/WarehouseOperatorNavbar";
+import StakeHolderNavbar from "../../components/navbars/StakeHolderNavbar";
 
 export default function EditProfile() {
 	const [formValues, setFormValues] = useState({});
@@ -53,7 +53,13 @@ export default function EditProfile() {
 
 	return (
 		<div className="d-flex">
-			{params.privs == "adm" ? <AdminNavbar priv="admin" /> : params.privs == "wh" ? <WarehouseOperatorNavbar /> : <StakeholderNavbar />}
+			{params.privs == "adm" ? (
+				<AdminNavbar priv="admin" />
+			) : params.privs == "wh" ? (
+				<WarehouseOperatorNavbar />
+			) : (
+				<StakeholderNavbar />
+			)}
 			<div className="container">
 				<div className="d-flex justify-content-center p-4">
 					<h1>Update your details</h1>

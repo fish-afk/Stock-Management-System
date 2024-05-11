@@ -1,7 +1,7 @@
 import React from "react";
-import AdminNavbar from "../../components/AdminNavbar";
-import WarehouseOperatorNavbar from "../../components/WarehouseOperatorNavbar";
-import StakeholderNavbar from "../../components/StakeHolderNavbar";
+import AdminNavbar from "../../components/navbars/AdminNavbar";
+import WarehouseOperatorNavbar from "../../components/navbars/WarehouseOperatorNavbar";
+import StakeHolderNavbar from "../../components/navbars/StakeHolderNavbar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import BASEURL from "../../constants/apiBaseUrl";

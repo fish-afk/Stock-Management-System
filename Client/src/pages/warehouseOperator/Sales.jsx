@@ -1,6 +1,6 @@
 import React from "react";
-import WarehouseOperatorNavbar from "../../components/WarehouseOperatorNavbar";
-import SalesTable from "../../components/SalesTable";
+import WarehouseOperatorNavbar from "../../components/navbars/WarehouseOperatorNavbar";
+import SalesTable from "../../components/tables/SalesTable";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

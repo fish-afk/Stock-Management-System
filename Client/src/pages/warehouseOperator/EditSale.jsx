@@ -2,19 +2,19 @@ import React, { useEffect, useState } from "react";
 import BASEURL from "../../constants/apiBaseUrl";
 import Swal from "sweetalert2";
 import axios from "axios";
-import WarehouseOperatorNavbar from "../../components/WarehouseOperatorNavbar";
+import WarehouseOperatorNavbar from "../../components/navbars/WarehouseOperatorNavbar";
 import { useParams, useLocation } from "react-router-dom";
 
 export default function EditSale() {
-    const params = useParams();
-    const locationHook = useLocation();
-    
+	const params = useParams();
+	const locationHook = useLocation();
+
 	const [formValues, setFormValues] = useState({
 		customer_id: locationHook.state.customer_id,
 		product_id: locationHook.state.product_id,
 		sale_date: locationHook.state.sale_date,
 		quantity: locationHook.state.quantity,
-		unit_price: locationHook.state.unit_price
+		unit_price: locationHook.state.unit_price,
 	});
 	const [saleImage, setSaleImage] = useState(null);
 	const [products, setProducts] = useState([]);
@@ -71,8 +71,8 @@ export default function EditSale() {
 		try {
 			const formData = new FormData();
 			formData.append("jwt_key", jwt_key);
-            formData.append("username", username);
-            formData.append("sale_id", params.sale_id)
+			formData.append("username", username);
+			formData.append("sale_id", params.sale_id);
 			formData.append("customer_id", customer_id);
 			formData.append("product_id", product_id);
 			formData.append("unit_price", unit_price);

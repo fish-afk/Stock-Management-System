@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import BASEURL from "../../constants/apiBaseUrl";
 import IMAGESBASEURL from "../../constants/imagesBaseUrl";
-import WarehouseOperatorNavbar from "../../components/WarehouseOperatorNavbar";
+import WarehouseOperatorNavbar from "../../components/navbars/WarehouseOperatorNavbar";
 
 export default function WarehousesWh() {
 	const [warehouses, setWarehouses] = useState([]);
-    
+
 	const func = async () => {
 		const userData = JSON.parse(localStorage.getItem("userDataObject"));
 		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
@@ -25,8 +25,6 @@ export default function WarehousesWh() {
 		func();
 	}, []);
 
-	
-
 	return (
 		<div className="d-flex">
 			<WarehouseOperatorNavbar priv={"admin"} />
@@ -37,7 +35,6 @@ export default function WarehousesWh() {
 				<div className="title text-center mt-2 mb-5 p-1">
 					<h1 className="fw-light">Warehouses</h1>
 				</div>
-				
 
 				<div className="container-fluid mt-1">
 					<div className="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-5">
@@ -59,7 +56,7 @@ export default function WarehousesWh() {
 										<p className="card-text">
 											{warehouse.warehouse_description}
 										</p>
-										
+
 										<button className="btn btn-info" onClick={() => {}}>
 											Inspect
 										</button>

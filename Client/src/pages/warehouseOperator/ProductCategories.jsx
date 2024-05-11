@@ -4,12 +4,11 @@ import { useNavigate } from "react-router-dom";
 import BASEURL from "../../constants/apiBaseUrl";
 import axios from "axios";
 import IMAGESBASEURL from "../../constants/imagesBaseUrl";
-import WarehouseOperatorNavbar from "../../components/WarehouseOperatorNavbar";
+import WarehouseOperatorNavbar from "../../components/navbars/WarehouseOperatorNavbar";
 
 export default function ProductCategoriesWh() {
 	const Navigate = useNavigate();
 	const [ProductCategories, setProductCategories] = useState([]);
-
 
 	const func = async () => {
 		const userData = JSON.parse(localStorage.getItem("userDataObject"));
@@ -41,7 +40,7 @@ export default function ProductCategoriesWh() {
 				<div className="title text-center p-1 mt-2 mb-5">
 					<h1 className="fw-light">Current Product Categories In The System</h1>
 				</div>
-				
+
 				<div className="container-fluid mt-1">
 					<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 						{ProductCategories.map((ProductCategory) => (
@@ -64,7 +63,6 @@ export default function ProductCategoriesWh() {
 										<p className="card-text">
 											{ProductCategory.category_description}
 										</p>
-										
 									</div>
 								</div>
 							</div>
