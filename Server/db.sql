@@ -3,8 +3,6 @@ CREATE DATABASE StockManagementSystem_001356993;
 USE StockManagementSystem_001356993;
 
 
-
-
 CREATE TABLE IF NOT EXISTS `Categories` (
   `category_id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `category_name` VARCHAR(255),
