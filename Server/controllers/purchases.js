@@ -159,12 +159,12 @@ async function addPurchase(req, res) {
 
 	try {
 		// Query the current quantity in stock of the product
-		const product = await pool.query(
+		const [product] = await pool.query(
 			"SELECT quantity_in_stock FROM Products WHERE product_id = ?",
 			[product_id],
 		);
 
-		if (!product || product.length === 0) {
+		if (!product) {
 			return res
 				.send({ status: "FAILURE", message: "Product not found" });
 		}
@@ -176,7 +176,7 @@ async function addPurchase(req, res) {
 		const currentQuantity = product[0].quantity_in_stock;
 
 		// Update the quantity in stock after purchase
-		const updatedQuantity = currentQuantity + quantity;
+		const updatedQuantity = Number(currentQuantity) + Number(quantity);
 		await pool.query(
 			"UPDATE Products SET quantity_in_stock = ? WHERE product_id = ?",
 			[updatedQuantity, product_id],

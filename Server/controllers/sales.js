@@ -158,18 +158,19 @@ async function addSale(req, res) {
 
 	try {
 		// Query the current quantity in stock of the product
-		const product = await pool.query(
+		const [product] = await pool.query(
 			"SELECT quantity_in_stock FROM Products WHERE product_id = ?",
 			[product_id],
 		);
 
-		if (!product || product.length === 0) {
+		if (!product) {
 			return res
 				.send({ status: "FAILURE", message: "Product not found" });
 		}
 
 		const currentQuantity = product[0].quantity_in_stock;
 
+	
 		// Check if the quantity being sold is greater than the current quantity
 		if (quantity > currentQuantity) {
 			return res

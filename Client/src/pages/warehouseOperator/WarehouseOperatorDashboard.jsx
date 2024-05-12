@@ -72,31 +72,31 @@ export default function WarehouseOperatorDashboard() {
 					</h4>
 					<div className="pt-3">
 						<Link
-							to="/admin/pages/system-users/new"
+							to="/warehouse-operator/pages/purchases/new"
 							className="btn btn-primary me-4 ps-4 pe-4"
 						>
 							Add purchase
 						</Link>
 						<Link
-							to="/admin/pages/customers/new"
+							to="/warehouse-operator/pages/sales/new"
 							className="btn btn-primary m-4 ps-4 pe-4"
 						>
 							Add sale
 						</Link>
 						<Link
-							to="/admin/pages/suppliers/new"
+							to="/warehouse-operator/pages/products/new"
 							className="btn btn-primary m-4 ps-4 pe-4"
 						>
 							Add product
 						</Link>
 						<Link
-							to="/admin/pages/product-categories/new"
+							to="/editprofile/wh"
 							className="btn btn-primary m-4 ps-4 pe-4"
 						>
 							Edit profile
 						</Link>
 						<Link
-							to="/admin/pages/warehouses/new"
+							to="/changepassword/wh"
 							className="btn btn-primary m-4 ps-4 pe-4"
 						>
 							Change password
