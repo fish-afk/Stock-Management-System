@@ -1,11 +1,114 @@
 import React from "react";
 import WarehouseOperatorNavbar from "../../components/navbars/WarehouseOperatorNavbar";
+import { Link } from "react-router-dom";
+import { FaRegUserCircle } from "react-icons/fa";
+import axios from "axios";
+import BASEURL from "../../constants/apiBaseUrl";
+import PurchasesChart from "../../components/charts/PurchasesChart";
+import SalesChart from "../../components/charts/SalesChart";
+import ProductCategoryChart from "../../components/charts/ProductCategoryChart";
 
 export default function WarehouseOperatorDashboard() {
+	
+	const getDate = () => {
+		const today = new Date();
+		const day = today.getDate();
+		const month = today.toLocaleString("default", { month: "long" });
+		const year = today.getFullYear();
+
+		const daySuffix = (day) => {
+			if (day > 3 && day < 21) return "th";
+			switch (day % 10) {
+				case 1:
+					return "st";
+				case 2:
+					return "nd";
+				case 3:
+					return "rd";
+				default:
+					return "th";
+			}
+		};
+
+		const formattedDate = `${day}${daySuffix(day)} ${month} ${year}`;
+
+		return formattedDate;
+	};
+
+	const username = JSON.stringify(
+		JSON.parse(localStorage.getItem("userDataObject")).username,
+	).replaceAll('"', "");
+	
 	return (
 		<div className="d-flex">
 			<WarehouseOperatorNavbar priv={"WarehouseOperator"} />
-			<h1>WarehouseOperatorDashboard</h1>
+			<div className="text-end overflow-auto" style={{ maxHeight: "100vh" }}>
+				<div className="d-flex justify-content-between align-items-center">
+					<div className="text-start">
+						<h5 className="p-3">
+							<em>{getDate()}</em>
+						</h5>
+					</div>
+					<div>
+						<h5 className="p-3 text-end">
+							<FaRegUserCircle className="me-2" size={20} />
+							<em>{username} : Warehouse-operator</em>
+						</h5>
+					</div>
+				</div>
+				<div className="text-start p-3 pt-2">
+					<h4 className="text-primary">
+						<em>Inventory stats 📈</em>
+					</h4>
+
+					<div className="d-flex p-3 pt-5">
+						<PurchasesChart />
+						<ProductCategoryChart />
+						<SalesChart />
+					</div>
+				</div>
+				
+				<div className="text-start p-3 pt-3">
+					<h4 className="text-primary">
+						<em>Quick shortcuts 🔗</em>
+					</h4>
+					<div className="pt-3">
+						<Link
+							to="/admin/pages/system-users/new"
+							className="btn btn-primary me-4 ps-4 pe-4"
+						>
+							Add purchase
+						</Link>
+						<Link
+							to="/admin/pages/customers/new"
+							className="btn btn-primary m-4 ps-4 pe-4"
+						>
+							Add sale
+						</Link>
+						<Link
+							to="/admin/pages/suppliers/new"
+							className="btn btn-primary m-4 ps-4 pe-4"
+						>
+							Add product
+						</Link>
+						<Link
+							to="/admin/pages/product-categories/new"
+							className="btn btn-primary m-4 ps-4 pe-4"
+						>
+							Edit profile
+						</Link>
+						<Link
+							to="/admin/pages/warehouses/new"
+							className="btn btn-primary m-4 ps-4 pe-4"
+						>
+							Change password
+						</Link>
+						<button className="btn btn-primary m-4 ps-4 pe-4">
+							Export inventory data as CSV
+						</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }

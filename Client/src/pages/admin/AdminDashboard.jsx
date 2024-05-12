@@ -43,7 +43,7 @@ const AdminDashboard = () => {
 		<div className="d-flex">
 			<AdminNavbar />
 
-			<div className="text-end">
+			<div className="text-end overflow-auto" style={{maxHeight: "100vh"}}>
 				<div className="d-flex justify-content-between align-items-center">
 					<div className="text-start">
 						<h5 className="p-3">

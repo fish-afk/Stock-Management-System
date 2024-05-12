@@ -23,18 +23,19 @@ INSERT INTO `customers` (`customer_id`, `customer_name`, `email`, `phone`) VALUE
 	(6, 'Sophia Martinez', 'sophia@example.com', '4444444444'),
 	(7, 'James Taylor', 'james@example.com', '7777777777');
 
--- Dumping data for table stockmanagementsystem_001356993.products: ~0 rows (approximately)
-INSERT INTO `products` (`product_id`, `product_name`, `description`, `unit_price`, `quantity_in_stock`, `category_id`, `product_image`, `warehouse_id`, `last_edited_by`) VALUES
-	(1, 'Laptop', 'High-performance laptop', 800.00, 50, 1, 'laptop.jpg', 1, 'admin'),
-	(2, 'Smartphone', 'Latest smartphone model', 700.00, 70, 1, 'smartphone.jpg', 1, 'admin'),
-	(3, 'Desktop Computer', 'Powerful desktop computer', 1200.00, 40, 1, 'desktop.jpg', 1, 'admin'),
-	(4, 'T-Shirt', 'Casual cotton t-shirt', 20.00, 100, 2, 'tshirt.jpg', 2, 'admin'),
-	(5, 'Jeans', 'Denim jeans', 30.00, 80, 2, 'jeans.jpg', 2, 'admin'),
-	(6, 'Dress', 'Elegant dress', 50.00, 60, 2, 'dress.jpg', 2, 'admin'),
-	(7, 'Novel', 'Best-selling novel', 10.00, 200, 3, 'novel.jpg', 3, 'admin'),
-	(8, 'Cookbook', 'Collection of recipes', 25.00, 120, 3, 'cookbook.jpg', 3, 'admin'),
-	(9, 'Candle Holder', 'Decorative candle holder', 15.00, 150, 4, 'candleholder.jpg', 4, 'admin'),
-	(10, 'Vase', 'Decorative vase', 35.00, 90, 4, 'vase.jpg', 4, 'admin');
+INSERT INTO `products` (`product_id`, `product_name`, `description`, `unit_price`, `quantity_in_stock`, `category_id`, `product_image`, `warehouse_id`, `last_edited_by`) VALUES (1, 'Laptop', 'High-performance laptop', 800.00, 50, 1, 'laptop.jpg', 1, 'admin');
+INSERT INTO `products` (`product_id`, `product_name`, `description`, `unit_price`, `quantity_in_stock`, `category_id`, `product_image`, `warehouse_id`, `last_edited_by`) VALUES (2, 'Smartphone', 'Latest smartphone model', 700.00, 70, 1, 'smartphone.jpg', 1, 'admin');
+INSERT INTO `products` (`product_id`, `product_name`, `description`, `unit_price`, `quantity_in_stock`, `category_id`, `product_image`, `warehouse_id`, `last_edited_by`) VALUES (3, 'Desktop Computer', 'Powerful desktop computer', 1200.00, 40, 1, 'desktop.jpg', 1, 'admin');
+INSERT INTO `products` (`product_id`, `product_name`, `description`, `unit_price`, `quantity_in_stock`, `category_id`, `product_image`, `warehouse_id`, `last_edited_by`) VALUES (4, 'T-Shirt', 'Casual cotton t-shirt', 20.00, 100, 2, 'tshirt.jpg', 2, 'admin');
+INSERT INTO `products` (`product_id`, `product_name`, `description`, `unit_price`, `quantity_in_stock`, `category_id`, `product_image`, `warehouse_id`, `last_edited_by`) VALUES (5, 'Jeans', 'Denim jeans', 30.00, 80, 2, 'jeans.jpg', 2, 'admin');
+INSERT INTO `products` (`product_id`, `product_name`, `description`, `unit_price`, `quantity_in_stock`, `category_id`, `product_image`, `warehouse_id`, `last_edited_by`) VALUES (6, 'Dress', 'Elegant dress', 50.00, 60, 2, 'dress.jpg', 2, 'admin');
+INSERT INTO `products` (`product_id`, `product_name`, `description`, `unit_price`, `quantity_in_stock`, `category_id`, `product_image`, `warehouse_id`, `last_edited_by`) VALUES (7, 'Novel', 'Best-selling novel', 10.00, 200, 3, 'novel.jpg', 3, 'admin');
+INSERT INTO `products` (`product_id`, `product_name`, `description`, `unit_price`, `quantity_in_stock`, `category_id`, `product_image`, `warehouse_id`, `last_edited_by`) VALUES (8, 'Cookbook', 'Collection of recipes', 25.00, 120, 3, 'cookbook.jpg', 3, 'admin');
+INSERT INTO `products` (`product_id`, `product_name`, `description`, `unit_price`, `quantity_in_stock`, `category_id`, `product_image`, `warehouse_id`, `last_edited_by`) VALUES (9, 'Candle Holder', 'Decorative candle holder', 15.00, 150, 4, 'candleholder.jpg', 4, 'admin');
+INSERT INTO `products` (`product_id`, `product_name`, `description`, `unit_price`, `quantity_in_stock`, `category_id`, `product_image`, `warehouse_id`, `last_edited_by`) VALUES (10, 'Vase', 'Decorative vase', 35.00, 90, 4, 'vase.jpg', 4, 'admin');
+INSERT INTO `products` (`product_id`, `product_name`, `description`, `unit_price`, `quantity_in_stock`, `category_id`, `product_image`, `warehouse_id`, `last_edited_by`) VALUES (11, 'Cola drink', 'Fizzy drink', 12.00, 12, 6, NULL, 2, 'john_doe_wh');
+INSERT INTO `products` (`product_id`, `product_name`, `description`, `unit_price`, `quantity_in_stock`, `category_id`, `product_image`, `warehouse_id`, `last_edited_by`) VALUES (12, 'Lays crisps', 'Food', 19.00, 200, 5, NULL, 4, 'john_doe_wh');
+
 
 -- Dumping data for table stockmanagementsystem_001356993.purchases: ~0 rows (approximately)
 INSERT INTO `purchases` (`purchase_id`, `supplier_id`, `product_id`, `purchase_date`, `quantity`, `unit_price`, `proof_of_purchase_image`) VALUES

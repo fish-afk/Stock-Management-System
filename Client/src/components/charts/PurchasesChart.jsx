@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import BASEURL from "../../constants/apiBaseUrl";
 
-function BarChart() {
+function PurchasesChart() {
 
 	const [purchases, setPurchases] = useState([]);
 
@@ -27,7 +27,7 @@ function BarChart() {
 
 
 	const data = {
-		labels: purchases.map((data) => new Date(data.purchase_date).getDay()),
+		labels: purchases.map((data) => new Date(data.purchase_date).getDate()),
 		datasets: [
 			{
 				label: "Purchases",
@@ -44,9 +44,9 @@ function BarChart() {
 
 	return (
 		<div>
-			<Bar width="600vw" height={"250vh"} data={data} />
+			<Bar width="450vw" height={"350vh"} data={data} />
 		</div>
 	);
 }
 
-export default BarChart;
+export default PurchasesChart;
