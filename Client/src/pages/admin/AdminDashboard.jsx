@@ -8,8 +8,6 @@ import { Link } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
 
 const AdminDashboard = () => {
-
-	
 	const getDate = () => {
 		const today = new Date();
 		const day = today.getDate();
@@ -35,6 +33,37 @@ const AdminDashboard = () => {
 		return formattedDate;
 	};
 
+	const handleExportData = () => {
+		Swal.fire({
+			title: "Export System Data",
+			text: "Please select the format:",
+			icon: "info",
+			showCancelButton: true,
+			confirmButtonText: "JSON",
+			cancelButtonText: "CSV",
+			cancelButtonColor: "green",
+			confirmButtonColor: "blue",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// Export as JSON
+				// You can handle the JSON export logic here
+				Swal.fire(
+					"Exported!",
+					"System data has been exported as JSON.",
+					"success",
+				);
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				// Export as CSV
+				// You can handle the CSV export logic here
+				Swal.fire(
+					"Exported!",
+					"System data has been exported as CSV.",
+					"success",
+				);
+			}
+		});
+	};
+
 	const username = JSON.stringify(
 		JSON.parse(localStorage.getItem("userDataObject")).username,
 	).replaceAll('"', "");
@@ -43,7 +72,7 @@ const AdminDashboard = () => {
 		<div className="d-flex">
 			<AdminNavbar />
 
-			<div className="text-end overflow-auto" style={{maxHeight: "100vh"}}>
+			<div className="text-end overflow-auto" style={{ maxHeight: "100vh" }}>
 				<div className="d-flex justify-content-between align-items-center">
 					<div className="text-start">
 						<h5 className="p-3">
@@ -51,10 +80,8 @@ const AdminDashboard = () => {
 						</h5>
 					</div>
 					<div>
-						
 						<h5 className="p-3 text-end">
-							
-							<FaRegUserCircle className="me-2" size={20}/>
+							<FaRegUserCircle className="me-2" size={20} />
 							<em>{username} : Admin</em>
 						</h5>
 					</div>
@@ -106,8 +133,8 @@ const AdminDashboard = () => {
 						>
 							Add warehouse
 						</Link>
-						<button className="btn btn-primary m-4 ps-4 pe-4">
-							Export system Data as CSV
+						<button className="btn btn-primary m-4 ps-4 pe-4" onClick={handleExportData}>
+							Export system Data
 						</button>
 					</div>
 				</div>

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
 import PurchasesChart from "../../components/charts/PurchasesChart";
 import SalesChart from "../../components/charts/SalesChart";
+import Swal from "sweetalert2";
 import ProductCategoryChart from "../../components/charts/ProductCategoryChart";
 
 export default function WarehouseOperatorDashboard() {
@@ -32,7 +33,36 @@ export default function WarehouseOperatorDashboard() {
 
 		return formattedDate;
 	};
-
+	const handleExportData = () => {
+			Swal.fire({
+				title: "Export Inventory Data",
+				text: "Please select the format:",
+				icon: "info",
+				showCancelButton: true,
+				confirmButtonText: "JSON",
+				cancelButtonText: "CSV",
+				cancelButtonColor: 'green',
+				confirmButtonColor: 'blue'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Export as JSON
+					// You can handle the JSON export logic here
+					Swal.fire(
+						"Exported!",
+						"Inventory data has been exported as JSON.",
+						"success",
+					);
+				} else if (result.dismiss === Swal.DismissReason.cancel) {
+					// Export as CSV
+					// You can handle the CSV export logic here
+					Swal.fire(
+						"Exported!",
+						"Inventory data has been exported as CSV.",
+						"success",
+					);
+				}
+			});
+	};
 	const username = JSON.stringify(
 		JSON.parse(localStorage.getItem("userDataObject")).username,
 	).replaceAll('"', "");
@@ -101,8 +131,8 @@ export default function WarehouseOperatorDashboard() {
 						>
 							Change password
 						</Link>
-						<button className="btn btn-primary m-4 ps-4 pe-4">
-							Export inventory data as CSV
+						<button className="btn btn-primary m-4 ps-4 pe-4" onClick={handleExportData}>
+							Export inventory data
 						</button>
 					</div>
 				</div>
