@@ -2,8 +2,6 @@ import React from "react";
 import WarehouseOperatorNavbar from "../../components/navbars/WarehouseOperatorNavbar";
 import { Link } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
-import axios from "axios";
-import BASEURL from "../../constants/apiBaseUrl";
 import PurchasesChart from "../../components/charts/PurchasesChart";
 import SalesChart from "../../components/charts/SalesChart";
 import ProductCategoryChart from "../../components/charts/ProductCategoryChart";
@@ -62,12 +60,12 @@ export default function WarehouseOperatorDashboard() {
 					</h4>
 
 					<div className="d-flex p-3 pt-5">
-						<PurchasesChart />
-						<ProductCategoryChart />
-						<SalesChart />
+						<PurchasesChart sizeH={"350vh"} sizeW={"450vw"} />
+						<ProductCategoryChart sizeW="300vw" sizeH="400vh" legendPosition={"top"}/>
+						<SalesChart sizeH={"350vh"} sizeW={"450vw"} orientation="y" />
 					</div>
 				</div>
-				
+
 				<div className="text-start p-3 pt-3">
 					<h4 className="text-primary">
 						<em>Quick shortcuts 🔗</em>

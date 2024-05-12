@@ -4,27 +4,42 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import BASEURL from "../../constants/apiBaseUrl";
 
-function ProductCategoryChart({ sizeH, sizeW, legendPosition }) {
+function ProfitIndex() {
+    const [purchases, setPurchases] = useState([]);
+    const [sales, setSales] = useState([]);
 
-    const [stats, setStats] = useState([]);
-
-    const func = async () => {
+    const func2 = async () => {
         const userData = JSON.parse(localStorage.getItem("userDataObject"));
         const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
         const username = userData?.username;
-        let data = await axios.post(BASEURL + "/stats/getcategorystats", {
+        let data = await axios.post(BASEURL + "/sales/getallsales", {
             username,
             jwt_key,
         });
         const response = data?.data;
+        console.log(response);
 
-        console.log(response.data);
-        setStats(response?.data == undefined ? [] : response?.data);
+        setSales(response?.data == undefined ? [] : response?.data);
     };
-    useEffect(() => {
+
+	const func = async () => {
+		const userData = JSON.parse(localStorage.getItem("userDataObject"));
+		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
+		const username = userData?.username;
+		let data = await axios.post(BASEURL + "/purchases/getallpurchases", {
+			username,
+			jwt_key,
+		});
+		const response = data?.data;
+		console.log(response);
+
+		setPurchases(response?.data == undefined ? [] : response?.data);
+	};
+	useEffect(() => {
         func();
-    }, []);
-    
+        func2();
+	}, []);
+
 	const categoryData = {
 		labels: stats.map((data) => data.category_name),
 		datasets: [
@@ -37,13 +52,12 @@ function ProductCategoryChart({ sizeH, sizeW, legendPosition }) {
 					"#50AF95",
 					"#f3ba2f",
 					"#2a71d0",
-					"pink"
 				],
 				borderColor: "black",
 				borderWidth: 2,
 			},
 		],
-	}
+	};
 
 	return (
 		<div className="p-2 ps-4">
@@ -54,17 +68,14 @@ function ProductCategoryChart({ sizeH, sizeW, legendPosition }) {
 							display: true,
 							text: "Product Category Distribution",
 						},
-						legend: {
-							position: legendPosition,
-						},
 					},
 				}}
-				width={sizeW}
-				height={sizeH}
+				width="300vw"
+				height={"400vh"}
 				data={categoryData}
 			/>
 		</div>
 	);
 }
 
-export default ProductCategoryChart;
+export default ProfitIndex;

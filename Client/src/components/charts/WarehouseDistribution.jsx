@@ -4,49 +4,49 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import BASEURL from "../../constants/apiBaseUrl";
 
-function PurchasesChart({ sizeW, sizeH }) {
-
-	const [purchases, setPurchases] = useState([]);
+function WarehouseDistribution({ sizeW, sizeH, orientation }) {
+	const [stats, setWarehouseDistribution] = useState([]);
 
 	const func = async () => {
 		const userData = JSON.parse(localStorage.getItem("userDataObject"));
 		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
 		const username = userData?.username;
-		let data = await axios.post(BASEURL + "/purchases/getallpurchases", {
+		let data = await axios.post(BASEURL + "/stats/getwarehousedistribution", {
 			username,
 			jwt_key,
 		});
 		const response = data?.data;
 		console.log(response);
 
-		setPurchases(response?.data == undefined ? [] : response?.data);
+		setWarehouseDistribution(response?.data == undefined ? [] : response?.data);
 	};
 	useEffect(() => {
 		func();
 	}, []);
 
-
 	const data = {
-		labels: purchases.map((data) => new Date(data.purchase_date).getDate()),
+		labels: stats.map((data) => data.warehouse_name),
 		datasets: [
 			{
-				label: "Purchases",
-				data: purchases.map((data) => data.quantity * data.unit_price),
-				backgroundColor: [
-					"pink",
-					
-				],
+				label: "Warehouse product distribution",
+				data: stats.map((data) => data.quantity_in_stock),
+				backgroundColor: ["blue"],
 				borderColor: "black",
 				borderWidth: 2,
 			},
 		],
-	}
+	};
 
 	return (
-		<div>
-			<Bar width={sizeW} height={sizeH} data={data} />
+		<div className="p-2 ps-4">
+			<Bar
+				width={sizeW}
+				options={{ indexAxis: orientation }}
+				height={sizeH}
+				data={data}
+			/>
 		</div>
 	);
 }
 
-export default PurchasesChart;
+export default WarehouseDistribution;

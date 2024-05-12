@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import BASEURL from "../../constants/apiBaseUrl";
 
-function SalesChart() {
+function SalesChart({ sizeW, sizeH, orientation = "x" }) {
 	const [sales, setSales] = useState([]);
 
 	const func = async () => {
@@ -40,9 +40,9 @@ function SalesChart() {
 	return (
 		<div className="p-2 ps-4">
 			<Bar
-				width="450vw"
-				options={{ indexAxis: "y" }}
-				height={"350vh"}
+				width={sizeW}
+				options={{ indexAxis: orientation }}
+				height={sizeH}
 				data={data}
 			/>
 		</div>
