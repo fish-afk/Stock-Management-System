@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const security = require("./middleware/Security");
-const {createDirectories} = require('./middleware/multer_middleware')
+const { createImageDirectories } = require("./middleware/multer_middleware");
 const path = require("path");
 const rateLimit = require("express-rate-limit");
 
@@ -19,11 +19,11 @@ const usersRouter = require("./routers/users");
 const productCategoriesRouter = require("./routers/categories");
 const customersRouter = require("./routers/customers");
 const suppliersRouter = require("./routers/suppliers");
-const warehousesRouter = require('./routers/warehouses')
-const productsRouter = require('./routers/products');
-const purchasesRouter = require('./routers/purchases');
-const salesRouter = require('./routers/sales');
-const statsRouter = require('./routers/stats');
+const warehousesRouter = require("./routers/warehouses");
+const productsRouter = require("./routers/products");
+const purchasesRouter = require("./routers/purchases");
+const salesRouter = require("./routers/sales");
+const statsRouter = require("./routers/stats");
 
 const rateLimiter = rateLimit({
 	windowMs: 3 * 60 * 1000, // 3 minutes
@@ -42,11 +42,11 @@ app.use("/api/users", rateLimiter, usersRouter);
 app.use("/api/productcategories", rateLimiter, productCategoriesRouter);
 app.use("/api/customers", rateLimiter, customersRouter);
 app.use("/api/suppliers", rateLimiter, suppliersRouter);
-app.use('/api/warehouses', rateLimiter, warehousesRouter)
-app.use('/api/products', rateLimiter, productsRouter);
+app.use("/api/warehouses", rateLimiter, warehousesRouter);
+app.use("/api/products", rateLimiter, productsRouter);
 app.use("/api/purchases", rateLimiter, purchasesRouter);
 app.use("/api/sales", rateLimiter, salesRouter);
-app.use('/api/stats', rateLimiter, statsRouter);
+app.use("/api/stats", rateLimiter, statsRouter);
 
 app.get("/", rateLimiter, (req, res) => {
 	res.send("working test route");
@@ -60,6 +60,6 @@ app.get("*", rateLimiter, (req, res) => {
 });
 
 app.listen(PORT, () => {
-	createDirectories();
+	createImageDirectories();
 	console.log("Server Listening on Port " + PORT);
 });

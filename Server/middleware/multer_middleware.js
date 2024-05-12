@@ -1,8 +1,8 @@
 const multer = require("multer");
 const path = require("path");
-const fs = require('fs');
+const fs = require("fs");
 
-const createDirectories = () => {
+const createImageDirectories = () => {
 	const baseDir = "images";
 	const productsDir = `${baseDir}/products`;
 	const productcategoriesDir = `${baseDir}/product_categories`;
@@ -37,7 +37,15 @@ const createDirectories = () => {
 };
 
 // Define an array of allowed file extensions
-const allowedFileExtensions = [".jpeg", ".jpg", ".png", ".bmp", ".webp", ".pdf", ".docx"];
+const allowedFileExtensions = [
+	".jpeg",
+	".jpg",
+	".png",
+	".bmp",
+	".webp",
+	".pdf",
+	".docx",
+];
 
 // Create a custom file filter function
 const fileFilter = (req, file, cb) => {
@@ -116,11 +124,17 @@ const storage5 = multer.diskStorage({
 	},
 });
 
-
 const upload1 = multer({ storage: storage1, fileFilter: fileFilter });
 const upload2 = multer({ storage: storage2, fileFilter: fileFilter });
 const upload3 = multer({ storage: storage3, fileFilter: fileFilter });
 const upload4 = multer({ storage: storage4, fileFilter: fileFilter });
 const upload5 = multer({ storage: storage5, fileFilter: fileFilter });
 
-module.exports = { upload1, upload2, upload3, upload4, upload5, createDirectories };
+module.exports = {
+	upload1,
+	upload2,
+	upload3,
+	upload4,
+	upload5,
+	createImageDirectories,
+};
