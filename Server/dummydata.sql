@@ -4,6 +4,8 @@
 -- Server OS:                    Win64
 -- --------------------------------------------------------
 
+-- This is some data to help seed the database with something for testing purposes
+
 -- Dumping data for table stockmanagementsystem_001356993.categories: ~7 rows (approximately)
 INSERT INTO `categories` (`category_id`, `category_name`, `category_description`, `category_image_name`) VALUES
 	(1, 'Electronics', 'Electronics products', 'electronics.jpg'),

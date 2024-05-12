@@ -128,7 +128,13 @@ async function editPurchase(req, res) {
 }
 
 async function addPurchase(req, res) {
-	const { supplier_id, product_id, purchase_date, quantity, unit_price, username,
+	const {
+		supplier_id,
+		product_id,
+		purchase_date,
+		quantity,
+		unit_price,
+		username,
 		jwt_key,
 	} = req.body;
 
@@ -152,7 +158,30 @@ async function addPurchase(req, res) {
 	};
 
 	try {
+		// Query the current quantity in stock of the product
+		const product = await pool.query(
+			"SELECT quantity_in_stock FROM Products WHERE product_id = ?",
+			[product_id],
+		);
+
+		if (!product || product.length === 0) {
+			return res
+				.send({ status: "FAILURE", message: "Product not found" });
+		}
+
+
+		// Insert the purchase into the Purchases table
 		await pool.query("INSERT INTO Purchases SET ?", purchase);
+
+		const currentQuantity = product[0].quantity_in_stock;
+
+		// Update the quantity in stock after purchase
+		const updatedQuantity = currentQuantity + quantity;
+		await pool.query(
+			"UPDATE Products SET quantity_in_stock = ? WHERE product_id = ?",
+			[updatedQuantity, product_id],
+		);
+
 		return res.send({
 			status: "SUCCESS",
 			message: "Purchase added successfully",
@@ -164,6 +193,7 @@ async function addPurchase(req, res) {
 			.send({ status: "FAILURE", message: "Unknown error" });
 	}
 }
+
 
 module.exports = {
 	getAllPurchases,

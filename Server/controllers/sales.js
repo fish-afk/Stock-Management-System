@@ -157,6 +157,33 @@ async function addSale(req, res) {
 	};
 
 	try {
+		// Query the current quantity in stock of the product
+		const product = await pool.query(
+			"SELECT quantity_in_stock FROM Products WHERE product_id = ?",
+			[product_id],
+		);
+
+		if (!product || product.length === 0) {
+			return res
+				.send({ status: "FAILURE", message: "Product not found" });
+		}
+
+		const currentQuantity = product[0].quantity_in_stock;
+
+		// Check if the quantity being sold is greater than the current quantity
+		if (quantity > currentQuantity) {
+			return res
+				.send({ status: "FAILURE", message: "Insufficient quantity in stock" });
+		}
+
+		// Update the quantity in stock after sale
+		const updatedQuantity = currentQuantity - quantity;
+		await pool.query(
+			"UPDATE Products SET quantity_in_stock = ? WHERE product_id = ?",
+			[updatedQuantity, product_id],
+		);
+
+		// Proceed with sale insertion
 		await pool.query("INSERT INTO Sales SET ?", sale);
 		return res.send({ status: "SUCCESS", message: "Sale added successfully" });
 	} catch (err) {
@@ -166,6 +193,8 @@ async function addSale(req, res) {
 			.send({ status: "FAILURE", message: "Unknown error" });
 	}
 }
+
+
 
 module.exports = {
 	getAllSales,
