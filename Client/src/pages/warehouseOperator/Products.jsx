@@ -100,10 +100,10 @@ export default function Products() {
 					</button>
 				</div>
 
-				<div className="container-fluid mt-1">
+				<div className="container-fluid mt-1 ">
 					<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 						{Products.map((Product) => (
-							<div className="col" key={Product.product_id}>
+							<div className="col item-cardss-parent" key={Product.product_id}>
 								<div
 									className="card h-100 text-white p-2 bg-dark"
 									style={{
@@ -112,6 +112,7 @@ export default function Products() {
 									}}
 								>
 									<div
+										className="item-cardss"
 										style={{
 											backgroundImage: `url(${IMAGESBASEURL}/products/${
 												Product.product_image || "none"
@@ -125,7 +126,7 @@ export default function Products() {
 											width: "100%",
 											height: "100%",
 											zIndex: 1, // Place the overlay behind the content
-											filter: "brightness(0.5)", // Adjust the brightness
+											filter: "brightness(0.35)", // Adjust the brightness
 										}}
 									></div>
 									<div

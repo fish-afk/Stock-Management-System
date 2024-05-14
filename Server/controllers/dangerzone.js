@@ -1,5 +1,4 @@
 const { pool } = require("../models/_mysql");
-const jwt = require("jsonwebtoken");
 
 async function getTables(pool) {
 	const [tables] = await pool.query("SHOW TABLES");
@@ -8,13 +7,14 @@ async function getTables(pool) {
 
 async function emptyTables(pool, tables) {
 	try {
-		for (const table in tables) {
-			if (table != "users" && table != "Users") {
-				await pool.query(`DELETE FROM \`${table}\``);
+        for (let i = 0; i < tables.length; i++) {
+			if (tables[i] != "users" && tables[i] != "Users") {
+				await pool.query(`DELETE FROM \`${tables[i]}\``);
 			}
 		}
 		return true;
-	} catch (err) {
+    } catch (err) {
+        console.log(err)
 		return false;
 	}
 }
@@ -27,8 +27,8 @@ const resetDb = async (req, res) => {
 		});
 	}
 
-	const tables = await getTables(pool);
-	const result = emptyTables(pool, tables);
+    const tables = await getTables(pool);
+	const result = await emptyTables(pool, tables);
 
 	try {
 		if (result == true) {

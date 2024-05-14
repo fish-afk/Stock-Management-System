@@ -41,10 +41,13 @@ export default function ProductCategoriesWh() {
 					<h1 className="fw-light">Current Product Categories In The System</h1>
 				</div>
 
-				<div className="container-fluid mt-1">
+				<div className="container-fluid mt-1 ">
 					<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 						{ProductCategories.map((ProductCategory) => (
-							<div className="col" key={ProductCategory.category_id}>
+							<div
+								className="col item-cardss-parent"
+								key={ProductCategory.category_id}
+							>
 								<div
 									className="card h-100 text-white p-2 bg-dark"
 									style={{
@@ -53,6 +56,7 @@ export default function ProductCategoriesWh() {
 									}}
 								>
 									<div
+										className="item-cardss"
 										style={{
 											backgroundImage: `url(${IMAGESBASEURL}/product_categories/${
 												ProductCategory.category_image_name || "none"
@@ -78,6 +82,9 @@ export default function ProductCategoriesWh() {
 										</h5>
 										<p className="card-text">
 											{ProductCategory.category_description}
+										</p>
+										<p className="card-text">
+											Products : {ProductCategory.number_of_products}
 										</p>
 									</div>
 								</div>

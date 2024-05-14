@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 async function getAllCategories(req, res) {
 	try {
-		const query = "SELECT * FROM Categories";
+		const query = `SELECT c.*, COUNT(p.product_id) AS number_of_products FROM Categories c LEFT JOIN Products p ON c.category_id = p.category_id GROUP BY c.category_id;`;
 		const [categories] = await pool.query(query);
 
 		return res.send({

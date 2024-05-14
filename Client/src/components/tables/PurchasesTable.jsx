@@ -10,15 +10,14 @@ const PurchasesTable = ({ purchases, crud }) => {
 	const [record, setrecord] = useState(null);
 
 	function formatDate(date) {
-    // Extract date components
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const year = date.getFullYear();
+		// Extract date components
+		const day = String(date.getDate()).padStart(2, "0");
+		const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+		const year = date.getFullYear();
 
-    // Format the date and time as 'dd/mm/yyyy'
-    return `${day}/${month}/${year}`;
+		// Format the date and time as 'dd/mm/yyyy'
+		return `${day}/${month}/${year}`;
 	}
-
 
 	const delete_purchase = async (purchase_id) => {
 		const msg = "Are you sure you want to delete this record?";
@@ -74,7 +73,7 @@ const PurchasesTable = ({ purchases, crud }) => {
 						<th scope="col">Supplier ID</th>
 						<th scope="col">Product ID</th>
 						<th scope="col">Purchase Date</th>
-						<th scope="col">Unit Price</th>
+						<th scope="col">Unit price (K)</th>
 						<th scope="col">Quantity</th>
 					</tr>
 				</thead>

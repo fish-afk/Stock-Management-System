@@ -63,7 +63,6 @@ const SalesTable = ({ sales, crud }) => {
 		return `${day}/${month}/${year}`;
 	}
 
-
 	return (
 		<div className="container-fluid">
 			<table className="table table-hover table-success table-striped table-bordered p-5">
@@ -73,7 +72,7 @@ const SalesTable = ({ sales, crud }) => {
 						<th scope="col">Customer ID</th>
 						<th scope="col">Product ID</th>
 						<th scope="col">Sale Date</th>
-						<th scope="col">Unit Price</th>
+						<th scope="col">Unit price (K)</th>
 						<th scope="col">Quantity</th>
 					</tr>
 				</thead>

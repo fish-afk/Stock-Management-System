@@ -36,10 +36,13 @@ export default function WarehousesWh() {
 					<h1 className="fw-light">Warehouses</h1>
 				</div>
 
-				<div className="container-fluid mt-1">
+				<div className="container-fluid mt-1 ">
 					<div className="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-5">
 						{warehouses.map((warehouse) => (
-							<div className="col" key={warehouse.warehouse_id}>
+							<div
+								className="col item-cardss-parent"
+								key={warehouse.warehouse_id}
+							>
 								<div
 									className="card h-100 text-white p-3 bg-dark"
 									style={{
@@ -48,6 +51,7 @@ export default function WarehousesWh() {
 									}}
 								>
 									<div
+										className="item-cardss"
 										style={{
 											backgroundImage: `url(${IMAGESBASEURL}/warehouses/${
 												warehouse.image_name || "none"
@@ -70,8 +74,14 @@ export default function WarehousesWh() {
 										style={{ position: "relative", zIndex: 2 }} // Ensures content is above the overlay
 									>
 										<h5 className="card-title">{warehouse.warehouse_name}</h5>
-										<p className="card-text">
+										<p className="card-text pt-3">
 											{warehouse.warehouse_description}
+										</p>
+										<p className="card-text">
+											Location: {warehouse.warehouse_location}
+										</p>
+										<p className="card-text">
+											Storage Capacity: {warehouse.max_storage_capacity} MT
 										</p>
 										<button className="btn btn-info" onClick={() => {}}>
 											Inspect
