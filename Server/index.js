@@ -10,7 +10,7 @@ require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-app.use(express.json({ limit: "20mb" }));
+app.use(express.json({ limit: '20mb'}));
 app.use(cors({ origin: "*" }));
 app.use(security.securityMiddleware);
 app.use("/static/images", express.static(path.join(__dirname, "images"))); //serve static images
@@ -24,6 +24,7 @@ const productsRouter = require("./routers/products");
 const purchasesRouter = require("./routers/purchases");
 const salesRouter = require("./routers/sales");
 const statsRouter = require("./routers/stats");
+const exportsRouter = require('./routers/exporter')
 
 const rateLimiter = rateLimit({
 	windowMs: 3 * 60 * 1000, // 3 minutes
@@ -47,6 +48,7 @@ app.use("/api/products", rateLimiter, productsRouter);
 app.use("/api/purchases", rateLimiter, purchasesRouter);
 app.use("/api/sales", rateLimiter, salesRouter);
 app.use("/api/stats", rateLimiter, statsRouter);
+app.use('/api/export', rateLimiter, exportsRouter);
 
 app.get("/", rateLimiter, (req, res) => {
 	res.send("working test route");

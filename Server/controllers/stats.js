@@ -76,6 +76,7 @@ JOIN
 	});
 }
 
+
 module.exports = {
 	getInventoryStats,
     getCategoryStats,
