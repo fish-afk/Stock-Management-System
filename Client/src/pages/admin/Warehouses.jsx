@@ -103,15 +103,32 @@ export default function Warehouses() {
 								<div
 									className="card h-100 text-white p-3 bg-dark"
 									style={{
-										backgroundImage: `url(${IMAGESBASEURL}/warehouses/${
-											warehouse.image_name || "none"
-										})`,
-										backgroundSize: "cover",
-										backgroundPosition: "center",
-										backgroundRepeat: "no-repeat",
+										position: "relative", // Added position relative
+										overflow: "hidden", // Ensures the overlay doesn't overflow the card
 									}}
 								>
-									<div className="card-body">
+									<div
+										style={{
+											backgroundImage: `url(${IMAGESBASEURL}/warehouses/${
+												warehouse.image_name || "none"
+											})`,
+											backgroundBlendMode: "darken",
+											backgroundSize: "cover",
+											backgroundPosition: "center",
+											backgroundRepeat: "no-repeat",
+											position: "absolute",
+											top: 0,
+											left: 0,
+											width: "100%",
+											height: "100%",
+											zIndex: 1, // Ensures the overlay is below the content
+											filter: "brightness(0.35)", // Adjust brightness
+										}}
+									></div>
+									<div
+										className="card-body"
+										style={{ position: "relative", zIndex: 2 }} // Ensures content is above the overlay
+									>
 										<h5 className="card-title">{warehouse.warehouse_name}</h5>
 										<p className="card-text">
 											{warehouse.warehouse_description}

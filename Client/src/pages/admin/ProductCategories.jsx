@@ -109,15 +109,31 @@ export default function ProductCategories() {
 								<div
 									className="card h-100 text-white p-2 bg-dark"
 									style={{
-										backgroundImage: `url(${IMAGESBASEURL}/product_categories/${
-											ProductCategory.category_image_name || "none"
-										})`,
-										backgroundSize: "cover",
-										backgroundPosition: "center",
-										backgroundRepeat: "no-repeat",
+										position: "relative", // Ensure the overlay is positioned correctly
+										overflow: "hidden", // Prevent the overlay from overflowing the card
 									}}
 								>
-									<div className="card-body">
+									<div
+										style={{
+											backgroundImage: `url(${IMAGESBASEURL}/product_categories/${
+												ProductCategory.category_image_name || "none"
+											})`,
+											backgroundSize: "cover",
+											backgroundPosition: "center",
+											backgroundRepeat: "no-repeat",
+											position: "absolute",
+											top: 0,
+											left: 0,
+											width: "100%",
+											height: "100%",
+											zIndex: 1, // Place the overlay behind the content
+											filter: "brightness(0.35)", // Adjust the brightness
+										}}
+									></div>
+									<div
+										className="card-body"
+										style={{ position: "relative", zIndex: 2 }} // Ensure the content is above the overlay
+									>
 										<h5 className="card-title">
 											{ProductCategory.category_name}
 										</h5>

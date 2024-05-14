@@ -107,15 +107,31 @@ export default function Products() {
 								<div
 									className="card h-100 text-white p-2 bg-dark"
 									style={{
-										backgroundImage: `url(${IMAGESBASEURL}/products/${
-											Product.product_image || "none"
-										})`,
-										backgroundSize: "cover",
-										backgroundPosition: "center",
-										backgroundRepeat: "no-repeat",
+										position: "relative", // Ensure the overlay is positioned correctly
+										overflow: "hidden", // Prevent the overlay from overflowing the card
 									}}
 								>
-									<div className="card-body">
+									<div
+										style={{
+											backgroundImage: `url(${IMAGESBASEURL}/products/${
+												Product.product_image || "none"
+											})`,
+											backgroundSize: "cover",
+											backgroundPosition: "center",
+											backgroundRepeat: "no-repeat",
+											position: "absolute",
+											top: 0,
+											left: 0,
+											width: "100%",
+											height: "100%",
+											zIndex: 1, // Place the overlay behind the content
+											filter: "brightness(0.5)", // Adjust the brightness
+										}}
+									></div>
+									<div
+										className="card-body"
+										style={{ position: "relative", zIndex: 2 }} // Ensure the content is above the overlay
+									>
 										<h5 className="card-title">{Product.product_name}</h5>
 										<p className="card-text">{Product.description}</p>
 										<br />
