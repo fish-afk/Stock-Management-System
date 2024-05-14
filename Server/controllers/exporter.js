@@ -18,8 +18,7 @@ async function exportTableToCsv(pool, tableName, outputDir) {
 	return filename;
 }
 
-async function exportDbToJson(pool) {
-	const tables = await getTables(pool);
+async function exportDbToJson(pool, tables) {
 	const data = {};
 
 	for (const table of tables) {
@@ -30,7 +29,7 @@ async function exportDbToJson(pool) {
 	return data;
 }
 
-async function exportDbToCSV(outputZip) {
+async function exportDbToCSV(outputZip, tables) {
 	const outputDir = path.join(__dirname, "../tmpexports");
 
 	// Create exports directory if it doesn't exist
@@ -38,7 +37,6 @@ async function exportDbToCSV(outputZip) {
 		fs.mkdirSync(outputDir);
 	}
 	try {
-		const tables = await getTables(pool);
 		const files = [];
 
 		for (const table of tables) {
@@ -79,7 +77,14 @@ async function exportDbToCSV(outputZip) {
 	}
 }
 
-const exporter = async (req, res) => {
+const SystemDataExporter = async (req, res) => {
+	if (req.decoded.role_id != 1) {
+		return res.send({
+			status: "FAILURE",
+			message: "insufficient privileges",
+		});
+	}
+	
 	const option = req.body.option || "csv"; // default to 'csv' if no format is specified
 
 	if (option != "csv" && option != "json") {
@@ -90,9 +95,11 @@ const exporter = async (req, res) => {
 	}
 
 	if (option == "json") {
-		const data = await exportDbToJson(pool);
+		const tables = await getTables(pool);
+		const data = await exportDbToJson(pool, tables);
 		return res.send({ status: "SUCCESS", data: data });
 	} else {
+		const tables = await getTables(pool);
 		const outputZipDir = path.join(__dirname, "../dbexports");
 		const outputZip = path.join(__dirname, "../dbexports/database_export.zip");
 
@@ -102,7 +109,65 @@ const exporter = async (req, res) => {
 		}
 
 		try {
-			await exportDbToCSV(outputZip, option);
+			await exportDbToCSV(outputZip, tables);
+			setTimeout(async () => {
+				await res.download(outputZip, (err) => {
+					if (err) {
+						console.error("Error sending file:", err);
+						res.status(500).send("Error downloading file");
+					} else {
+						// Delete the zip file after download
+						fs.unlinkSync(outputZip);
+					}
+				});
+			}, 1000); // Delay to ensure file closure
+		} catch (err) {
+			console.error("Error exporting database:", err);
+			res.status(500).send("Error exporting database");
+		}
+	}
+};
+
+const InventoryDataExporter = async (req, res) => {
+	const option = req.body.option || "csv"; // default to 'csv' if no format is specified
+
+	if (option != "csv" && option != "json") {
+		res.send({
+			status: "FAILURE",
+			message: "Invalid format. Use 'csv' or 'json'.",
+		});
+	}
+
+	if (option == "json") {
+		const tables = [
+			"purchases",
+			"sales",
+			"products",
+			"customers",
+			"suppliers",
+			"warehouses",
+		];
+		const data = await exportDbToJson(pool, tables);
+		return res.send({ status: "SUCCESS", data: data });
+	} else {
+		const tables = [
+			"purchases",
+			"sales",
+			"products",
+			"customers",
+			"suppliers",
+			"warehouses",
+		];
+		const outputZipDir = path.join(__dirname, "../dbexports");
+		const outputZip = path.join(__dirname, "../dbexports/database_export.zip");
+
+		// Create exports directory if it doesn't exist
+		if (!fs.existsSync(outputZipDir)) {
+			fs.mkdirSync(outputZipDir);
+		}
+
+		try {
+			await exportDbToCSV(outputZip, tables);
 			setTimeout(async () => {
 				await res.download(outputZip, (err) => {
 					if (err) {
@@ -122,5 +187,6 @@ const exporter = async (req, res) => {
 };
 
 module.exports = {
-	exporter,
+	SystemDataExporter,
+	InventoryDataExporter,
 };

@@ -7,9 +7,49 @@ import SalesChart from "../../components/charts/SalesChart";
 import ProductCategoryChart from "../../components/charts/ProductCategoryChart";
 import WarehouseDistribution from "../../components/charts/WarehouseDistribution";
 import Swal from "sweetalert2";
+import axios from "axios";
+import BASEURL from "../../constants/apiBaseUrl";
+import { saveAs } from "file-saver";
 
 export default function StakeHolderDashboard() {
 	
+	const func = async (option) => {
+		const userData = JSON.parse(localStorage.getItem("userDataObject"));
+		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
+		const username = userData?.username;
+		let response = await axios.post(
+			BASEURL + "/export/exportinventorydata",
+			{
+				username,
+				jwt_key,
+				option,
+			},
+			{
+				responseType: option == 'csv' ? 'blob' : 'json',
+				timeout: 10000
+			});
+		
+		if (option == 'json') {
+			const jsonData = response.data.data;
+			const jsonDataStr = JSON.stringify(jsonData, null, 2);
+			saveAs(new Blob([jsonDataStr]), "exports.json")
+			return;
+		} else {
+			const contentDisposition = response.headers["content-disposition"];
+			let filename = "database_export.zip"; // Default filename
+
+			if (contentDisposition) {
+				const matches = /filename="([^"]+)"/.exec(contentDisposition);
+				if (matches != null && matches[1]) {
+					filename = matches[1];
+				}
+			}
+
+			saveAs(new Blob([response.data]), filename);
+		}
+		
+	};
+
 	const getDate = () => {
 		const today = new Date();
 		const day = today.getDate();
@@ -45,10 +85,10 @@ export default function StakeHolderDashboard() {
 			cancelButtonText: "CSV",
 			cancelButtonColor: "green",
 			confirmButtonColor: "blue",
-		}).then((result) => {
+		}).then(async (result) => {
 			if (result.isConfirmed) {
 				// Export as JSON
-				// You can handle the JSON export logic here
+				await func('json')
 				Swal.fire(
 					"Exported!",
 					"Inventory data has been exported as JSON.",
@@ -56,7 +96,7 @@ export default function StakeHolderDashboard() {
 				);
 			} else if (result.dismiss === Swal.DismissReason.cancel) {
 				// Export as CSV
-				// You can handle the CSV export logic here
+				await func("csv");
 				Swal.fire(
 					"Exported!",
 					"Inventory data has been exported as CSV.",
