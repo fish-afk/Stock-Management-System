@@ -159,7 +159,7 @@ const InventoryDataExporter = async (req, res) => {
 			"warehouses",
 		];
 		const outputZipDir = path.join(__dirname, "../dbexports");
-		const outputZip = path.join(__dirname, "../dbexports/database_export.zip");
+		const outputZip = path.join(__dirname, "../dbexports/inventory_data_export.zip");
 
 		// Create exports directory if it doesn't exist
 		if (!fs.existsSync(outputZipDir)) {

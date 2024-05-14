@@ -32,11 +32,11 @@ export default function StakeHolderDashboard() {
 		if (option == 'json') {
 			const jsonData = response.data.data;
 			const jsonDataStr = JSON.stringify(jsonData, null, 2);
-			saveAs(new Blob([jsonDataStr]), "exports.json")
+			saveAs(new Blob([jsonDataStr]), "inventory_export.json");
 			return;
 		} else {
 			const contentDisposition = response.headers["content-disposition"];
-			let filename = "database_export.zip"; // Default filename
+			let filename = "inventory_export.zip"; // Default filename
 
 			if (contentDisposition) {
 				const matches = /filename="([^"]+)"/.exec(contentDisposition);

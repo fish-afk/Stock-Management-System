@@ -6,7 +6,7 @@ import BASEURL from "../../constants/apiBaseUrl";
 import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import WarehouseOperatorNavbar from "../../components/navbars/WarehouseOperatorNavbar";
-import StakeHolderNavbar from "../../components/navbars/StakeHolderNavbar";
+import StakeholderNavbar from "../../components/navbars/StakeHolderNavbar";
 
 export default function EditProfile() {
 	const [formValues, setFormValues] = useState({});
