@@ -77,7 +77,7 @@ export default function Warehouses() {
 
 	return (
 		<div className="d-flex">
-			<AdminNavbar priv={"admin"} />
+			<AdminNavbar />
 			<div
 				className="container pb-5 overflow-auto"
 				style={{ maxHeight: "100vh" }}

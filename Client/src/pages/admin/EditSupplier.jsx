@@ -78,7 +78,7 @@ export default function EditSupplier() {
 
 	return (
 		<div className="d-flex" style={{ height: "100vh" }}>
-			<AdminNavbar priv="admin" />
+			<AdminNavbar />
 			<div className="container">
 				<div className="d-flex justify-content-center p-2">
 					<h3>Edit Supplier</h3>

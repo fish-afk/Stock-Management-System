@@ -61,7 +61,7 @@ export default function ChangePassword() {
 	return (
 		<div className="d-flex">
 			{params.privs == "adm" ? (
-				<AdminNavbar priv="admin" />
+				<AdminNavbar />
 			) : params.privs == "wh" ? (
 				<WarehouseOperatorNavbar />
 			) : (

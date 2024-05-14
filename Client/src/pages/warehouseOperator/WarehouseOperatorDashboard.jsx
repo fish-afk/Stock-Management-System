@@ -108,7 +108,7 @@ export default function WarehouseOperatorDashboard() {
 	
 	return (
 		<div className="d-flex">
-			<WarehouseOperatorNavbar priv={"WarehouseOperator"} />
+			<WarehouseOperatorNavbar />
 			<div className="text-end overflow-auto" style={{ maxHeight: "100vh" }}>
 				<div className="d-flex justify-content-between align-items-center">
 					<div className="text-start">

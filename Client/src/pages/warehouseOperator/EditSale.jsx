@@ -131,7 +131,7 @@ export default function EditSale() {
 
 	return (
 		<div className="d-flex" style={{ height: "100vh" }}>
-			<WarehouseOperatorNavbar priv="admin" />
+			<WarehouseOperatorNavbar />
 			<div className="container">
 				<div className="d-flex justify-content-center p-2">
 					<h3>Add New Sale</h3>
