@@ -13,6 +13,102 @@ import { saveAs } from "file-saver";
  
 const AdminDashboard = () => {
 
+
+
+	const deleteSpecificTable = async (table) => {
+		const msg = "Are you sure you want delete data in this table?";
+		const txt =
+			"This action is irreversible";
+		const result = await Swal.fire({
+			title: msg,
+			text: txt,
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#d33",
+			cancelButtonColor: "#3085d6",
+			confirmButtonText: "Yes, Go Ahead",
+		});
+
+		if (result.isConfirmed) {
+			const userData = JSON.parse(localStorage.getItem("userDataObject"));
+			const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
+			const username = userData?.username;
+			const reqData = { jwt_key, username, table };
+
+			let data = await axios.delete(
+				BASEURL + "/dangerzone/deletespecifictable",
+				{
+					data: reqData,
+				},
+			);
+			const response = data?.data;
+			console.log(response);
+
+			if (response.status == "SUCCESS") {
+				Swal.fire({
+					title: "Data emptied Successfully",
+					timer: 3000,
+					icon: "success",
+				}).then(() => {
+					location.reload();
+				});
+			} else {
+				Swal.fire({
+					title: "Error resetting table. Try later",
+					timer: 3000,
+					icon: "error",
+				}).then(() => {
+					location.reload();
+				});
+			}
+		}
+	};
+
+	const resetDb = async () => {
+		const msg = "Are you sure you want to reset the database?";
+		const txt = "This action is irreversible and will delete all tables except the users table";
+		const result = await Swal.fire({
+			title: msg,
+			text: txt,
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#d33",
+			cancelButtonColor: "#3085d6",
+			confirmButtonText: "Yes, Go Ahead",
+		});
+
+		if (result.isConfirmed) {
+			const userData = JSON.parse(localStorage.getItem("userDataObject"));
+			const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
+			const username = userData?.username;
+			const reqData = { jwt_key, username };
+
+			let data = await axios.delete(BASEURL + "/dangerzone/resetdb", {
+				data: reqData,
+			});
+			const response = data?.data;
+			console.log(response);
+
+			if (response.status === "SUCCESS") {
+				Swal.fire({
+					title: "Database emptied Successfully",
+					timer: 3000,
+					icon: "success",
+				}).then(() => {
+					location.reload();
+				});
+			} else {
+				Swal.fire({
+					title: "Error resetting database. Try later",
+					timer: 3000,
+					icon: "error",
+				}).then(() => {
+					location.reload();
+				});
+			}
+		}
+	};
+
 	const func = async (option) => {
 		const userData = JSON.parse(localStorage.getItem("userDataObject"));
 		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
@@ -176,7 +272,10 @@ const AdminDashboard = () => {
 						>
 							Add warehouse
 						</Link>
-						<button className="btn btn-primary m-4 ps-4 pe-4" onClick={handleExportData}>
+						<button
+							className="btn btn-primary m-4 ps-4 pe-4"
+							onClick={handleExportData}
+						>
 							Export system Data
 						</button>
 					</div>
@@ -187,20 +286,38 @@ const AdminDashboard = () => {
 						<em>Danger Zone ⚠️</em>
 					</h4>
 					<div>
-						<button className="btn btn-danger me-4 ps-4 pe-4">
+						<button className="btn btn-danger me-4 ps-3 pe-3" onClick={resetDb}>
 							Reset Database
 						</button>
-						<button className="btn btn-danger m-4 ps-4 pe-4">
-							Delete All Users
+						<button
+							className="btn btn-danger m-4 ps-3 pe-3"
+							onClick={() => {deleteSpecificTable("products")}}
+						>
+							Delete All Products
 						</button>
-						<button className="btn btn-danger m-4 ps-4 pe-4">
+						<button
+							className="btn btn-danger m-4 ps-3 pe-3"
+							onClick={() => {deleteSpecificTable("sales")}}
+						>
 							Delete All Sales
 						</button>
-						<button className="btn btn-danger m-4 ps-4 pe-4">
+						<button
+							className="btn btn-danger m-4 ps-3 pe-3"
+							onClick={() => {deleteSpecificTable("purchases")}}
+						>
 							Delete All Purchases
 						</button>
-						<button className="btn btn-danger m-4 ps-4 pe-4">
-							Delete All Suppliers and Customers
+						<button
+							className="btn btn-danger m-4 ps-3 pe-3"
+							onClick={() => {deleteSpecificTable("suppliers")}}
+						>
+							Delete All Suppliers
+						</button>
+						<button
+							className="btn btn-danger m-4 ps-3 pe-3"
+							onClick={() => {deleteSpecificTable("customers")}}
+						>
+							Delete All Customers
 						</button>
 					</div>
 				</div>
