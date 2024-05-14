@@ -53,13 +53,24 @@ const SalesTable = ({ sales, crud }) => {
 		}
 	};
 
+	function formatDate(date) {
+		// Extract date components
+		const day = String(date.getDate()).padStart(2, "0");
+		const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+		const year = date.getFullYear();
+
+		// Format the date and time as 'dd/mm/yyyy'
+		return `${day}/${month}/${year}`;
+	}
+
+
 	return (
 		<div className="container-fluid">
 			<table className="table table-hover table-success table-striped table-bordered p-5">
 				<thead className="thead-dark">
 					<tr>
 						<th scope="col">Sale ID</th>
-						<th scope="col">Supplier ID</th>
+						<th scope="col">Customer ID</th>
 						<th scope="col">Product ID</th>
 						<th scope="col">Sale Date</th>
 						<th scope="col">Unit Price</th>
@@ -72,7 +83,7 @@ const SalesTable = ({ sales, crud }) => {
 							<td>{sale.sale_id}</td>
 							<td>{sale.customer_id}</td>
 							<td>{sale.product_id}</td>
-							<td>{sale.sale_date}</td>
+							<td>{formatDate(new Date(sale.sale_date))}</td>
 							<td>{sale.unit_price}</td>
 							<td>{sale.quantity}</td>
 							{crud == true ? (

@@ -9,6 +9,17 @@ const PurchasesTable = ({ purchases, crud }) => {
 	const Navigate = useNavigate();
 	const [record, setrecord] = useState(null);
 
+	function formatDate(date) {
+    // Extract date components
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const year = date.getFullYear();
+
+    // Format the date and time as 'dd/mm/yyyy'
+    return `${day}/${month}/${year}`;
+	}
+
+
 	const delete_purchase = async (purchase_id) => {
 		const msg = "Are you sure you want to delete this record?";
 		const txt = "This action is irreversible";
@@ -73,7 +84,7 @@ const PurchasesTable = ({ purchases, crud }) => {
 							<td>{purchase.purchase_id}</td>
 							<td>{purchase.supplier_id}</td>
 							<td>{purchase.product_id}</td>
-							<td>{purchase.purchase_date}</td>
+							<td>{formatDate(new Date(purchase.purchase_date))}</td>
 							<td>{purchase.unit_price}</td>
 							<td>{purchase.quantity}</td>
 

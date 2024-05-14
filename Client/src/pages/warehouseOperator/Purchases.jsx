@@ -11,6 +11,8 @@ export default function PurchasesSt() {
 	const Navigate = useNavigate();
 	const [purchases, setPurchases] = useState([])
 
+	
+
 	const func = async () => {
 		const userData = JSON.parse(localStorage.getItem("userDataObject"));
 		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
