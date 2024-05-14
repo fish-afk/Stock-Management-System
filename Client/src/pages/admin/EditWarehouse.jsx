@@ -167,7 +167,6 @@ export default function EditWarehouse() {
 							}
 						/>
 					</div>
-
 					<div className="form-outline mb-3">
 						<label
 							className="text-white form-label"

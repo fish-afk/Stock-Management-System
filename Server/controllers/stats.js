@@ -76,9 +76,43 @@ JOIN
 	});
 }
 
+const getWarehouseComposition = async (req, res) => {
+	const warehouse_id = req.body["warehouse_id"];
+	const query = `
+        SELECT 
+            warehouses.warehouse_id, 
+            products.product_id, 
+            products.product_name, 
+            products.quantity_in_stock 
+        FROM 
+            warehouses 
+        LEFT JOIN 
+            products ON warehouses.warehouse_id = products.warehouse_id 
+        WHERE 
+            warehouses.warehouse_id = ?
+    `;
+
+	try {
+		const [WarehouseComposition] = await pool.query(query, [warehouse_id]);
+		return res.send({
+			status: "SUCCESS",
+			message: "Stats Retrieved",
+			data: WarehouseComposition,
+		});
+	} catch (error) {
+		return res.status(500).send({
+			status: "FAILURE",
+			message: "Database query failed",
+			error: error.message,
+		});
+	}
+};
+
+
 
 module.exports = {
 	getInventoryStats,
-    getCategoryStats,
-    getWarehouseDistribution
+	getCategoryStats,
+	getWarehouseDistribution,
+	getWarehouseComposition
 };

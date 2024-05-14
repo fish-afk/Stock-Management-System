@@ -4,10 +4,12 @@ import axios from "axios";
 import BASEURL from "../../constants/apiBaseUrl";
 import IMAGESBASEURL from "../../constants/imagesBaseUrl";
 import WarehouseOperatorNavbar from "../../components/navbars/WarehouseOperatorNavbar";
+import { useNavigate } from "react-router-dom";
 
 export default function WarehousesWh() {
 	const [warehouses, setWarehouses] = useState([]);
 
+	const Navigate = useNavigate()
 	const func = async () => {
 		const userData = JSON.parse(localStorage.getItem("userDataObject"));
 		const jwt_key = localStorage.getItem("stock-managment-system-auth-token");
@@ -83,7 +85,18 @@ export default function WarehousesWh() {
 										<p className="card-text">
 											Storage Capacity: {warehouse.max_storage_capacity} MT
 										</p>
-										<button className="btn btn-info" onClick={() => {}}>
+										<button
+											className="btn btn-info"
+											onClick={() => {
+												Navigate(
+													"/admin/pages/warehouses/inspect/" +
+														warehouse.warehouse_id,
+													{
+														state: { ...warehouse },
+													},
+												);
+											}}
+										>
 											Inspect
 										</button>
 									</div>

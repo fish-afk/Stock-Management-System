@@ -26,6 +26,7 @@ import AddNewPurchase from "./pages/warehouseOperator/AddNewPurchase";
 import AddNewSale from "./pages/warehouseOperator/AddNewSale";
 import EditSale from "./pages/warehouseOperator/EditSale";
 import EditPurchase from "./pages/warehouseOperator/EditPurchase";
+import InspectWarehouseWh from "./pages/warehouseOperator/InspectWarehouse";
 
 //stakeholder pages
 import StakeHolderDashboard from "./pages/stakeHolder/StakeHolderDashboard";
@@ -45,6 +46,7 @@ import AddNewProductCategory from "./pages/admin/AddNewProductCategory";
 import AddNewCustomer from "./pages/admin/AddNewCustomer";
 import AddNewSupplier from "./pages/admin/AddNewSupplier";
 import AddNewWarehouse from "./pages/admin/AddNewWarehouse";
+import InspectWarehouse from "./pages/admin/InspectWarehouse";
 import EditProductCategory from "./pages/admin/EditProductCategory";
 import EditCustomer from "./pages/admin/EditCustomer";
 import EditSupplier from "./pages/admin/EditSupplier";
@@ -205,6 +207,14 @@ const router = createBrowserRouter([
 									</ProtectedRoute>
 								),
 							},
+							{
+								path: "inspect/:warehouse_id",
+								element: (
+									<ProtectedRoute>
+										<InspectWarehouse />
+									</ProtectedRoute>
+								),
+							},
 						],
 					},
 					{
@@ -343,6 +353,14 @@ const router = createBrowserRouter([
 								element: (
 									<ProtectedRoute>
 										<WarehousesWh />
+									</ProtectedRoute>
+								),
+							},
+							{
+								path: "inspect/:warehouse_id",
+								element: (
+									<ProtectedRoute>
+										<InspectWarehouseWh />
 									</ProtectedRoute>
 								),
 							},

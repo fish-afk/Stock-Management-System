@@ -165,7 +165,18 @@ export default function Warehouses() {
 										>
 											Remove
 										</button>
-										<button className="btn btn-info" onClick={() => {}}>
+										<button
+											className="btn btn-info"
+											onClick={() => {
+												Navigate(
+													"/admin/pages/warehouses/inspect/" +
+														warehouse.warehouse_id,
+													{
+														state: { ...warehouse },
+													},
+												);
+											}}
+										>
 											Inspect
 										</button>
 									</div>

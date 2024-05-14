@@ -97,11 +97,6 @@ const SuppliersTable = ({ Suppliers }) => {
 									Edit Supplier
 								</button>
 							</td>
-							<td>
-								<button className="btn btn-warning pe-2 ps-2 pt-1 pb-1">
-									See details
-								</button>
-							</td>
 						</tr>
 					))}
 				</tbody>
