@@ -32,7 +32,6 @@ import InspectWarehouseWh from "./pages/warehouseOperator/InspectWarehouse";
 import StakeHolderDashboard from "./pages/stakeHolder/StakeHolderDashboard";
 import PurchasesSt from "./pages/stakeHolder/Purchases";
 import SalesSt from "./pages/stakeHolder/Sales";
-import KPIs from "./pages/stakeHolder/KPIs";
 
 // admin pages
 import SystemUsers from "./pages/admin/SystemUsers";
@@ -479,19 +478,7 @@ const router = createBrowserRouter([
 							},
 						],
 					},
-					{
-						path: "kpis",
-						children: [
-							{
-								index: true,
-								element: (
-									<ProtectedRoute>
-										<KPIs />
-									</ProtectedRoute>
-								),
-							},
-						],
-					},
+					
 				],
 			},
 		],

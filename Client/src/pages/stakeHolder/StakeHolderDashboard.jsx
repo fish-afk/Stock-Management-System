@@ -129,7 +129,7 @@ export default function StakeHolderDashboard() {
 				</div>
 				<div className="text-start p-3 pt-2">
 					<h4 className="text-primary">
-						<em>Inventory stats 📈</em>
+						<em>KPIs and other Data 📈</em>
 					</h4>
 
 					<div className="d-flex p-2 pt-5">
