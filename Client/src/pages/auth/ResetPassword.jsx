@@ -52,91 +52,11 @@ const ResetPassword = () => {
 
 	return (
 		<div className="sign-in__wrapper bg-black">
-			{/* Overlay */}
-			<div className="sign-in__backdrop"></div>
-			{/* Form */}
-			<Form className="shadow p-4 bg-white rounded" onSubmit={handleSubmit}>
-				{/* Header */}
-
-				<div className="h4 mb-2 text-center">Reset Password</div>
-				{/* ALert */}
-				{show == "" ? (
-					<></>
-				) : show == "SUCCESS" ? (
-					<Alert
-						className="mb-2"
-						variant="success"
-						onClose={() => setShow(false)}
-						dismissible
-					>
-						{message}
-					</Alert>
-				) : (
-					<Alert
-						className="mb-2"
-						variant="danger"
-						onClose={() => setShow(false)}
-						dismissible
-					>
-						{message}
-					</Alert>
-				)}
-				<Form.Group className="mb-2" controlId="username">
-					<Form.Label>Username</Form.Label>
-					<Form.Control
-						type="text"
-						value={inputUsername}
-						placeholder="Username"
-						onChange={(e) => setInputUsername(e.target.value)}
-						required
-					/>
-				</Form.Group>
-				<Form.Group className="mb-2" controlId="new_password">
-					<Form.Label>New Password</Form.Label>
-					<Form.Control
-						type="password"
-						value={inputPassword}
-						placeholder="Password"
-						onChange={(e) => setInputPassword(e.target.value)}
-						required
-					/>
-				</Form.Group>
-
-				<Form.Group className="mb-2" controlId="confirm_password">
-					<Form.Label>Confrm New Password</Form.Label>
-					<Form.Control
-						type="password"
-						value={inputConfirmPassword}
-						placeholder="Password"
-						onChange={(e) => setInputConfirmPassword(e.target.value)}
-						required
-					/>
-				</Form.Group>
-
-				<div className="d-grid justify-content-end pb-3">
-					<Button
-						className="text-muted px-0"
-						variant="link"
-						onClick={() => {
-							Navigate("/login");
-						}}
-					>
-						Back to Login
-					</Button>
-				</div>
-
-				{!loading ? (
-					<Button className="w-100" variant="primary" type="submit">
-						Reset Password
-					</Button>
-				) : (
-					<Button className="w-100" variant="primary" type="submit" disabled>
-						Reset Password Pending...
-					</Button>
-				)}
-			</Form>
+			<div className="text-primary">
+				<h3>To reset your password please contact the system adminitrator for this website.</h3>
+			</div>
 			{/* Footer */}
-			<div className="w-100 mb-2 position-absolute bottom-0 start-50 translate-middle-x text-white text-center">
+			<div className="w-100 p-4 position-absolute bottom-0 start-50 translate-middle-x text-white text-center">
 				Stock Management System | &copy; {new Date().getFullYear()}
 			</div>
 		</div>

@@ -88,7 +88,7 @@ const router = createBrowserRouter([
 		element: <Logout />,
 	},
 	{
-		path: "/reset-password/:priv",
+		path: "/reset-password",
 		element: <ResetPassword />,
 	},
 	{

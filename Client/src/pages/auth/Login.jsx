@@ -97,8 +97,9 @@ const Login = () => {
 					<Form.Label>Username</Form.Label>
 					<Form.Control
 						type="text"
+						className="border-dark" 
 						value={inputUsername}
-						placeholder="Username"
+						placeholder="Enter Username"
 						onChange={(e) => setInputUsername(e.target.value)}
 						required
 					/>
@@ -107,8 +108,9 @@ const Login = () => {
 					<Form.Label>Password</Form.Label>
 					<Form.Control
 						type="password"
+						className="border-dark"
 						value={inputPassword}
-						placeholder="Password"
+						placeholder="Enter Password"
 						onChange={(e) => setInputPassword(e.target.value)}
 						required
 					/>
@@ -137,7 +139,7 @@ const Login = () => {
 				)}
 			</Form>
 			{/* Footer */}
-			<div className="w-100 mb-2 position-absolute bottom-0 start-50 translate-middle-x text-white text-center">
+			<div className="w-100 p-4 position-absolute bottom-0 start-50 translate-middle-x text-white text-center">
 				Stock Management System | &copy; {new Date().getFullYear()}
 			</div>
 		</div>
