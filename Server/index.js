@@ -29,7 +29,7 @@ const dangerzoneRouter = require('./routers/dangerzone')
 
 const rateLimiter = rateLimit({
 	windowMs: 3 * 60 * 1000, // 3 minutes
-	max: 200, // Limit each IP to 200 requests
+	max: 1000, // Limit each IP to 1000 requests
 	message: {
 		status: "FAILURE",
 		message: "Too many requests, please try again later",

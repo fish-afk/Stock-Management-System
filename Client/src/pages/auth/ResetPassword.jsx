@@ -52,8 +52,8 @@ const ResetPassword = () => {
 
 	return (
 		<div className="sign-in__wrapper bg-black">
-			<div className="text-primary">
-				<h3>To reset your password please contact the system adminitrator for this website.</h3>
+			<div className="text-secondary">
+				<h3>To reset your password, please contact the administrator of this website.</h3>
 			</div>
 			{/* Footer */}
 			<div className="w-100 p-4 position-absolute bottom-0 start-50 translate-middle-x text-white text-center">

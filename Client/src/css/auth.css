@@ -10,15 +10,19 @@
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
+    transition: all 300ms ease-in-out;
 }
 
 .sign-in__backdrop {
+    transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
     position: absolute;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.3);
 }
 
 .sign-in__wrapper form {
+    transition: all 300ms ease-in-out;
     width: 24rem;
     max-width: 90%;
     z-index: 1;

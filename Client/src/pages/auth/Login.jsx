@@ -97,7 +97,7 @@ const Login = () => {
 					<Form.Label>Username</Form.Label>
 					<Form.Control
 						type="text"
-						className="border-dark" 
+						className="border-secondary" 
 						value={inputUsername}
 						placeholder="Enter Username"
 						onChange={(e) => setInputUsername(e.target.value)}
@@ -108,7 +108,7 @@ const Login = () => {
 					<Form.Label>Password</Form.Label>
 					<Form.Control
 						type="password"
-						className="border-dark"
+						className="border-secondary"
 						value={inputPassword}
 						placeholder="Enter Password"
 						onChange={(e) => setInputPassword(e.target.value)}
