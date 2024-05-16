@@ -1,3 +1,5 @@
+Please use the most updated version of this codebase found here: https://github.com/fish-afk/001356993_COMP1682
+
 Final year computing project.
 Stock Management System For SHIHAB ENTERPRISE ltd.
 But it is also compatible to any similar company.
@@ -77,3 +79,23 @@ run this command to start the react frontend
 ### step 6:
 
 copy the link shown in the CLI for the react code and paste and visit it in the browser.
+
+
+Admin credentials:
+
+username: john_doe
+password: password123
+
+
+
+Warehouse operator credentials:
+
+username: john_doe_wh
+password: password123
+
+
+
+Stakeholder credentials:
+
+username: john_doe_st
+password: password123
