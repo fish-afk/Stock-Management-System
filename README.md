@@ -1,6 +1,5 @@
 # Simple Stock management system.
 
-Final year computing project.
 Stock Management System For SHIHAB ENTERPRISE ltd.
 But it is also compatible to any similar company.
 
