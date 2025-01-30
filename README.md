@@ -1,3 +1,5 @@
+# Simple Stock management system.
+
 Please use the most updated version of this codebase found here: https://github.com/fish-afk/001356993_COMP1682
 
 Final year computing project.
