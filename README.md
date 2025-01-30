@@ -3,7 +3,7 @@
 Stock Management System For SHIHAB ENTERPRISE ltd.
 But it is also compatible to any similar company.
 
-## How to run this project locally
+## How to run this project locally.
 
 ## Prerequisites:
 
