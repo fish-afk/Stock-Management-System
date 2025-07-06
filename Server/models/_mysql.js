@@ -4,7 +4,7 @@ const mysql = require("mysql2/promise"); // For connecting to MySQL database
 const pool = mysql.createPool({
 	host: "localhost",
 	user: "root",
-	password: "Shihab786..",
+	password: "password",
 	database: "StockManagementSystem_001356993",
 });
 
